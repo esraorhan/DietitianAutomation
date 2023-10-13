@@ -1,0 +1,32 @@
+﻿@model MealViewModel
+
+
+<form asp-controller="Meal" asp-action="Edit" method="post" class="card-body clearfix">
+    @* <div class="text-danger" asp-validation-summary="ModelOnly"></div>*@
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label"> Öğün Adı <span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span class="text-danger" asp-validation-for="Meal.MealName"></span>
+            <input type="text" asp-for="Meal.MealName" class="form-control">
+            <input type="hidden" asp-for="Meal.MealID" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Öğün Zamanı<span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span class="text-danger" asp-validation-for="Meal.MealTime"></span>
+            <input type="time" asp-for="Meal.MealTime" class="form-control">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label"></label>
+        <div class="col-md-7">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+    </div>
+    <div class="text-danger" asp-validation-summary="All">
+        @* model de olsutuduklarıı listelemeleye yarıyor.uyarı dizini olarak*@
+    </div>
+
+</form>

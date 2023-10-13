@@ -1,0 +1,16 @@
+﻿using Core.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Entities.Concrete
+{
+   public  class Meal :IEntity
+    {
+        public int MealID { get; set; }
+        public string MealName { get; set; }
+        public string MealTime { get; set; }
+    }
+}

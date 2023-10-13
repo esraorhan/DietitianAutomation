@@ -1,0 +1,92 @@
+﻿@model MealViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Öğünler Listesi</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Anasayfa/Index/">Anasayfa</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Öğünler</li>
+                </ol>
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#MealList">Öğünler Listesi</a></li>
+
+                <li class="nav-item"><a class="nav-link active" id="Library-tab-Boot" data-toggle="tab" href="#NewMeal">Yeni Öğün Ekle</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane" id="MealList">
+                @await Component.InvokeAsync("MealList")
+            </div>
+
+            <div class="tab-pane active" id="NewMeal">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Öğün Ekle</h3>
+                        <div class="card-options ">
+                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                        </div>
+                    </div>
+
+                    <form asp-controller="Meal" asp-action="Add" method="post" class="card-body clearfix">
+                        @* <div class="text-danger" asp-validation-summary="ModelOnly"></div>*@
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"> Öğün Adı <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span class="text-danger" asp-validation-for="Meal.MealName"></span>
+                                <input type="text" asp-for="Meal.MealName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Öğün Zamanı<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span class="text-danger" asp-validation-for="Meal.MealTime"></span>
+                                <input type="time" asp-for="Meal.MealTime" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-7">
+                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                            </div>
+                        </div>
+                        <div class="text-danger" asp-validation-summary="All">
+                            @* model de olsutuduklarıı listelemeleye yarıyor.uyarı dizini olarak*@
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+
+               @* @Html.Partial("EditCategoryViewModal")*@
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

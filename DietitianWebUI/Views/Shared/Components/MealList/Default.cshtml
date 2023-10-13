@@ -1,0 +1,41 @@
+﻿@model MealViewModel
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Öğün Adı</th>
+                        <th>Saati</th>
+
+                        <th>Düzenle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null)
+                    {
+
+                    }
+                    else
+                    {
+                        int a = 1;
+                        @foreach (var item in Model.Meals)
+                        {
+                            <tr>
+                                <td>@a</td>
+                                <td>@item.MealName</td>
+                                <td>@item.MealTime</td>
+                                <td>
+                                    <a type="button" onclick="showInPopup('@Url.Action("Edit","Meal",new {mealId=item.MealID})','Öğün  Güncelle')" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
+                                    @*<a type="button" href="@Url.Action("Delete","Meal",new {mealId=item.MealID})" class="btn btn-icon btn-sm" title="Sil"><i class="fa fa-trash-o text-danger"></i></a>*@
+                                </td>
+                            </tr>
+                            a++;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
