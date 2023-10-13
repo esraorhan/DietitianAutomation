@@ -1,0 +1,81 @@
+﻿@model FoodViewModal
+
+<form asp-action="Edit" asp-controller="Food" method="post" class="card-body clearfix">
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Yemek Adı <span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span asp-validation-for="Food.FoodName" class="text-danger"></span>
+            <input type="text" asp-for="Food.FoodName" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Kategoriler<span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span asp-validation-for="Food.CategoryID" class="text-danger"></span>
+            <select class="form-control input-height" asp-for="Food.CategoryID" asp-items="Model.Categories">
+                <option value="">Seçiniz...</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Miktarı<span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span asp-validation-for="Food.Amount" class="text-danger"></span>
+            <input type="text" asp-for="Food.Amount" class="form-control" placeholder="Sayı olarak giriniz !">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Ölçü Birimi  <span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span asp-validation-for="Food.UnitOfMeasure" class="text-danger"></span>
+            <select class="form-control input-height" asp-for="Food.UnitOfMeasure">
+                <option value="">Seçiniz...</option>
+                <option value="GR">Gram(GR)</option>
+                <option value="Litre(LT)">Litre(LT)</option>
+                <option value="Dilim">Dilim</option>
+                <option value="Kaşık">Kaşık</option>
+                <option value="Kaşık">Tane</option>
+                <option value="Porsiyon">Porsiyon</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group row clearfix">
+        <label class="col-md-3 col-form-label">Kalori <span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span asp-validation-for="Food.Calorie" class="text-danger"></span>
+            <input type="text" asp-for="Food.Calorie" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Protein <span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span asp-validation-for="Food.Protein" class="text-danger"></span>
+            <input type="text" asp-for="Food.Protein" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Karbonhidrat <span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span asp-validation-for="Food.Carbohydrate" class="text-danger"></span>
+            <input type="text" asp-for="Food.Carbohydrate" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label">Yağ<span class="text-danger">*</span></label>
+        <div class="col-md-7">
+            <span asp-validation-for="Food.Oil" class="text-danger"></span>
+            <input type="text" asp-for="Food.Oil" class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label"></label>
+        <div class="col-md-7">
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+    </div>
+
+    <div class="text-danger" asp-validation-summary="All">
+        @* model de olsutuduklarıı listelemeleye yarıyor.uyarı dizini olarak*@
+    </div>
+</form>

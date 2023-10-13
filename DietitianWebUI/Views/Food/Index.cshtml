@@ -1,0 +1,157 @@
+﻿@model FoodViewModal
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Page title and tab -->
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Besinler Listesi</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Anasayfa/Index/">Anasayfa</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Besinler</li>
+                </ol>
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Besinler-Listesi">Besinler Listesi</a></li>
+
+                <li class="nav-item"><a class="nav-link active" id="Library-tab-Boot" data-toggle="tab" href="#Besinekle">Yeni Yiyecek Ekle</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane " id="Besinler-Listesi">
+                @await Component.InvokeAsync("FoodList")
+            </div>
+
+            <div class="tab-pane active" id="Besinekle">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Yeni Yiyecek Ekle</h3>
+                        <div class="card-options ">
+                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                        </div>
+                    </div>
+                    <form asp-action="Add" asp-controller="Food" method="post" class="card-body clearfix">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Yemek Adı <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span asp-validation-for="Food.FoodName" class="text-danger"></span>
+                                <input type="text" asp-for="Food.FoodName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Kategoriler<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span asp-validation-for="Food.CategoryID" class="text-danger"></span>
+                                <select class="form-control input-height" asp-for="Food.CategoryID" asp-items="Model.Categories">
+                                    <option value="">Seçiniz...</option>
+                                </select>
+
+                                <select class="form-control input-height" style="display:none" asp-for="Categories" asp-items="Model.Categories">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Miktarı<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span asp-validation-for="Food.Amount" class="text-danger"></span>
+                                <input type="text" asp-for="Food.Amount" class="form-control" placeholder="Sayı olarak giriniz !">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Ölçü Birimi  <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span asp-validation-for="Food.UnitOfMeasure" class="text-danger"></span>
+                                <select class="form-control input-height" asp-for="Food.UnitOfMeasure">
+                                    <option value="">Seçiniz...</option>
+                                    <option value="GR">Gram(GR)</option>
+                                    <option value="Litre(LT)">Litre(LT)</option>
+                                    <option value="Dilim">Dilim</option>
+                                    <option value="Kaşık">Kaşık</option>
+                                    <option value="Kaşık">Tane</option>
+                                    <option value="Porsiyon">Porsiyon</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row clearfix">
+                            <label class="col-md-3 col-form-label">Kalori <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span asp-validation-for="Food.Calorie" class="text-danger"></span>
+                                <input type="number" asp-for="Food.Calorie" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Protein <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span asp-validation-for="Food.Protein" class="text-danger"></span>
+                                <input type="text" asp-for="Food.Protein" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Karbonhidrat <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span asp-validation-for="Food.Carbohydrate" class="text-danger"></span>
+                                <input type="number" asp-for="Food.Carbohydrate" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Yağ<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <span asp-validation-for="Food.Oil" class="text-danger"></span>
+                                <input type="text" asp-for="Food.Oil" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-7">
+                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                            </div>
+                        </div>
+
+                        <div class="text-danger" asp-validation-summary="All">
+                             @*model de olsutuduklarıı listelemeleye yarıyor.uyarı dizini olarak*@
+                        </div>
+
+                    </form>
+
+                    @if (ViewData.ContainsKey("FluentValidationErrors"))
+                    {
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach (var error in (List<string>)ViewData["FluentValidationErrors"])
+                                {
+                                    <li>@error</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+
+                @Html.Partial("EditFoodViewModal")
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

@@ -23,6 +23,9 @@ namespace Business.DependencyResolvers.Autofac
             //Mael -öğünler
             builder.RegisterType<MealManager>().As<IMealService>();
             builder.RegisterType<EfMealDal>().As<IMealDal>();
+            //Food -besinler Listesi
+            builder.RegisterType<FoodManager>().As<IFoodService>();
+            builder.RegisterType<EfFoodDal>().As<IFoodDal>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Business.Abstract
 {
     public interface IFoodService
     {
-        IDataResult<List<Food>> GetList();
+        IDataResult<List<FoodListByCategoryDto>> GetFoodListByCategories();
         IDataResult<Food> GetById(int foodId);
         IResult Update(Food food);
         IResult Add(Food food);

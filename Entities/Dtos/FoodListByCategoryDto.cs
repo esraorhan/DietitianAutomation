@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Entities.Dtos
 {
-   public  class Food:IEntity
+    public class FoodListByCategoryDto :IDto
     {
         public int FoodID { get; set; }
         public string FoodName { get; set; }
@@ -18,5 +18,7 @@ namespace Entities.Concrete
         public decimal? Oil { get; set; }
         public decimal? Protein { get; set; }
         public int CategoryID { get; set; }
+        public string CategoryName { get; set; }
+        public string Description { get; set; }
     }
 }
