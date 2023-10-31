@@ -1,0 +1,179 @@
+﻿@model AdultCustomerViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+
+
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Dep-all">Danışan Listesi</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Dep-add">Danışan Ekle</a></li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+
+            @*@await Component.InvokeAsync("DanisanListesiView")*@
+            <div class="tab-pane" id="Dep-add">
+                <div class="col-lg-12 col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Yeni Danışan Kaydı</h3>
+                            <div class="card-options ">
+                                <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <form asp-controller="Customers" asp-action="Add" method="post">
+                                <div class="row clearfix">
+                                    <div class="col-sm-6">
+                                        <label class="col-md-3 col-form-label">Adı Soyadı <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <span class="text-danger" asp-validation-for="AdultCustomer.FullName"></span>
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.FullName" name="AdiSoyadi" placeholder="Adı Soyadı">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-3 col-form-label">Mail <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Mail" name="Email" placeholder="E-mail">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-3 col-form-label">Telefon <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <span class="text-danger" asp-validation-for="AdultCustomer.Phone"></span>
+                                            <input type="number" class="form-control" asp-for="AdultCustomer.Phone" name="TlfNo" placeholder="Telefon No">
+                                        </div>
+                                    </div>
+
+                                    
+                                    <div class="col-sm-6">
+                                        <label class="col-md-3 col-form-label">Kilo <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <span class="text-danger" asp-validation-for="AdultCustomer.Kilo"></span>
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Kilo" name="Kilo" placeholder="KG">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-6 col-form-label">Boy(cm) <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <span class="text-danger" asp-validation-for="AdultCustomer.Size"></span>
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Size" name="Boy" placeholder="Boy(cm)" >
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-6 col-form-label">Doğum tarihi <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <span class="text-danger" asp-validation-for="AdultCustomer.DateOfBirth"></span>
+                                            @*<input data-provide="datepicker"  asp-for="AdultCustomer.DateOfBirth" class="form-control" placeholder="Doğum Tarihi">*@
+                                            <input type="date" class="form-control" placeholder="Doğum Tarihi" asp-for="AdultCustomer.DateOfBirth">
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-6">
+                                        <label class="col-md-3 col-form-label">Cinsiyet <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <select name="Cinsiyet" asp-for="AdultCustomer.Gender" class="form-control" required>
+                                                <option value="K">Kadın</option>
+                                                <option value="E">Erkek</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-6 col-form-label">Mesleğiniz <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Job" name="job" placeholder="Mesleğiniz">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-3 col-form-label">Hedef Kilo <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.CustomerTarget" name="hedef" placeholder="hedef">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-4 col-form-label">Çalışma Şekli <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <select name="egitimdurumu" asp-for="AdultCustomer.MannerOfWork" class="form-control">
+                                                <option value="HAREKETSİZ - AYDA 1-2 GÜN EGZERSİZ">HAREKETSİZ - AYDA 1-2 GÜN EGZERSİZ</option>
+                                                <option value="AZ HAREKETLİ - AYDA 1-3 GÜN EGZERSİZ">AZ HAREKETLİ - AYDA 1-3 GÜN EGZERSİZ</option>
+                                                <option value="ORTA DERECE HAREKETLİ - AYDA 3-5 GÜN EGZERSİZ">ORTA DERECE HAREKETLİ - AYDA 3-5 GÜN EGZERSİZ</option>
+                                                <option value="ÇOK HAREKETLİ - AYDA 6-7 GÜN EGZERSİZ">ÇOK HAREKETLİ - AYDA 6-7 GÜN EGZERSİZ</option>
+                                                <option value="Yüksek Lisans">AŞIRI HAREKETLİ - YOĞUN EĞZERSİZ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-6 col-form-label">Genetik Rahatsızlıklar <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="GeneticDisease" asp-for="AdultCustomer.GeneticDisease" placeholder="Genetik hastalıklar">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-6 col-form-label">Alkol Kullanılıyor mu? <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <select name="AlcoholUse" asp-for="AdultCustomer.AlcoholUse" class="form-control">
+                                                <option value="true">Evet</option>
+                                                <option value="false">Hayır</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-6 col-form-label">Resim <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="Image" placeholder="Resim Yükleyin">
+                                        </div>
+                                    </div>
+                                    @*<div class="col-sm-6">
+                                        <label class="col-md-4 col-form-label">BMH Değeri <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.BMH_value" name="bmh" placeholder="BMH Değeri">
+                                        </div>
+                                    </div>*@
+                                    <div class="col-sm-6">
+                                        <label class="col-md-3 col-form-label">PAL Değeri</label>
+                                        <div class="form-group">
+                                            <span class="text-danger" asp-validation-for="AdultCustomer.PAL_value"></span>
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.PAL_value" placeholder="PAL Değeri">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label class="col-md-3 col-form-label">Notlar <span class="text-danger">*</span></label>
+                                        <span class="text-danger" asp-validation-for="AdultCustomer.Description"></span>
+                                        <div class="form-group">
+                                            <textarea rows="4" class="summernote" asp-for="AdultCustomer.Description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary float-right">Kaydet</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+

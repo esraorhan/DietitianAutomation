@@ -20,5 +20,13 @@ namespace Entities.Concrete
         public string MannerOfWork { get; set; }
         public int Size { get; set; }
         public int Kilo { get; set; }
+        public int Age { get; set; }
+        public string CustomerTarget { get; set; } //müşteri hedefi 
+        public string Allergy { get; set; }
+        public string GeneticDisease { get; set; }
+        public bool AlcoholUse { get; set; }
+        public string Description { get; set; }
+        public decimal? BMH_value { get; set; }
+        public decimal? PAL_value { get; set; }
     }
 }

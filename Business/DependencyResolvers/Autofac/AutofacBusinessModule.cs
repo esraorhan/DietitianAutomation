@@ -26,6 +26,10 @@ namespace Business.DependencyResolvers.Autofac
             //Food -besinler Listesi
             builder.RegisterType<FoodManager>().As<IFoodService>();
             builder.RegisterType<EfFoodDal>().As<IFoodDal>();
+
+            //customer
+            builder.RegisterType<AdultCustomerManager>().As<IAdultCustomerService>();
+            builder.RegisterType<EfAdultCustomerDal>().As<IAdultCustomerDal>();
         }
     }
 }

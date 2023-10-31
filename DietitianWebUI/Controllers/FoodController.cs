@@ -66,8 +66,6 @@ namespace DietitianWebUI.Controllers
                 {
 
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                    //ViewData["FluentValidationErrors"] = item.ErrorMessage;
-            
                 }
             }
             var r = _categoryService.GetList().Success == true ? _categoryService.GetList().Data : null;
@@ -102,6 +100,22 @@ namespace DietitianWebUI.Controllers
                 Categories =categories
             };
             return PartialView("EditFoodViewModal", model);
+        }
+        [HttpPost]
+        public IActionResult Edit(FoodViewModal model)
+        {
+            var result = _foodService.Update(model.Food);
+            if (result.Success == true)
+            {
+                TempData.Add("message", result.Message);
+
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+            return Redirect("/Food/Index");
+          
         }
 
     }
