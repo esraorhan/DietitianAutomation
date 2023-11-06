@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-   public  interface IAdultMeetingService
+    public interface ICustomerCalculationService
     {
-      
+        IResult CustomerCalgulationValues(AdultCustomer adultCustomer);
     }
 }

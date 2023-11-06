@@ -43,36 +43,36 @@
                                         <label class="col-md-3 col-form-label">Adı Soyadı <span class="text-danger">*</span></label>
                                         <div class="form-group">
                                             <span class="text-danger" asp-validation-for="AdultCustomer.FullName"></span>
-                                            <input type="text" class="form-control" asp-for="AdultCustomer.FullName" name="AdiSoyadi" placeholder="Adı Soyadı">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.FullName" placeholder="Adı Soyadı">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="col-md-3 col-form-label">Mail <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" asp-for="AdultCustomer.Mail" name="Email" placeholder="E-mail">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Mail" placeholder="E-mail">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="col-md-3 col-form-label">Telefon <span class="text-danger">*</span></label>
                                         <div class="form-group">
                                             <span class="text-danger" asp-validation-for="AdultCustomer.Phone"></span>
-                                            <input type="number" class="form-control" asp-for="AdultCustomer.Phone" name="TlfNo" placeholder="Telefon No">
+                                            <input type="number" class="form-control" asp-for="AdultCustomer.Phone" placeholder="Telefon No">
                                         </div>
                                     </div>
 
-                                    
+
                                     <div class="col-sm-6">
                                         <label class="col-md-3 col-form-label">Kilo <span class="text-danger">*</span></label>
                                         <div class="form-group">
                                             <span class="text-danger" asp-validation-for="AdultCustomer.Kilo"></span>
-                                            <input type="text" class="form-control" asp-for="AdultCustomer.Kilo" name="Kilo" placeholder="KG">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Kilo" placeholder="KG">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="col-md-6 col-form-label">Boy(cm) <span class="text-danger">*</span></label>
                                         <div class="form-group">
                                             <span class="text-danger" asp-validation-for="AdultCustomer.Size"></span>
-                                            <input type="text" class="form-control" asp-for="AdultCustomer.Size" name="Boy" placeholder="Boy(cm)" >
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Size" placeholder="Boy(cm)">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -88,28 +88,29 @@
                                     <div class="col-sm-6">
                                         <label class="col-md-3 col-form-label">Cinsiyet <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <select name="Cinsiyet" asp-for="AdultCustomer.Gender" class="form-control" required>
-                                                <option value="K">Kadın</option>
-                                                <option value="E">Erkek</option>
+                                            <select asp-for="AdultCustomer.Gender" class="form-control" required>
+                                                <option value="">Seçiniz</option>
+                                                <option value="Kadın">Kadın</option>
+                                                <option value="Erkek">Erkek</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="col-md-6 col-form-label">Mesleğiniz <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" asp-for="AdultCustomer.Job" name="job" placeholder="Mesleğiniz">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Job" placeholder="Mesleğiniz">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="col-md-3 col-form-label">Hedef Kilo <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" asp-for="AdultCustomer.CustomerTarget" name="hedef" placeholder="hedef">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.CustomerTarget" placeholder="hedef">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="col-md-4 col-form-label">Çalışma Şekli <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <select name="egitimdurumu" asp-for="AdultCustomer.MannerOfWork" class="form-control">
+                                            <select asp-for="AdultCustomer.MannerOfWork" class="form-control">
                                                 <option value="HAREKETSİZ - AYDA 1-2 GÜN EGZERSİZ">HAREKETSİZ - AYDA 1-2 GÜN EGZERSİZ</option>
                                                 <option value="AZ HAREKETLİ - AYDA 1-3 GÜN EGZERSİZ">AZ HAREKETLİ - AYDA 1-3 GÜN EGZERSİZ</option>
                                                 <option value="ORTA DERECE HAREKETLİ - AYDA 3-5 GÜN EGZERSİZ">ORTA DERECE HAREKETLİ - AYDA 3-5 GÜN EGZERSİZ</option>
@@ -121,13 +122,19 @@
                                     <div class="col-sm-6">
                                         <label class="col-md-6 col-form-label">Genetik Rahatsızlıklar <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="GeneticDisease" asp-for="AdultCustomer.GeneticDisease" placeholder="Genetik hastalıklar">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.GeneticDisease" placeholder="Genetik hastalıklar">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="col-md-6 col-form-label">Alerjiniz var mı? <span class="text-danger">*</span></label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" asp-for="AdultCustomer.Allergy" placeholder="Alerjileriniz">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="col-md-6 col-form-label">Alkol Kullanılıyor mu? <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <select name="AlcoholUse" asp-for="AdultCustomer.AlcoholUse" class="form-control">
+                                            <select asp-for="AdultCustomer.AlcoholUse" class="form-control">
                                                 <option value="true">Evet</option>
                                                 <option value="false">Hayır</option>
                                             </select>
@@ -136,22 +143,22 @@
                                     <div class="col-sm-6">
                                         <label class="col-md-6 col-form-label">Resim <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" name="Image" placeholder="Resim Yükleyin">
+                                            <input type="text" class="form-control" placeholder="Resim Yükleyin">
                                         </div>
                                     </div>
-                                    @*<div class="col-sm-6">
-                                        <label class="col-md-4 col-form-label">BMH Değeri <span class="text-danger">*</span></label>
+                                    <!--<div class="col-sm-6">
+                                        <label class="col-md-4 col-form-label">BMH Değeri <span class="text-danger"></span></label>
                                         <div class="form-group">
                                             <input type="text" class="form-control" asp-for="AdultCustomer.BMH_value" name="bmh" placeholder="BMH Değeri">
                                         </div>
-                                    </div>*@
+                                    </div>
                                     <div class="col-sm-6">
                                         <label class="col-md-3 col-form-label">PAL Değeri</label>
-                                        <div class="form-group">
-                                            <span class="text-danger" asp-validation-for="AdultCustomer.PAL_value"></span>
-                                            <input type="text" class="form-control" asp-for="AdultCustomer.PAL_value" placeholder="PAL Değeri">
+                                        <div class="form-group">-->
+                                            @*<span class="text-danger" asp-validation-for="AdultCustomer.PAL_value"></span>*@
+                                            <!--<input type="text" class="form-control" asp-for="AdultCustomer.PAL_value" placeholder="PAL Değeri">
                                         </div>
-                                    </div>
+                                    </div>-->
                                     <div class="col-sm-12">
                                         <label class="col-md-3 col-form-label">Notlar <span class="text-danger">*</span></label>
                                         <span class="text-danger" asp-validation-for="AdultCustomer.Description"></span>

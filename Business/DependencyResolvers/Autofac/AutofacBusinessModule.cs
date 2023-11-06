@@ -30,6 +30,10 @@ namespace Business.DependencyResolvers.Autofac
             //customer
             builder.RegisterType<AdultCustomerManager>().As<IAdultCustomerService>();
             builder.RegisterType<EfAdultCustomerDal>().As<IAdultCustomerDal>();
+
+            //customerdetail
+            builder.RegisterType<AdultCustomerDetailManager>().As<IAdultCustomerDetailService>();
+            builder.RegisterType<EfAdultCustomerDetailDal>().As<IAdultCustomerDetailDal>();
         }
     }
 }

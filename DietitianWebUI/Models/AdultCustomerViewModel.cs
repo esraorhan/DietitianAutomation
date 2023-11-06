@@ -9,6 +9,7 @@ namespace DietitianWebUI.Models
     public class AdultCustomerViewModel
     {
         public AdultCustomer AdultCustomer { get; set; }
+        public AdultCustomerDetail AdultCustomerDetail { get; set; }
         public List<AdultCustomer> AdultCustomers { get; set; }
     }
 }

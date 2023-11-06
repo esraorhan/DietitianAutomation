@@ -13,9 +13,10 @@ namespace Entities.Concrete
         public int AdultCustomerID { get; set; } // danısanid
       
       
-        public decimal BMH_value { get; set; }
-        public decimal PAL_value { get; set; }
-        public decimal Vki_value { get; set; }
-        public decimal BodyFatIndex { get; set; }
+        public decimal? BMH_value { get; set; }
+        public decimal? PAL_value { get; set; }
+        public decimal? Vki_value { get; set; }
+        public decimal? BodyFatIndex { get; set; }
+        public string Vki_comment { get; set; }
     }
 }

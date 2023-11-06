@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace Business.Abstract
 {
     public interface IAdultCustomerDetailService
     {
-        IDataResult<List<AdultCustomerDetail>> GetList(int adultCustomerId);
-        IDataResult<AdultCustomerDetail> GetById(int adultCustomerDetailId,int adultCustomerId);
+       // IDataResult<List<AdultCustomerDetail>> GetList(int adultCustomerId);
+        IDataResult<AdultCustomerDetailListByCustomerDto> GetDetailCustomer(int adultCustomerId);
         IResult Update(AdultCustomerDetail  customerDetail);
         IResult Add(AdultCustomerDetail customerDetail);
         IResult Delete(AdultCustomerDetail customerDetail);

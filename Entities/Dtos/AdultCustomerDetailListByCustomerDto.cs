@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Concrete
+namespace Entities.Dtos
 {
-    public class AdultCustomer: IEntity
+    public class AdultCustomerDetailListByCustomerDto : IDto
     {
         public int AdultCustomerID { get; set; }
         public string FullName { get; set; }
@@ -26,7 +26,11 @@ namespace Entities.Concrete
         public string GeneticDisease { get; set; }
         public bool AlcoholUse { get; set; }
         public string Description { get; set; }
-        //public decimal? BMH_value { get; set; }
-        //public decimal? PAL_value { get; set; }
+
+        public int AdultCustomerDetailID { get; set; }
+        public decimal? BMH_value { get; set; }
+        public decimal? PAL_value { get; set; }
+        public decimal? Vki_value { get; set; }
+        public decimal? BodyFatIndex { get; set; }
     }
 }

@@ -15,10 +15,12 @@ namespace Business.Concrete
     public class AdultCustomerManager : IAdultCustomerService
     {
         private IAdultCustomerDal _customerDal;
+        private IAdultCustomerDetailDal _customerDetailDal;
 
-        public AdultCustomerManager(IAdultCustomerDal customerDal)
+        public AdultCustomerManager(IAdultCustomerDal customerDal, IAdultCustomerDetailDal customerDetailDal)
         {
             _customerDal = customerDal;
+            _customerDetailDal = customerDetailDal;
         }
 
         public IResult Add(AdultCustomer adultCustomer)
@@ -27,6 +29,7 @@ namespace Business.Concrete
             if (result == null)
             {
                 _customerDal.ADD(adultCustomer);
+              
                 return new SuccessResult(Messages.Added);
             }
             else
