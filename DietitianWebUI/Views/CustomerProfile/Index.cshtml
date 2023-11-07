@@ -1,8 +1,236 @@
-﻿
+﻿@model CustomerProfileViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Müşteri Profili</h1>
+@await Component.InvokeAsync("CustomerProfileInformation")
 
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Gorusmeler">Görüşmeler</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Staff-grid">Diyet Programları</a></li>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Grafikler">Vucut Ölçüleri</a></li>
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Dosyalar">Dosyalar</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane" id="Gorusmeler">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        @*<a type="submit" onclick="showInPopup('@Url.Action("AddMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID})','Yeni Görüşme Ekle')" class="btn btn-sm btn-success float-lg-right">Yeni Görüşme Ekle</a>*@
+
+                    </div>
+                </div>
+                @*@await Component.InvokeAsync("GorusmeList", Model.AdultCustomerDetail.AdultCustomerID)*@
+
+            </div>
+            <div class="tab-pane" id="Staff-grid">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img class="card-profile-img" src="~/assets/images/sm/avatar1.jpg" alt="">
+                                <h5 class="mb-0">Peter Richards</h5>
+                                <span>Librarian</span>
+                                <div class="text-muted">+ (916) 369-7180</div>
+                                <p class="mb-4 mt-3">449 Thompson St, Conway, SC, 29527</p>
+                                <button class="btn btn-primary btn-sm">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane" id="Grafikler">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-4 col-md-6">
+                        <canvas id="chartdiv" style="width:600px; height:400px;">
+                        </canvas>
+                    </div>
+                    <div class="col-xl-6 col-lg-4 col-md-6">
+                        <canvas id="chartBelCM" style="width:600px; height:400px;">
+                        </canvas>
+                    </div>
+                    <div class="col-xl-6 col-lg-4 col-md-6">
+                        <canvas id="chartKalcaCM" style="width:600px; height:400px;">
+                        </canvas>
+                    </div>
+                    <div class="col-xl-6 col-lg-4 col-md-6">
+                        <canvas id="Yagorani" style="width:600px; height:400px;">
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane active" id="Dosyalar">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        @*<a type="submit" onclick="showInPopup('@Url.Action("NewTahlilAdd","DanisanProfil",new {customerId=Model.AdultCustomerDetail.AdultCustomerID})','Yeni tahlil')" class="btn btn-sm btn-success float-lg-right">Tahlil Ekle</a>*@
+
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    @*@await Component.InvokeAsync("TahlilList", id)*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+                @*@Html.Partial("NewDanisanAddModal")
+                @Html.Partial("EditGorusmeViewModal")
+                @Html.Partial("NewTahlilAddModal")*@
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@section grafikscript{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "@Url.Action("KiloGrafik", "DanisanProfil")",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                ChartJSRes(result.jsonlist, "Kilo", "KiLO(KG)","chartdiv");
+            }
+        });
+
+          $.ajax({
+            url: "@Url.Action("BelCMGrafik", "DanisanProfil")",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                ChartJSRes(result.jsonlist, "Bel Ölçüsü", "BEL(CM)","chartBelCM");
+            }
+          });
+
+         $.ajax({
+            url: "@Url.Action("KalcaCMGrafik", "DanisanProfil")",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                ChartJSRes(result.jsonlist, "Kalça Ölçüsü", "KALÇA(CM)","chartKalcaCM");
+            }
+         });
+          $.ajax({
+            url: "@Url.Action("KalcaCMGrafik", "DanisanProfil")",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                ChartJSRes(result.jsonlist, "Yağ Oranı", "Yağ(%)","Yagorani");
+            }
+        });
+
+    });
+   function ChartJSRes(result,label,text,div_id) {
+
+            //  console.log(result);
+            var labels = [];
+            var dataresults = [];
+            $.each(result, function (index, item) {
+
+                labels.push(item.tarih);
+                dataresults.push(item.deger);
+            });
+            //console.log(labels)
+            //console.log(dataresults)
+
+       const ctx = document.getElementById(div_id).getContext('2d');
+
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels, //banka adı
+                    datasets: [{
+                        label: label,
+                        data: dataresults,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(235, 45,0, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(135, 48, 36,0.5)',
+                            'rgba(36, 135, 70,0.5)',
+                            'rgba(100, 70, 189,0.5)',
+                            'rgba(0 ,139 ,139,0.5)',
+                            'rgba(75 ,0,130,0.5)',
+                            'rgba(166 ,69,12,0.5)',
+                            'rgba(245 ,1,1,0.5)'
+
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(135, 48, 36,1)',
+                            'rgba(36, 135, 70,1)',
+                            'rgb(100, 70, 189,1)',
+                            'rgb(0 ,139 ,139,1)',
+                            'rgb(75 ,0,130,1)',
+                            'rgba(166 ,69,12,1)',
+                            'rgba(245 ,1,1,1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: text
+                        }
+                    },
+                    scale: {
+                        reverse: true,
+
+                        xAxes: [{
+                            display: true,
+                            type: 'time',
+                            time: {
+                                parser: 'DD/MM/YYYY',
+                                unit: 'day',
+                                unitStepSize: 1,
+                                displayFormats: {
+                                    'day': 'DD/MM/YYYY'
+                                }
+                            }
+                        }
+                        ],
+                        yAxes: [{ ticks: { min: 0, max: 120 } }],
+                    }
+                }
+
+            });
+        }
+    </script>
+}

@@ -58,5 +58,32 @@ namespace DietitianWebUI.Controllers
             }
             return View("Index");
         }
+
+        [HttpGet("/Customers/Edit/{customerId}")]
+        public IActionResult Edit(int customerId)
+        {
+            var customerInformation = _customerService.GetById(customerId).Data;
+            var model = new AdultCustomerViewModel
+            {
+                AdultCustomer = customerInformation
+            };
+            return PartialView("EditCustomerViewModal", model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(AdultCustomerViewModel model)
+        {
+            var result = _customerService.Update(model.AdultCustomer);
+            if (result.Success == true)
+            {
+                TempData.Add("message", result.Message);
+
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+            return Redirect("/Customers/Index");
+        }
     }
 }

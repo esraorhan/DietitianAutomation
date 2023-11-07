@@ -35,9 +35,9 @@
                         <td>@item.Age</td>
                         <td>@item.StartingDate</td>
                         <td>
-                            <a href="/DanisanProfil/Index/@item.AdultCustomerID" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></a>
-                            <a href="/Danisan/DanisanEdit/@item.AdultCustomerID" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></a>
-                            <a href="/Danisan/DanisanDelete/@item.AdultCustomerID" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                            <a href="/CustomerProfile/Index/@item.AdultCustomerID" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></a>
+                            <a onclick="showInPopup('@Url.Action("Edit","Customers",new {customerId=item.AdultCustomerID})','Danışan Güncelle')" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
+                            <a  href="@Url.Action("Delete","Customers",new {customerId=item.AdultCustomerID})"  class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
                         </td>
                     </tr>
                             a++;

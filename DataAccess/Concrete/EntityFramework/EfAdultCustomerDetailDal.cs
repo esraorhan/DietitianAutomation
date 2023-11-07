@@ -42,7 +42,8 @@ namespace DataAccess.Concrete.EntityFramework
                                   BMH_value = d.BMH_value,
                                   BodyFatIndex = d.BodyFatIndex,
                                   PAL_value = d.PAL_value,
-                                  Vki_value = d.Vki_value
+                                  Vki_value = d.Vki_value,
+                                   Vki_comment=d.Vki_comment
                               });
 
                 return result.FirstOrDefault();

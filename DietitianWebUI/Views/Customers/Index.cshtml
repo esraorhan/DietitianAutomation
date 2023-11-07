@@ -155,8 +155,8 @@
                                     <div class="col-sm-6">
                                         <label class="col-md-3 col-form-label">PAL Değeri</label>
                                         <div class="form-group">-->
-                                            @*<span class="text-danger" asp-validation-for="AdultCustomer.PAL_value"></span>*@
-                                            <!--<input type="text" class="form-control" asp-for="AdultCustomer.PAL_value" placeholder="PAL Değeri">
+                                    @*<span class="text-danger" asp-validation-for="AdultCustomer.PAL_value"></span>*@
+                                    <!--<input type="text" class="form-control" asp-for="AdultCustomer.PAL_value" placeholder="PAL Değeri">
                                         </div>
                                     </div>-->
                                     <div class="col-sm-12">
@@ -184,3 +184,17 @@
 </div>
 
 
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+
+                @Html.Partial("EditCustomerViewModal")
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
