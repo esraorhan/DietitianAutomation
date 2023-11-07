@@ -25,7 +25,7 @@ namespace Business.Concrete
         {
             //bu kısımda analiz hesaplamalrı yapılcak
             double boyMetre = adultCustomer.Size / 100.0;
-            double vki = adultCustomer.Kilo / (boyMetre * boyMetre);
+            double vki = Convert.ToDouble(adultCustomer.Kilo) / (boyMetre * boyMetre);
             // VKİ'ye dayalı vücut yağ oranı tahmini
             double vucutYagOrani = 0;
             double bmh = 0;

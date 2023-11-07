@@ -1,0 +1,51 @@
+﻿@model AdultCustomerViewModel
+<div class="tab-pane active" id="Dep-all">
+    <div class="table-responsive">
+        <div class="table-responsive">
+            <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Adı Soyadı</th>
+                        <th>Email</th>
+                        <th>Telefon</th>
+                        <th>Mesleği</th>
+                        <th>Yaş</th>
+                        <th>Başlama Tarihi</th>
+                        <th>Düzenle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null)
+                    {
+
+                    }
+                    else
+                    {
+                        int a = 1;
+                        @foreach (var item in Model.AdultCustomers)
+                        {
+                    <tr>
+                        <td>@a</td>
+                        <td>@item.FullName</td>
+                        <td>@item.Mail</td>
+                        <td>@item.Phone</td>
+
+                        <td>@item.Job</td>
+                        <td>@item.Age</td>
+                        <td>@item.StartingDate</td>
+                        <td>
+                            <a href="/DanisanProfil/Index/@item.AdultCustomerID" class="btn btn-icon btn-sm" title="View"><i class="fa fa-eye"></i></a>
+                            <a href="/Danisan/DanisanEdit/@item.AdultCustomerID" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></a>
+                            <a href="/Danisan/DanisanDelete/@item.AdultCustomerID" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                        </td>
+                    </tr>
+                            a++;
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

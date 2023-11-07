@@ -19,7 +19,7 @@ namespace Entities.Concrete
         public DateTime DateOfBirth { get; set; }
         public string MannerOfWork { get; set; }
         public int Size { get; set; }
-        public int Kilo { get; set; }
+        public decimal Kilo { get; set; }
         public int? Age { get; set; }
         public string CustomerTarget { get; set; } //müşteri hedefi 
         public string Allergy { get; set; }

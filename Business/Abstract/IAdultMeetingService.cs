@@ -10,6 +10,10 @@ namespace Business.Abstract
 {
    public  interface IAdultMeetingService
     {
-      
+        IDataResult<List<AdultMeeting>> GetList();
+        IDataResult<AdultMeeting> GetById(int meetingId);
+        IResult Update(AdultMeeting meeting);
+        IResult Add(AdultMeeting meeting);
+        IResult Delete(AdultMeeting meeting);
     }
 }
