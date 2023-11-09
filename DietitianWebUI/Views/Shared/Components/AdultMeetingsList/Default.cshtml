@@ -1,0 +1,48 @@
+﻿@model CustomerProfileViewModel
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Bel Ölç.</th>
+                        <th>Görüşme Tarihi</th>
+                        <th>Kilo</th>
+                        <th>Açıklama</th>
+                        <th>Düzenle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null)
+                    {
+
+                    }
+                    else
+                    {
+                        foreach (var item in Model.AdultMeetings)
+                        {
+                            <tr>
+                                <td class="w60">
+                                    <img class="avatar" src="~/assets/images/xs/avatar3.jpg" alt="">
+                                </td>
+                                <td><div class="font-15">@item.WaistSize</div></td>
+                                <td><span>@item.MeetingDate.ToShortDateString()</span></td>
+                                <td><span class="text-muted">@item.UpdateKilo</span></td>
+                                <td><span class="text-muted">@item.Description</span></td>
+
+                                <td>
+                                    <a type="button" href="@Url.Action("EditMeeting","CustomerProfile",new {meetingId=item.AdultMeetingID})" class="btn btn-icon btn-sm" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a type="button" href="@Url.Action("DeleteMeeting","CustomerProfile",new {meetingId=item.AdultMeetingID,customerId=item.AdultCustomerID})" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

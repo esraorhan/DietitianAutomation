@@ -1,11 +1,32 @@
 ﻿@model CustomerProfileViewModel
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@await Component.InvokeAsync("CustomerProfileInformation")
+@*@await Component.InvokeAsync("CustomerProfileInformation" ,new { CustomerId = HttpContextAccessor.HttpContext.Session.GetInt32("customerId") })*@
+<div class="row mt-4">
+  
+    <div class="col-sm-12 col-lg-4 mx-auto">
+        <div class="card ">
+            <div class="card-status bg-green"></div>
+            <div class="card-body">
+                <div class="card-category">@Model.AdultCustomerDetail.FullName</div>
+                <div class="display-5 my-2">@Model.AdultCustomerDetail.Kilo kg</div>
+                <ul class="list-unstyled leading-loose">
+                    <li>@Model.AdultCustomerDetail.Age Yaşında</li>
+                    <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_value</b>  vücut kitle indeksi</li>
+                    <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_comment</b></li>
+                    <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20"> @Model.AdultCustomerDetail.BMH_value</b> kcal bazal metobolizma hızınız</li>
+                    <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>
+                </ul>
 
+            </div>
+        </div>
+    </div>
+</div>
 <div class="section-body">
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center ">
@@ -13,7 +34,7 @@
 
             </div>
             <ul class="nav nav-tabs page-header-tab">
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Gorusmeler">Görüşmeler</a></li>
+                <li class="nav-item"><a class="nav-link " data-toggle="tab" href="#Gorusmeler">Görüşmeler</a></li>
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Staff-grid">Diyet Programları</a></li>
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#Grafikler">Vucut Ölçüleri</a></li>
                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Dosyalar">Dosyalar</a></li>
@@ -25,14 +46,14 @@
 <div class="section-body mt-4">
     <div class="container-fluid">
         <div class="tab-content">
-            <div class="tab-pane" id="Gorusmeler">
+            <div class="tab-pane" id="Gorusmeler" >
                 <div class="row mb-3">
                     <div class="col-12">
-                        @*<a type="submit" onclick="showInPopup('@Url.Action("AddMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID})','Yeni Görüşme Ekle')" class="btn btn-sm btn-success float-lg-right">Yeni Görüşme Ekle</a>*@
+                        <a type="submit" onclick="showInPopup('@Url.Action("AddNewMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID })','Yeni Görüşme Ekle')"  class="btn btn-sm btn-primary float-lg-right">Yeni Görüşme Ekle</a>
 
                     </div>
                 </div>
-                @*@await Component.InvokeAsync("GorusmeList", Model.AdultCustomerDetail.AdultCustomerID)*@
+                @await Component.InvokeAsync("AdultMeetingsList", Model.AdultCustomerDetail.AdultCustomerID)
 
             </div>
             <div class="tab-pane" id="Staff-grid">
@@ -96,9 +117,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
             </div>
             <div class="modal-body">
+                @await Html.PartialAsync("AddNewMeetingModal")
                 @*@Html.Partial("NewDanisanAddModal")
-                @Html.Partial("EditGorusmeViewModal")
-                @Html.Partial("NewTahlilAddModal")*@
+                    @Html.Partial("EditGorusmeViewModal")
+                    @Html.Partial("NewTahlilAddModal")*@
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -107,42 +129,18 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     $(document).ready(function () {
-        $.ajax({
-            url: "@Url.Action("KiloGrafik", "DanisanProfil")",
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json",
-            success: function (result) {
-                ChartJSRes(result.jsonlist, "Kilo", "KiLO(KG)","chartdiv");
-            }
-        });
-
+      
           $.ajax({
-            url: "@Url.Action("BelCMGrafik", "DanisanProfil")",
+            url: "@Url.Action("Graphics", "CustomerProfile", new { customerId = Model.AdultCustomerDetail.AdultCustomerID })",
             type: "GET",
             dataType: "json",
             contentType: "application/json",
-            success: function (result) {
-                ChartJSRes(result.jsonlist, "Bel Ölçüsü", "BEL(CM)","chartBelCM");
-            }
-          });
-
-         $.ajax({
-            url: "@Url.Action("KalcaCMGrafik", "DanisanProfil")",
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json",
-            success: function (result) {
-                ChartJSRes(result.jsonlist, "Kalça Ölçüsü", "KALÇA(CM)","chartKalcaCM");
-            }
-         });
-          $.ajax({
-            url: "@Url.Action("KalcaCMGrafik", "DanisanProfil")",
-            type: "GET",
-            dataType: "json",
-            contentType: "application/json",
-            success: function (result) {
-                ChartJSRes(result.jsonlist, "Yağ Oranı", "Yağ(%)","Yagorani");
+              success: function (result) {
+                  console.log(result.kilo);
+                  ChartJSRes(result.kilo, "Kilo", "KiLO(KG)", "chartdiv");
+                  ChartJSRes(result.yagOrani, "Yağ Oranı", "Yağ(%)", "Yagorani");
+                  ChartJSRes(result.kalca, "Kalça Ölçüsü", "KALÇA(CM)", "chartKalcaCM");
+                  ChartJSRes(result.bel, "Bel Ölçüsü", "BEL(CM)", "chartBelCM");
             }
         });
 
@@ -157,8 +155,7 @@
                 labels.push(item.tarih);
                 dataresults.push(item.deger);
             });
-            //console.log(labels)
-            //console.log(dataresults)
+            
 
        const ctx = document.getElementById(div_id).getContext('2d');
 

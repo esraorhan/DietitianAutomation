@@ -1,0 +1,96 @@
+﻿@model CustomerProfileViewModel
+@{
+    ViewData["Title"] = "EditMeeting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h6>Görüşme Detayları </h6>
+
+<div class="card">
+    <div class="card-body">
+        <form asp-controller="CustomerProfile" asp-action="EditMeeting" method="post">
+            @Html.AntiForgeryToken()
+            
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Güncel Kilonuz <span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <span class="text-danger" asp-validation-for="AdultMeeting.UpdateKilo"></span>
+                    <input type="text"  data-val="false" asp-for="AdultMeeting.UpdateKilo" class="form-control">
+                    <input type="hidden" asp-for="AdultMeeting.AdultCustomerID" value="@Model.AdultMeeting.AdultCustomerID">
+                    <input type="hidden" asp-for="AdultMeeting.AdultMeetingID" value="@Model.AdultMeeting.AdultMeetingID">
+                    <input type="hidden" asp-for="AdultMeeting.MeetingDate">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Yağ Oranı(%) <span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <input type="number" asp-for="AdultMeeting.FatRate" class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Bel Ölçüsü(CM) <span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <span class="text-danger" asp-validation-for="AdultMeeting.WaistSize"></span>
+                    <input type="number" asp-for="AdultMeeting.WaistSize" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Kalça Ölçüsü(CM) <span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <span class="text-danger" asp-validation-for="AdultMeeting.HaunchSize"></span>
+                    <input type="number" asp-for="AdultMeeting.HaunchSize" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Gogus Ölçüsü(CM)<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <span class="text-danger" asp-validation-for="AdultMeeting.ChestSize"></span>
+                    <input type="number" asp-for="AdultMeeting.ChestSize" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Basen Ölçüsü(CM)<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <span class="text-danger" asp-validation-for="AdultMeeting.HipSize"></span>
+                    <input type="number" asp-for="AdultMeeting.HipSize" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Kol Ölçüsü(CM)<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <input type="number" asp-for="AdultMeeting.ArmSize" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Karın Ölçüsü(CM)<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <input type="number" asp-for="AdultMeeting.StomachSize" class="form-control">
+                </div>
+            </div>
+            @*<div class="form-group row">
+                    <label class="col-md-3 col-form-label">Bacak Ölçüsü(CM)<span class="text-danger">*</span></label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control">
+                    </div>
+                </div>*@
+
+
+
+
+
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Not<span class="text-danger"></span></label>
+                <div class="col-md-9">
+                    <textarea rows="4" asp-for="AdultMeeting.Description" class="form-control no-resize" placeholder="Açıklama"></textarea>
+
+                </div>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-primary">Güncelle</button>
+
+        </form>
+    </div>
+</div>

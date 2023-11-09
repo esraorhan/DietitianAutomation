@@ -19,6 +19,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = (from a in context.AdultCustomers
                               join d in context.AdultCustomerDetails on a.AdultCustomerID equals d.AdultCustomerDetailID
+                              where a.AdultCustomerID ==customerId
                               select new AdultCustomerDetailListByCustomerDto
                               {
                                   AdultCustomerID = a.AdultCustomerID,

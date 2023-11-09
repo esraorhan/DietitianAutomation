@@ -20,5 +20,6 @@ namespace Entities.Concrete
         public int StomachSize { get; set; }
         public int FatRate { get; set; }
         public string Description { get; set; }
+        public DateTime MeetingDate { get; set; }
     }
 }

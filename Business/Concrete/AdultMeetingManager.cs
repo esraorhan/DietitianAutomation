@@ -37,9 +37,9 @@ namespace Business.Concrete
             return new SuccessDataResult<AdultMeeting>(_meetingDal.GET(c => c.AdultMeetingID == meetingId));
         }
 
-        public IDataResult<List<AdultMeeting>> GetList()
+        public IDataResult<List<AdultMeeting>> GetList(int customerId)
         {
-            return new SuccessDataResult<List<AdultMeeting>>(_meetingDal.GETLIST().ToList());
+            return new SuccessDataResult<List<AdultMeeting>>(_meetingDal.GETLIST(c => c.AdultCustomerID == customerId).ToList());
         }
 
         public IResult Update(AdultMeeting meeting)
