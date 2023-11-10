@@ -1,0 +1,49 @@
+﻿@model CustomerProfileViewModel
+<div class="tab-pane" id="pro-add">
+    <div class="row clearfix">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="card">
+
+                <div class="card-body">
+                    <div class="row clearfix">
+                        <form asp-controller="CustomerProfile" asp-action="AddFolder" enctype="multipart/form-data" method="post">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <label>Dosya Başlığı </label>
+                                    <span class="text-danger" asp-validation-for="CustomerFolder.FolderTitle"></span>
+                                    <input type="text" asp-for="CustomerFolder.FolderTitle" required class="form-control">
+                                    <input type="hidden" asp-for="CustomerFolder.AdultCustomerID" value="@Model.AdultCustomerDetail.AdultCustomerID">
+                                </div>
+                            </div>
+                            @*<div class="col-md-12 col-sm-12">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>*@
+                            <div class="col-sm-12">
+                                <div class="form-group mt-2 mb-3">
+                                    <span class="text-danger" asp-validation-for="CustomerFolder.FolderPath"></span>
+                                    <input type="file" asp-for="CustomerFolder.FolderPath" class="dropify" required name="formFile">
+                                    <small id="fileHelp" class="form-text text-muted">Lütfen png, pdf formatında yükleme yapın. Aksi halde kaydetme işlemi başarısız olacaktır. </small>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group mt-3">
+                                    <label>Messages</label>
+                                    <span class="text-danger" asp-validation-for="CustomerFolder.FolderDescription"></span>
+                                    <textarea rows="4" asp-for="CustomerFolder.FolderDescription" class="form-control no-resize" required placeholder="Lütfen dosya hakkında açıklama yazın"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-primary">Kaydet</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,11 +16,13 @@ namespace DietitianWebUI.Controllers
     {
         private IAdultMeetingService _adultMeetingService;
         private IAdultCustomerDetailService _customerDetailService;
+        private ICustomerFolderService _folderService;
 
-        public CustomerProfileController(IAdultMeetingService adultMeetingService, IAdultCustomerDetailService customerDetailService)
+        public CustomerProfileController(IAdultMeetingService adultMeetingService, IAdultCustomerDetailService customerDetailService, ICustomerFolderService folderService)
         {
             _adultMeetingService = adultMeetingService;
             _customerDetailService = customerDetailService;
+            _folderService = folderService;
         }
 
         [HttpGet("/CustomerProfile/Index/{customerId}")]
@@ -145,6 +148,127 @@ namespace DietitianWebUI.Controllers
             var belarray = values.Select(v => new { tarih = v.tarih, deger = v.bel }).ToList();
 
             return Json(new { kilo = kiloArray, yagOrani = yagOraniArray, kalca =kalcaarray, bel =belarray });
+        }
+
+        [HttpGet("/CustomerProfile/AddFolder/{customerId}")]
+        public IActionResult AddFolder(int customerId)
+        {
+            var customerinformation = _customerDetailService.GetDetailCustomer(customerId).Data;
+            var model = new CustomerProfileViewModel
+            {
+                AdultCustomerDetail = customerinformation
+                // CourseId = CourseId
+            };
+            return PartialView("AddFolderModal", model);
+        }
+
+        [HttpPost]
+        public IActionResult AddFolder(CustomerProfileViewModel model)
+        {
+            var file = Request.Form.Files["formFile"];
+            CustomerFolderValidator cf = new CustomerFolderValidator();
+            ValidationResult result = new ValidationResult();
+            try
+            {
+                if (result.IsValid)
+                {
+                    if (file.ContentType == "image/png" || file.ContentType == "image/jpeg" || file.ContentType == "application/pdf")
+                    {
+                        var extension = Path.GetExtension(file.FileName);
+                        var newvideoname = Path.GetFileNameWithoutExtension(file.FileName.Replace(' ', '_')) + extension;
+                        var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Folder/", newvideoname);
+                        using (var stream = new FileStream(location, FileMode.Create))
+                        {
+                            file.CopyTo(stream);
+                        }
+                        model.CustomerFolder.FolderPath = newvideoname;
+                        model.CustomerFolder.CreationDate = DateTime.Now;
+                        model.CustomerFolder.FolderExtension = extension;
+                        var folder = _folderService.Add(model.CustomerFolder);
+                        if (folder.Success == true)
+                        {
+                            TempData.Add("message", folder.Message);
+                        }
+                        else
+                        {
+                            TempData.Add("errormessage", folder.Message);
+                        }
+                    }
+                   
+                }
+                else
+                {
+                    TempData.Add("errormessage", "Lütfen geçerli   formatta  yükleyin");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return Redirect("/CustomerProfile/Index/" + model.CustomerFolder.AdultCustomerID);
+        }
+
+        [HttpGet("/CustomerProfile/ShowFolder/{folderId}")]
+        public IActionResult ShowFolder(int folderId)
+        {
+            var folder = _folderService.GetById(folderId).Data;
+            var pdfFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Folder", folder.FolderPath);
+
+            if (System.IO.File.Exists(pdfFilePath))
+            {
+                if (folder.FolderExtension==".pdf")
+                {
+                    var fileBytes = System.IO.File.ReadAllBytes(pdfFilePath);
+                    return File(fileBytes, "application/pdf");
+                }
+                else
+                {
+                    var fileBytes = System.IO.File.ReadAllBytes(pdfFilePath);
+                    return File(fileBytes, "image/png");
+                }
+               
+            }
+            else
+            {
+                return NotFound(); // Dosya bulunamazsa uygun bir hata sayfasına yönlendirilebilir.
+            }
+            
+        }
+
+        [HttpGet("/CustomerProfile/DeleteFolder/{folderId}/{customerId}")]
+        public ActionResult Delete(int folderId, int customerId)
+        {
+            var foldercontent = _folderService.GetById(folderId).Data;
+
+
+            // Veritabanından video adını veya kimliğini alın(videoFileName olarak kabul edelim)
+            string folderFileName = foldercontent.FolderPath; // Örneğin sabit bir isimle saklamış olalım
+
+            // Videonun yüklendiği klasör yolunu belirleyin
+            string FolderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Folder");
+
+            // Fiziksel dosya yolunu oluşturun
+            string folderFilePath = Path.Combine(FolderPath, folderFileName);
+
+            // Dosyayı diskten silin
+            if (System.IO.File.Exists(folderFilePath))
+            {
+                System.IO.File.Delete(folderFilePath);
+            }
+
+            var result = _folderService.Delete(foldercontent);
+            if (result.Success == true)
+            {
+                TempData.Add("message", "Başarıyla Silindi");
+
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+
+            return Redirect("/CustomerProfile/Index/" + customerId);
         }
 
     }

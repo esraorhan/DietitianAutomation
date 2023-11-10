@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "ShowFolder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ShowFolder</h1>
+
+@*<embed src="/CustomerProfile/ShowFolder/" width="800" height="600" />*@
+
+@*<a href="/CustomerProfile/ShowFolder/" target="_blank">
+        <embed src="/CustomerProfile/ShowFolder/" width="800" height="600" />
+    </a>*@
+
+<a href="#" onclick="openImage('/CustomerProfile/ShowFolder/'); return false;">
+    <img src="/CustomerProfile/ShowFolder/" alt="Example Image">
+</a>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    function openImage(url) {
+        window.open(url, '_blank');
+    }
+</script>

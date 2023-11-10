@@ -13,7 +13,7 @@
         <div class="card ">
             <div class="card-status bg-green"></div>
             <div class="card-body">
-                <div class="card-category">@Model.AdultCustomerDetail.FullName</div>
+                <div class="card-category text-primary">@Model.AdultCustomerDetail.FullName</div>
                 <div class="display-5 my-2">@Model.AdultCustomerDetail.Kilo kg</div>
                 <ul class="list-unstyled leading-loose">
                     <li>@Model.AdultCustomerDetail.Age Yaşında</li>
@@ -49,7 +49,7 @@
             <div class="tab-pane" id="Gorusmeler" >
                 <div class="row mb-3">
                     <div class="col-12">
-                        <a type="submit" onclick="showInPopup('@Url.Action("AddNewMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID })','Yeni Görüşme Ekle')"  class="btn btn-sm btn-primary float-lg-right">Yeni Görüşme Ekle</a>
+                        <a type="submit" onclick="showInPopup('@Url.Action("AddNewMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID })','Yeni Görüşme Ekle')"  class="btn btn-sm text-light btn-primary float-lg-right">Yeni Görüşme Ekle</a>
 
                     </div>
                 </div>
@@ -96,12 +96,12 @@
             <div class="tab-pane active" id="Dosyalar">
                 <div class="row mb-3">
                     <div class="col-12">
-                        @*<a type="submit" onclick="showInPopup('@Url.Action("NewTahlilAdd","DanisanProfil",new {customerId=Model.AdultCustomerDetail.AdultCustomerID})','Yeni tahlil')" class="btn btn-sm btn-success float-lg-right">Tahlil Ekle</a>*@
+                        <a type="submit" onclick="showInPopup('@Url.Action("AddFolder","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID})','Yeni tahlil')" class="btn btn-sm btn-primary text-light float-lg-right">Dosya Yükle</a>
 
                     </div>
                 </div>
                 <div class="row clearfix">
-                    @*@await Component.InvokeAsync("TahlilList", id)*@
+                    @await Component.InvokeAsync("CustomerFolderList",  Model.AdultCustomerDetail.AdultCustomerID)
                 </div>
             </div>
         </div>
@@ -118,9 +118,8 @@
             </div>
             <div class="modal-body">
                 @await Html.PartialAsync("AddNewMeetingModal")
-                @*@Html.Partial("NewDanisanAddModal")
-                    @Html.Partial("EditGorusmeViewModal")
-                    @Html.Partial("NewTahlilAddModal")*@
+                @await Html.PartialAsync("AddFolderModal")
+              
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -161,7 +160,7 @@
             const myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels, //banka adı
+                    labels: labels, //tarih adı
                     datasets: [{
                         label: label,
                         data: dataresults,

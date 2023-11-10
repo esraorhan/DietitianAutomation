@@ -1,0 +1,50 @@
+﻿@model CustomerProfileViewModel
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Dosya başlığı</th>
+                        <th>Dosya Uzantısı</th>
+                        <th>Yükleme Tarihi</th>
+                        <th>Açıklama</th>
+                        <th>Düzenle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null)
+                    {
+
+                    }
+                    else
+                    {
+                        int a = 1;
+                        foreach (var item in Model.CustomerFolders)
+                        {
+                            <tr>
+                                <td class="w60">
+                                    @a
+                                </td>
+                                <td><div class="font-15">@item.FolderTitle</div></td>
+                                <td><span>@item.FolderPath</span></td>
+                                <td><span class="text-muted">@item.CreationDate</span></td>
+                                <td><span class="text-muted">@item.FolderDescription</span></td>
+
+                                <td>
+                                    <a type="button" href="@Url.Action("ShowFolder","CustomerProfile",new {folderId=item.CustomerFolderId})" class="btn btn-icon btn-sm" title="Görüntüle"><i class="fa fa-eye"></i></a>
+                                    <a type="button" href="/CustomerProfile/DeleteFolder/@item.CustomerFolderId/@item.AdultCustomerID" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+

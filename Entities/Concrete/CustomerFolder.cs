@@ -14,6 +14,7 @@ namespace Entities.Concrete
         public string FolderTitle { get; set; }
         public string FolderDescription { get; set; }
         public string FolderPath { get; set; }
+        public string FolderExtension { get; set; }
         public DateTime CreationDate { get; set; }
 
     }
