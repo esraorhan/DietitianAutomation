@@ -39,6 +39,10 @@ namespace Business.DependencyResolvers.Autofac
 
             builder.RegisterType<AdultMeetingManager>().As<IAdultMeetingService>();
             builder.RegisterType<EfAdultMeetingDal>().As<IAdultMeetingDal>();
+
+            //customerFolder 
+            builder.RegisterType<CustomerFolderManager>().As<ICustomerFolderService>();
+            builder.RegisterType<EfCustomerFolderDal>().As<ICustomerFolderDal>();
         }
     }
 }
