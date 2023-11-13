@@ -33,8 +33,8 @@
         .alert {
             position: fixed;
             bottom: 400px;
-            margin-left: 60%;
-            width: 96%;
+            margin-left: 50%;
+            width: 86%;
             z-index: 555;
         }
 
@@ -807,7 +807,7 @@
                         <ul class="metismenu">
                             <li class="active"><a href="/Anasayfa/Index/"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
                             <li><a href="/Customers/Index/"><i class="fa fa-black-tie"></i><span>Danışanlar</span></a></li>
-                            <li><a href="/DiyetSablon/Index/"><i class="fa fa-cutlery"></i><span>Diyet Şablonu</span></a></li>
+                            <li><a href="/DietLists/Index/"><i class="fa fa-cutlery"></i><span>Diyet Şablonu</span></a></li>
                             <li><a href="/Food/Index/"><i class="fa fa-users"></i><span>Besinler</span></a></li>
                             <li><a href="departments.html"><i class="fa fa-users"></i><span>Soru Listeleri</span></a></li>
                             <li><a href="courses.html"><i class="fa fa-graduation-cap"></i><span>Courses</span></a></li>
@@ -1059,6 +1059,13 @@
         <script src="~/Scripts/jquery.maskedinput.min.js"></script>
         @RenderSection("grafikscript", false)
     }
+
+    @if (IsSectionDefined("pageScript"))
+    {
+
+        @RenderSection("pageScript", false)
+    }
+
 </body>
 </html>
 

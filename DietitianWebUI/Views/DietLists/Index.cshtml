@@ -1,0 +1,99 @@
+﻿@model GeneralDietListViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Library</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Ericsson</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                </ol>
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Library-all">Yemek Şablonları</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            @*<div class="header-action">
+                    <a href="/DiyetSablon/DiyetSablonOlustur/" class="btn btn-success text-light"><i class="fa fa-plus-circle"></i>   Ekle</a>
+                </div>*@
+            <div class="header-action">
+                <a onclick="showInPopup('@Url.Action("AddGeneralDiet","DietLists")','Diyet Şablonu Oluştur')" class="btn btn-success text-light"><i class="fa fa-plus-circle"></i>   Diyet Şablonu Oluştur</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane active" id="Library-all">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            @*@await Component.InvokeAsync("DiyetSablonListView")*@
+                            <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
+                                <thead>
+                                    <tr>
+
+                                        <th>Diyet Adı</th>
+                                        <th>Açıklama</th>
+                                        <th>Oluşturma Tarihi</th>
+                                        <th>Düzenle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.GeneralDietLists == null)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in Model.GeneralDietLists)
+                                        {
+                                            <tr>
+                                                <td>@item.DietName</td>
+                                                <td>@item.Description</td>
+                                                <td>@item.Date.ToShortDateString()</td>
+                                                <td>
+                                                    <a href="/DietPlans/Index/@item.DietItemId" class="btn btn-icon btn-sm" title="Görüntüle"><i class="fa fa-eye"></i></a>
+                                                    <a href="/DietLists/Edit/@item.DietItemId" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
+                                                    <a href="/DietLists/Edit/@item.DietItemId" class="btn btn-icon btn-sm js-sweetalert" title="Sil" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

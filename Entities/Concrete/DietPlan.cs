@@ -17,5 +17,6 @@ namespace Entities.Concrete
         public decimal Oil { get; set; }
         public int MealID { get; set; }
         public int FoodID { get; set; }
+        public int DietItemId { get; set; }
     }
 }

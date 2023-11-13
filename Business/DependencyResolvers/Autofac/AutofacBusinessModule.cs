@@ -43,6 +43,14 @@ namespace Business.DependencyResolvers.Autofac
             //customerFolder 
             builder.RegisterType<CustomerFolderManager>().As<ICustomerFolderService>();
             builder.RegisterType<EfCustomerFolderDal>().As<ICustomerFolderDal>();
+
+            //GeneraldietList 
+            builder.RegisterType<GeneralDietListManager>().As<IGeneralDietListService>();
+            builder.RegisterType<EfGeneralDietListDal>().As<IGeneralDietListDal>();
+
+            //GeneraldietList 
+            builder.RegisterType<DietPlanManager>().As<IDietPlanService>();
+            builder.RegisterType<EfDietPlanDal>().As<IDietPlanDal>();
         }
     }
 }

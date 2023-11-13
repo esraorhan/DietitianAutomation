@@ -24,7 +24,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group mt-2 mb-3">
                                     <span class="text-danger" asp-validation-for="CustomerFolder.FolderPath"></span>
-                                    <input type="file" asp-for="CustomerFolder.FolderPath" class="dropify" required name="formFile">
+                                    <input type="file" asp-for="CustomerFolder.FolderPath" id="fileInput" class="dropify" required name="formFile" onchange="checkFileSize()">
                                     <small id="fileHelp" class="form-text text-muted">Lütfen png, pdf formatında yükleme yapın. Aksi halde kaydetme işlemi başarısız olacaktır. </small>
                                 </div>
                             </div>
@@ -47,3 +47,35 @@
 
     </div>
 </div>
+<script>
+    function checkFileSize() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0]; // Yüklenen dosyayı alın
+
+        if (file) {
+            const maxSizeInBytes = 1073741824; // 1 GB'ın byte cinsinden değeri
+            if (file.size > maxSizeInBytes) {
+
+                alert('Dosya boyutu 1 GB\'ı geçemez.');
+                fileInput.value = ''; // Dosya seçimini temizleyin
+            }
+        }
+        console.log(fileInput.files[0]);
+        if (file.type != "image/png" || file.type != "image/jpeg" || file.type != "application/pdf" ) {
+            alert('geçersiz dosya türü! .jpg veya .png  formatında yükleme yapın.');
+            fileInput.value = '';
+        }
+    }
+
+    function checkFileType() {
+        var ext = $('#ContentVideoPoster').val().split('.').pop().toLowerCase();
+        if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+            alert('geçersiz dosya türü, Png ve jpg formatında yükleyin!');
+        }
+    }
+</script>
+@section pageScript{
+
+
+}
+
