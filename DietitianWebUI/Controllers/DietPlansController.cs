@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using DietitianWebUI.Models;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -24,11 +25,15 @@ namespace DietitianWebUI.Controllers
 
         [HttpGet("/DietPlans/Index/{dietItemId}")]
         public IActionResult Index(int dietItemId)
-        {           
-            return View();
+        {
+            var model = new DietPlanViewModel
+            {
+                DietItemId = dietItemId
+            };
+            return View(model);
         }
 
-        public IActionResult AddMeal()
+        public IActionResult AddMeal(int dietItemId)
         {
             var meal = _mealService.GetList().Success == true ? _mealService.GetList().Data : null;
             List<SelectListItem> meals = meal != null
@@ -43,17 +48,56 @@ namespace DietitianWebUI.Controllers
             List<SelectListItem> foods = food != null
         ? food.Select(c => new SelectListItem
         {
-            Text = c.FoodName+" " + c.Amount + " " + c.UnitOfMeasure + " = " + c.Calorie + "Kalori",
+            Text = c.FoodName + " " + c.Amount + " " + c.UnitOfMeasure + " = " + c.Calorie + "Kalori",
             Value = c.FoodID.ToString()
         }).ToList()
         : new List<SelectListItem>();
             var model = new DietPlanViewModel
             {
                 Meals = meals,
-                Foods =foods
+                Foods = foods,
+                DietItemId = dietItemId
             };
 
-            return PartialView("AddMealModal",model);
+            return PartialView("AddMealModal", model);
+        }
+
+        public IActionResult CalculationByFood(int FoodId, int Amount)
+        {
+            var food = _foodService.GetById(FoodId).Data;
+            Dictionary<string, decimal?> foodvalues = new Dictionary<string, decimal?>();
+            if (Amount > 0)
+            {
+                foodvalues.Add("Karbonhidrat", food.Carbohydrate * Amount);
+                foodvalues.Add("Kalori", food.Calorie * Amount);
+                foodvalues.Add("Yag", food.Oil * Amount);
+                foodvalues.Add("Protein", food.Protein * Amount);
+            }
+            return Json(new { jsonlist = foodvalues });
+        }
+        [HttpPost]
+        public IActionResult AddMeal([FromBody] List<DietPlanModel> plans)
+        {
+            foreach (var item in plans)
+            {
+                _dietPlanService.Add(new DietPlan
+                {
+                    Amount = item.Amount,
+                    Calorie = item.Calorie,
+                    Carbohydrate = item.Carbohydrate,
+                    DietItemId = item.DietItemId,
+                    FoodID = item.FoodID,
+                    MealID = item.MealID,
+                    Oil = item.Oil,
+                    Protein = item.Protein,
+                    UnitOfMeasure = item.UnitOfMeasure,
+                    Description =item.Description
+                });
+            }
+            TempData.Add("message", "Başarılı Şekilde Eklendi");
+            string Location = "/DietPlans/Index/" + plans[0].DietItemId;
+            return Json(new { Locationhref = Location });
+            //return Redirect("/DietPlans/Index/" + plans[0].DietItemId);
         }
     }
 }

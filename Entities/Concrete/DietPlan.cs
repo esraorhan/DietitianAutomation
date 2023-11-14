@@ -15,8 +15,10 @@ namespace Entities.Concrete
         public decimal Calorie { get; set; }
         public decimal Carbohydrate { get; set; }
         public decimal Oil { get; set; }
+        public decimal Protein { get; set; }
         public int MealID { get; set; }
         public int FoodID { get; set; }
         public int DietItemId { get; set; }
+        public string Description { get; set; }
     }
 }

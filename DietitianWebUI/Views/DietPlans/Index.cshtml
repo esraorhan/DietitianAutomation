@@ -1,4 +1,4 @@
-﻿
+﻿@model DietPlanViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,7 +23,7 @@
                 </div>
             </a>
            @* <a type="submit" onclick="showInPopup('@Url.Action("AddMeal","DietPlans" ,new { DiyetSablonID =ViewBag.DiyetSablonID })','Öğün Ekle')">*@
-            <a type="submit" onclick="showInPopup('@Url.Action("AddMeal","DietPlans")','Öğün Ekle')">
+            <a type="submit" onclick="showInPopup('@Url.Action("AddMeal","DietPlans",new { dietItemId = Model.DietItemId })','Öğün Ekle')">
                 <div class="icon">
                     <i class="fa fa-plus-circle"></i>
                 </div>

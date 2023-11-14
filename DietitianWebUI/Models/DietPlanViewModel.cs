@@ -13,5 +13,7 @@ namespace DietitianWebUI.Models
         public IEnumerable<SelectListItem> Foods { get; set; }
 
         public DietPlan DietPlan { get; set; }
+        public List<DietPlan> DietPlans { get; set; }
+        public int DietItemId { get; set; }
     }
 }

@@ -5,23 +5,25 @@
         <div class="form-group">
             <label>Öğünler Seç </label>
             @*<span asp-validation-for="Food.CategoryID" class="text-danger"></span>*@
-            <select class="form-control input-height" asp-for="DietPlan.MealID" asp-items="Model.Meals">
+            <select class="form-control input-height" asp-for="DietPlan.MealID" asp-items="Model.Meals" id="MealID">
                 <option value="">Seçiniz...</option>
             </select>
+            <small id="FoodWarning" class="text-danger"></small>
         </div>
     </div>
     <div class="col-lg-12 col-md-12">
         <div class="form-group">
             <label>Besinler Listesi </label>
             <span asp-validation-for="DietPlan.FoodID" class="text-danger"></span>
-            <select class="form-control input-height" asp-for="DietPlan.FoodID" asp-items="Model.Foods">
+            <select class="form-control input-height" asp-for="DietPlan.FoodID" id="foodId" asp-items="Model.Foods">
                 <option value="">Seçiniz...</option>
             </select>
         </div>
         <div class="form-group">
             <label>Besin Notu </label>
             <input type="text" class="form-control" placeholder="Besin Notu" id="BesinAciklama">
-            <input type="hidden" name="DiyetSablonID" value="@ViewBag.DiyetSablonID" id="DiyetSablonID" />
+            <input type="hidden" name="dietItemId" value="@Model.DietItemId" id="DietItemId" />
+            @*<input type="hidden"  id="UnitOfMesaure" />*@
         </div>
     </div>
    
@@ -40,7 +42,7 @@
             <small id="OlcuBirimiUyari" class="text-danger"></small>
         </div>
     </div>*@
-    <div class="col-lg-6 col-md-12">
+    <div class="col-lg-12 col-md-12">
         <div class="form-group">
             <label>Miktar</label>
             <input type="text" class="form-control" placeholder="Miktar" id="Miktar">
@@ -51,25 +53,25 @@
     <div class="col-lg-3 col-md-12">
         <div class="form-group">
             <label>Kalori</label>
-            <input type="number" class="form-control" placeholder="Kalori" id="Kalori">
+            <input type="text" class="form-control" placeholder="Kalori" id="Kalori">
         </div>
     </div>
     <div class="col-lg-3 col-md-12">
         <div class="form-group">
             <label>Protein</label>
-            <input type="number" class="form-control" placeholder="Protein" id="Protein">
+            <input type="text" class="form-control" placeholder="Protein" id="Protein">
         </div>
     </div>
     <div class="col-lg-3 col-md-12">
         <div class="form-group">
             <label>Karbonhidrat</label>
-            <input type="number" class="form-control" placeholder="Karbonhidrat" id="Karbonhidrat">
+            <input type="text" class="form-control" placeholder="Karbonhidrat" id="Karbonhidrat">
         </div>
     </div>
     <div class="col-lg-3 col-md-12">
         <div class="form-group">
             <label>Yağ</label>
-            <input type="number" class="form-control" placeholder="Yağ" id="Yag">
+            <input type="text" class="form-control" placeholder="Yağ" id="Yag">
         </div>
     </div>
     <button class="btn btn-outline-success" id="Besinekle"> <i class="fa fa-plus"></i> Ekle</button>
@@ -96,26 +98,28 @@
 <script>
     $("#Miktar").keyup(function () {
         debugger;
-        var olcu = $("#OlcuBirimi").val();
+        var foodId = $("#foodId").val();
         var miktar = $("#Miktar").val();
-        var besin = $("#BesinID").val();
+       /* var besin = $("#BesinID").val();*/
         if (miktar == "") {
             $("#MiktarUyari").text("Lütfen Miktar değerini giriniz.");
-        } else if (olcu == "") {
-            $("#OlcuBirimiUyari").text("Lütfen Ölçü Birimini değerini giriniz.")
-        } else if (miktar != null && olcu != "" && besin != null) {
+        } else if (foodId == "") {
+            $("#FoodWarning").text("Lütfen besin Seçiniz.")
+        } else if (miktar != null && foodId != null) {
             $.ajax({
-                url: "@Url.Action("BesineGoreDegerlergetir", "DiyetSablon")",
-                data: { OlcuBirimi: olcu, Miktar: miktar, BesinID: besin },
+                url: "@Url.Action("CalculationByFood", "DietPlans")",
+                data: { FoodId: foodId, Amount: miktar },
                 type: "GET",
                 dataType: "json",
                 contentType: "application/json",
                 success: function (result) {
+                    console.log(result.jsonlist);
                     var res = result.jsonlist;
-                    $("#Kalori").val(res.kalori);
-                    $("#Protein").val(res.protein);
+                    $("#Kalori").val(res.Kalori);
+                    $("#Protein").val(res.Protein);
                     $("#Karbonhidrat").val(res.Karbonhidrat);
-                    $("#Yag").val(res.yag);
+                    $("#Yag").val(res.Yag);
+                    //$("#UnitOfMesaure").val(res.Yag);
                 }
             });
         }
@@ -124,26 +128,25 @@
 
     $("#Besinekle").click(function () {
         OgunIcerikleri = {
-            'Kalori': $("#Kalori").val(),
+            'Calorie': $("#Kalori").val(),
             'Protein': $("#Protein").val(),
-            'Karbonhidrat': $("#Karbonhidrat").val(),
-            'Yağ': $("#Yag").val(),
-            'BesinID': $("#BesinID").val(),
-            'OgunID': $("#OgunID").val(),
-            'BesinAdi': $("#BesinID option:selected").text(),
-            'Miktar': $("#Miktar").val(),
-            'BesinAciklama': $("#BesinAciklama").val(),
-            'Olcubirimi': $("#OlcuBirimi option:selected").text(),
-            'DiyetSablonID': $("#DiyetSablonID").val(),
-            'Saat': $("#Saat").val(),
+            'Carbohydrate': $("#Karbonhidrat").val(),
+            'Oil': $("#Yag").val(),
+            'FoodID': $("#foodId").val(),
+            'MealID': $("#MealID").val(),
+            //'BesinAdi': $("#BesinID option:selected").text(),
+            'Amount': $("#Miktar").val(),
+            'Description': $("#BesinAciklama").val(),
+            'UnitOfMeasure': "",
+            'DietItemId': $("#DietItemId").val(),
+           /* 'Saat': $("#Saat").val(),*/
         }
         OgunIcerikleri2.push(OgunIcerikleri);
 
         for (var i = 0; i < OgunIcerikleri2.length; i++) {
             var o = OgunIcerikleri2[i];
-            var html = ' <tbody><tr><td>' + o.BesinAdi + '(' + o.BesinAciklama+')</td>'
-                + '<td>' + o.Miktar + '-' + o.Olcubirimi + '</td>'
-                + '<td>' + o.Kalori + '</td>' +
+            var html = ' <tbody><tr><td>' + $("#foodId option:selected").text() + '(' + o.Description + ')</td>'
+                + '<td>' + o.Amount  + '<td>' + o.Calorie + '</td>' +
            '</tr> </tbody>';
         }
         $("#OzetOgun").append(html);
@@ -152,23 +155,23 @@
         $("#Karbonhidrat").val("");
         $("#Yag").val("");
         $("#Miktar").val("");
-        $("#OlcuBirimi").val("");
+        //$("#OlcuBirimi").val("");
         $("#BesinAciklama").val("");
-        $("#Saat").val("");
+       /* $("#Saat").val("");*/
     });
 
     $("#kaydet").click(function () {
-        console.log("öğün öğün"+JSON.stringify(OgunIcerikleri2));
+        console.log("plans"+JSON.stringify(OgunIcerikleri2));
         $.ajax({
             type: "POST",
-            url: "@Url.Action("OgunEkle", "DiyetSablon")",
-            data: {
-                ogunmodel: JSON.stringify(OgunIcerikleri2)
-            },
+            url: "@Url.Action("AddMeal", "DietPlans")",
+            data: JSON.stringify(OgunIcerikleri2),
             dataType: "json",
-            contentType: "application/json;  charset=utf-8",
+            contentType: "application/json;",
             success: function (result) {
-                window.location.href = result.Locationhref;
+                debugger;
+                console.log(result.Locationhref);
+                window.location.href = result.locationhref;
             }
         });
     });
