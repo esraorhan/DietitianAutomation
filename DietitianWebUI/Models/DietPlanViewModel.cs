@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.Dtos;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace DietitianWebUI.Models
         public DietPlan DietPlan { get; set; }
         public List<DietPlan> DietPlans { get; set; }
         public int DietItemId { get; set; }
+        public List<DietPlansListByMealGroupDto> dietPlansListByMeals { get; set; }
     }
 }

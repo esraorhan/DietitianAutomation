@@ -26,9 +26,11 @@ namespace DietitianWebUI.Controllers
         [HttpGet("/DietPlans/Index/{dietItemId}")]
         public IActionResult Index(int dietItemId)
         {
+            var dietlist = _dietPlanService.GetDietPlanListByMealGroupDto(dietItemId).Data;
             var model = new DietPlanViewModel
             {
-                DietItemId = dietItemId
+                DietItemId = dietItemId,
+                dietPlansListByMeals = dietlist
             };
             return View(model);
         }
