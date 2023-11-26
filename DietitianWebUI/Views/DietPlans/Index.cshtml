@@ -51,8 +51,8 @@
                             <a href="javascript:void(0)" data-toggle="dropdown"><i class="fe fe-more-vertical"></i></a>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-eye"></i> View Details </a>
-                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-share-alt"></i> Share </a>
-                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-cloud-download"></i> Download</a>
+                                <a href="javascript:void(0)" class="dropdown-item" onclick="ShowPdf()"><i class="dropdown-icon fa fa-share-alt"></i> Pdf Görüntüle </a>
+                                <a href="javascript:void(0)" class="dropdown-item" onclick="PrintPDF()"><i class="dropdown-icon fa fa-cloud-download"></i> Download</a>
                                 <div class="dropdown-divider"></div>
                                 <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-copy"></i> Copy to</a>
                                 <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-folder"></i> Move to</a>
@@ -62,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="pdfContent">
 
 
                     @if (Model.dietPlansListByMeals == null)
@@ -73,18 +73,52 @@
                     {
                         foreach (var mealgorup in Model.dietPlansListByMeals)
                         {
-                    <p>toplam kalori @mealgorup.SumCalorie</p>
+                            <p>toplam kalori @mealgorup.SumCalorie</p>
                             <div class="timeline_item ">
                                 <img class="tl_avatar" src="~/assets/images/spoon-and-fork.png" alt="">
                                 <span><a class="font-22" href="javascript:void(0);">@mealgorup.MealName</a>  <small class="float-right text-right font-15">@mealgorup.MealTime</small></span>
-                                @foreach (var item in mealgorup.DietPlandtos)
-                                {
-                                    <div class="msg">
-                                        <ul>
-                                            <li>@item.Amount  @item.UnitOfMeasure @item.FoodName  (@item.Description)  -@item.Calorie</li>
-                                        </ul>
-                                    </div>
-                                }
+                               
+                            <div class="msg table-responsive table-responsive-sm">
+                                <table class="table table-sm table-hover table-striped table_custom border-style spacing5 ">
+                                    <thead>
+                                        <tr>
+                                            <th>Miktar</th>
+                                            <th>ölçü birimi</th>
+                                            <th>Besin</th>
+                                            <th>Not</th>
+                                            <th>Kalori</th>
+                                            <th>Protein</th>
+                                            <th>Karbonhidrat</th>
+                                            <th>Yağ</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in mealgorup.DietPlandtos)
+                                        {
+                                        <tr>
+                                            <td>@item.Amount</td>
+                                            <td>@item.UnitOfMeasure</td>
+                                            <td>@item.FoodName</td>
+
+                                            <td>@item.Description</td>
+                                            <td><small class="badge badge-danger">@item.Calorie Kal</small>  </td>
+                                            <td><span class="badge badge-info">@item.Protein gr</span></td>
+                                            <td><span class="badge badge-warning">@item.Carbohydrate gr</span></td>
+                                            <td><span class="badge badge-secondary">@item.Oil gr</span></td>
+                                            <td>
+                                                <a type="button" href="/DietPlans/DeleteDietPlanItem/@item.DietPlanId" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                              
+                                    @*<ul>
+                                        <li>@item.Amount  @item.UnitOfMeasure @item.FoodName  (@item.Description)  -@item.Calorie</li>
+                                    </ul>*@
+                            </div>
+                               
                             </div>
                         }
                     }
@@ -107,16 +141,127 @@
                 <h5 class="modal-title" id="myCenterModalLabel"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modal-conytainer">
 
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
 @section grafikscript{
 
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 
 
+
+
+
+    <script>
+        //function PrintPDF() {
+        //    var pdf = new jsPDF();
+
+        //    // 'pdfContent' id'sine sahip div içeriğini PDF'e ekle
+        //    pdf.fromHTML($("#pdfContent").get(0), 20, 20, {
+        //        'width': 170,
+        //        'elementHandlers': {
+        //            '#ignorePDF': function (element, renderer) {
+        //                return true;
+        //            }
+        //        }
+        //    }, function () {
+        //        // PDF'i iframe içinde göster
+        //        var iframe = document.createElement('iframe');
+        //        iframe.setAttribute('style', 'position:absolute;right:0; top:0; bottom:0; height:100%; width:500px');
+        //        document.body.appendChild(iframe);
+        //        iframe.src = pdf.output('datauristring');
+        //    });
+        //}
+
+        function PrintPDF() {
+            var element = document.getElementById('pdfContent');
+
+            // html2pdf kütüphanesini kullanarak PDF'e dönüştürme
+            html2pdf(element, {
+                margin: 10,
+                filename: 'document.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).then(function (pdf) {
+                // PDF verisini al ve yeni bir sekmede aç
+                var pdfData = pdf.output();
+                var blob = new Blob([pdfData], { type: 'application/pdf' });
+                var pdfUrl = URL.createObjectURL(blob);
+
+                // Kullanıcıya PDF dosyasını indirmesini sağlayan bir link oluştur
+                var downloadLink = document.createElement('a');
+                downloadLink.href = pdfUrl;
+                downloadLink.download = 'document.pdf';
+
+                // Linki tıklatarak kullanıcıyı indirmeye yönlendir
+                downloadLink.click();
+            });
+        }
+
+        // dekontu yazdırma işlemi partial view içindeki görüntüyü alma işlemi
+        //function ShowPdf() {
+
+        //    var divToPrint = document.getElementById('pdfContent');
+
+        //    var newWin = window.open('', 'Print-Window');
+
+        //    newWin.document.open();
+
+        //    newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+
+        //    newWin.document.close();
+
+        //    setTimeout(function () { newWin.close(); }, 10);
+
+        //}
+        function ShowPdf() {
+            // Div içeriğini al
+            var divToPrint = document.getElementById('pdfContent');
+
+            // Yeni bir pencere aç
+            var newWin = window.open('', 'Print-Window');
+
+            // Orijinal div içeriğini kopyala
+            var clonedContent = divToPrint.cloneNode(true);
+
+            // Kopyalanan içerikteki img elementlerini bul ve kaldır
+            var imgElements = clonedContent.querySelectorAll('.tl_avatar');
+            imgElements.forEach(function (img) {
+                img.remove();
+            });
+
+            // Pencere içine HTML içeriğini yaz
+            newWin.document.open();
+            newWin.document.write('<html><body onload="window.print()">');
+            newWin.document.write(clonedContent.innerHTML);
+            newWin.document.write('</body></html>');
+            newWin.document.close();
+
+            // Pencereyi kapat
+            setTimeout(function () { newWin.close(); }, 10);
+        }
+
+
+    </script>
+
+
+    @*<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $(".js-example-basic-single").select2({
+                    language: "tr",
+                    dropdownParent: $(this).find("#modal-conytainer"),
+                    tags: true
+                });
+            });
+        </script>*@
 
 }
 

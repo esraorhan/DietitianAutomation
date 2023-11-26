@@ -15,7 +15,7 @@
                 </ol>
             </div>
             <ul class="nav nav-tabs page-header-tab">
-                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Library-all">Yemek Şablonları</a></li>
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Library-all">Diyet Şablonları</a></li>
             </ul>
         </div>
     </div>
@@ -46,6 +46,7 @@
 
                                         <th>Diyet Adı</th>
                                         <th>Açıklama</th>
+                                        <th>Toplam Kalori</th>
                                         <th>Oluşturma Tarihi</th>
                                         <th>Düzenle</th>
                                     </tr>
@@ -62,11 +63,12 @@
                                             <tr>
                                                 <td>@item.DietName</td>
                                                 <td>@item.Description</td>
+                                                <td>@item.TotalCalories kcal</td>
                                                 <td>@item.Date.ToShortDateString()</td>
                                                 <td>
                                                     <a href="/DietPlans/Index/@item.DietItemId" class="btn btn-icon btn-sm" title="Görüntüle"><i class="fa fa-eye"></i></a>
-                                                    <a href="/DietLists/Edit/@item.DietItemId" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
-                                                    <a href="/DietLists/Edit/@item.DietItemId" class="btn btn-icon btn-sm js-sweetalert" title="Sil" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                                                    <a  onclick="showInPopup('@Url.Action("Edit","DietLists",new { dietItemId= item.DietItemId})','Diyet Şablonu Güncelle')" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
+                                                    <a href="/DietLists/Delete/@item.DietItemId" class="btn btn-icon btn-sm js-sweetalert" title="Sil" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
                                                 </td>
                                             </tr>
                                         }

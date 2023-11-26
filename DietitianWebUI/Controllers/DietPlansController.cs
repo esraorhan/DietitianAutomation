@@ -101,5 +101,23 @@ namespace DietitianWebUI.Controllers
             return Json(new { Locationhref = Location });
             //return Redirect("/DietPlans/Index/" + plans[0].DietItemId);
         }
+
+        [HttpGet("/DietPlans/DeleteDietPlanItem/{dietPlanId}")]
+        public IActionResult DeleteDietPlanItem(int dietPlanId)
+        {
+            var dietItem = _dietPlanService.GetById(dietPlanId).Data;
+            var result = _dietPlanService.Delete(dietItem);
+            if (result.Success == true)
+            {
+                TempData.Add("message", "Başarıyla Silindi");
+
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+
+            return Redirect("/DietPlans/Index/"+dietItem.DietItemId);
+        }
     }
 }

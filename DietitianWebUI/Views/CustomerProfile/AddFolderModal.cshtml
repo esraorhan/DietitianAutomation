@@ -61,7 +61,9 @@
             }
         }
         console.log(fileInput.files[0]);
-        if (file.type != "image/png" || file.type != "image/jpeg" || file.type != "application/pdf" ) {
+        if (file.type != "image/png" || file.type != "image/jpg" || file.type != "application/pdf" ) {
+          
+        } else {
             alert('geçersiz dosya türü! .jpg veya .png  formatında yükleme yapın.');
             fileInput.value = '';
         }

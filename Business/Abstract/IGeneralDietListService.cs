@@ -11,6 +11,7 @@ namespace Business.Abstract
     public interface IGeneralDietListService
     {
         IDataResult<List<GeneralDietList>> GetList(int? customerId);
+        IDataResult<List<GeneralDietList>> GetList();
         IDataResult<GeneralDietList> GetById(int DietItemId);
         IResult Update(GeneralDietList dietList);
         IResult Add(GeneralDietList dietList);

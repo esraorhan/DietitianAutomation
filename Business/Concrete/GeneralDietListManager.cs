@@ -50,6 +50,11 @@ namespace Business.Concrete
             return new SuccessDataResult<List<GeneralDietList>>(_generalDietListDal.GETLIST(c => c.AdultCustomerID == customerId).ToList());
         }
 
+        public IDataResult<List<GeneralDietList>> GetList()
+        {
+            return new SuccessDataResult<List<GeneralDietList>>(_generalDietListDal.GETLIST().ToList());
+        }
+
         public IResult Update(GeneralDietList dietList)
         {
             _generalDietListDal.UPDATE(dietList);

@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace DietitianWebUI.Models
     {
         public GeneralDietList GeneralDietList { get; set; }
         public List<GeneralDietList> GeneralDietLists { get; set; }
+        public IEnumerable<SelectListItem> Customers { get; set; }
     }
 }

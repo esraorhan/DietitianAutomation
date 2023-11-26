@@ -1,12 +1,15 @@
 ﻿@model GeneralDietListViewModel
+
 <div class="card p-5">
-    <form asp-controller="DietLists" asp-action="AddGeneralDiet" method="post">
+    <form asp-controller="DietLists" asp-action="Edit" method="post">
         @Html.AntiForgeryToken()
 
         <div class="form-group row">
             <label class="col-md-3 col-form-label">Diyet Başlık <span class="text-danger">*</span></label>
             <div class="col-md-9">
                 <input type="text" asp-for="GeneralDietList.DietName" class="form-control">
+                @Html.HiddenFor(c=>c.GeneralDietList.DietItemId)
+                @Html.HiddenFor(c=>c.GeneralDietList.Date)
             </div>
         </div>
         <div class="form-group row">
@@ -32,7 +35,7 @@
         </div>
         <div class="row">
             <small class="text-danger">Öncelikle Şablon oluşturup sonrasında diyet oluşturmanız gerekir. </small>
-            <button type="submit" class="btn btn-primary">Ekle</button>
+            <button type="submit" class="btn btn-primary float-left">Güncelle</button>
         </div>
 
 
