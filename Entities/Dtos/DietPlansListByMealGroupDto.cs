@@ -11,11 +11,17 @@ namespace Entities.Dtos
     {
         public string MealName { get; set; }
         public string MealTime { get; set; }
+        
         public int MealID { get; set; }
         public decimal SumCalorie { get; set; }
        
-        public List<DietPlandto> DietPlandtos { get; set; }
+        public List<DietPlandtosGroupedDto> DietPlandtosGroupeds { get; set; }
 
+    }
+    public class DietPlandtosGroupedDto
+    {
+        public string HowManyDaysGroup { get; set; }
+        public List<DietPlandto> DietPlandtos { get; set; }
     }
     public class DietPlandto
     {

@@ -20,8 +20,9 @@ namespace DietitianWebUI.Models
         public string Description { get; set; }
 
         public string UnitOfMeasure { get; set; }
-      
-      
+        public string HowManyDays { get; set; }
+
+
         public int DietItemId { get; set; }
     }
 }

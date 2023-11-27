@@ -33,7 +33,8 @@ namespace DietitianWebUI.Controllers
             var customerinformation = _customerDetailService.GetDetailCustomer(customerId).Data;
             var model = new CustomerProfileViewModel
             {
-                AdultCustomerDetail = customerinformation
+                AdultCustomerDetail = customerinformation,
+                
                 // CourseId = CourseId
             };
             return View(model);
@@ -43,9 +44,13 @@ namespace DietitianWebUI.Controllers
         public IActionResult AddNewMeeting(int customerId)
         {
             var customerinformation = _customerDetailService.GetDetailCustomer(customerId).Data;
+            var LastMeeting = _adultMeetingService.GetList(customerId).Data.OrderByDescending(c => c.AdultMeetingID).FirstOrDefault();
+
             var model = new CustomerProfileViewModel
             {
-                AdultCustomerDetail = customerinformation
+                AdultCustomerDetail = customerinformation,
+                AdultMeeting =LastMeeting
+
                 // CourseId = CourseId
             };
             return PartialView("AddNewMeetingModal",model);

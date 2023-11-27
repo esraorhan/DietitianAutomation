@@ -64,7 +64,7 @@ namespace DietitianWebUI.Controllers
             return PartialView("AddMealModal", model);
         }
 
-        public IActionResult CalculationByFood(int FoodId, int Amount)
+        public IActionResult CalculationByFood(int FoodId, decimal Amount)
         {
             var food = _foodService.GetById(FoodId).Data;
             Dictionary<string, decimal?> foodvalues = new Dictionary<string, decimal?>();
@@ -93,7 +93,8 @@ namespace DietitianWebUI.Controllers
                     Oil = item.Oil,
                     Protein = item.Protein,
                     UnitOfMeasure = item.UnitOfMeasure,
-                    Description =item.Description
+                    Description =item.Description,
+                    HowManyDays =item.HowManyDays
                 });
             }
             TempData.Add("message", "Başarılı Şekilde Eklendi");

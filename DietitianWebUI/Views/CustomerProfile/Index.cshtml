@@ -7,26 +7,63 @@
 }
 
 @*@await Component.InvokeAsync("CustomerProfileInformation" ,new { CustomerId = HttpContextAccessor.HttpContext.Session.GetInt32("customerId") })*@
-<div class="row mt-4">
-  
-    <div class="col-sm-12 col-lg-4 mx-auto">
-        <div class="card ">
-            <div class="card-status bg-green"></div>
-            <div class="card-body">
-                <div class="card-category text-primary">@Model.AdultCustomerDetail.FullName</div>
-                <div class="display-5 my-2">@Model.AdultCustomerDetail.Kilo kg</div>
-                <ul class="list-unstyled leading-loose">
-                    <li>@Model.AdultCustomerDetail.Age Yaşında</li>
-                    <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_value</b>  vücut kitle indeksi</li>
-                    <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_comment</b></li>
-                    <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20"> @Model.AdultCustomerDetail.BMH_value</b> kcal bazal metobolizma hızınız</li>
-                    <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>
-                </ul>
+<div class="container-fluid">
+    <div class="row row-deck">
+        <div class="col-sm-12 col-lg-4 mx-auto">
+            <div class="card ">
+                <div class="card-status bg-blue"></div>
+                <div class="card-body">
+                    <div class="card-category text-primary">Hastalık Bilgilendirmesi</div>
+                    <div class="display-5 my-2">@Model.AdultCustomerDetail.Kilo kg</div>
+                    <ul class="list-unstyled leading-loose">
+                        <li>@Model.AdultCustomerDetail.Age Yaşında</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_value</b>  vücut kitle indeksi</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_comment</b></li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20"> @Model.AdultCustomerDetail.BMH_value</b> kcal bazal metobolizma hızınız</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>
+                    </ul>
 
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-4 mx-auto">
+            <div class="card ">
+                <div class="card-status bg-green"></div>
+                <div class="card-body">
+                    <div class="card-category text-success">@Model.AdultCustomerDetail.FullName</div>
+                    <div class="display-5 my-2">@Model.AdultCustomerDetail.Kilo kg</div>
+                    <ul class="list-unstyled leading-loose">
+                        <li>@Model.AdultCustomerDetail.Age Yaşında</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_value</b>  vücut kitle indeksi</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_comment</b></li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20"> @Model.AdultCustomerDetail.BMH_value</b> kcal bazal metobolizma hızınız</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-4 mx-auto">
+            <div class="card ">
+                <div class="card-status bg-pink"></div>
+                <div class="card-body">
+                    <div class="card-category text-danger">Hasta Öyküsü</div>
+                    <div class="h6 my-2">@Model.AdultCustomerDetail.Job</div>
+                    <ul class="list-unstyled leading-loose">
+                        <li>@Model.AdultCustomerDetail.MannerOfWork </li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i>Hastalık: @Model.AdultCustomerDetail.GeneticDisease  </li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i>Alerji: @Model.AdultCustomerDetail.Allergy </li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i>Notlar: @Html.Raw(Model.AdultCustomerDetail.Description) </li>
+                        @*<li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>*@
+                    </ul>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
 <div class="section-body">
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center ">
@@ -58,7 +95,13 @@
             </div>
             <div class="tab-pane" id="Staff-grid">
                 <div class="row">
-                    <div class="col-xl-3 col-lg-4 col-md-6">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <a type="submit"  class="btn btn-sm text-light btn-primary float-lg-right">Diyet Programı Oluştur</a>
+
+                        </div>
+                    </div>
+                    @*<div class="col-xl-3 col-lg-4 col-md-6">
                         <div class="card">
                             <div class="card-body text-center">
                                 <img class="card-profile-img" src="~/assets/images/sm/avatar1.jpg" alt="">
@@ -69,7 +112,7 @@
                                 <button class="btn btn-primary btn-sm">Read More</button>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
 
                 </div>
             </div>

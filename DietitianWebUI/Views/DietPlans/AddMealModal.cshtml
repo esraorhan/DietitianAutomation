@@ -14,16 +14,16 @@
     </div>
     <div class="col-lg-12 col-md-12">
         <div class="form-group">
-            <label>Ölçü Birimi</label>
-            <select class="form-control input-height" name="Olcubirimi" id="OlcuBirimi">
+            <label>Kaç Gün kullanacak?</label>
+            <select class="form-control input-height"asp-for="DietPlan.HowManyDays" id="howmanydays">
                 <option value="">Seçiniz...</option>
-                <option value="GR">Haftanın 1 Günü</option>
-                <option value="Litre(LT)">Haftanın 2 Günü</option>
-                <option value="Dilim">Haftanın 3 Günü</option>
-                <option value="Kaşık">Haftanın 4 Günü</option>
-                <option value="Kaşık">Haftanın 5 Günü</option>
-                <option value="Porsiyon">Haftanın 6 Günü</option>
-                <option value="Porsiyon">Haftanın 7 Günü</option>
+                <option value="Haftanın 1 Günü">Haftanın 1 Günü</option>
+                <option value="Haftanın 2 Günü">Haftanın 2 Günü</option>
+                <option value="Haftanın 3 Günü">Haftanın 3 Günü</option>
+                <option value="Haftanın 4 Günü">Haftanın 4 Günü</option>
+                <option value="Haftanın 5 Günü">Haftanın 5 Günü</option>
+                <option value="Haftanın 6 Günü">Haftanın 6 Günü</option>
+                <option value="Haftanın 7 Günü">Haftanın 7 Günü</option>
             </select>
             <small id="Haftauyarısı" class="text-danger"></small>
         </div>
@@ -150,7 +150,7 @@
                 'Description': $("#BesinAciklama").val(),
                 'UnitOfMeasure': "",
                 'DietItemId': $("#DietItemId").val(),
-                /* 'Saat': $("#Saat").val(),*/
+                'HowManyDays': $("#howmanydays option:selected").val(),
             }
 
             OgunIcerikleri2.push(OgunIcerikleri);
@@ -170,9 +170,9 @@
         $("#Karbonhidrat").val("");
         $("#Yag").val("");
         $("#Miktar").val("");
-        //$("#OlcuBirimi").val("");
+        $("#foodId").val("");
         $("#BesinAciklama").val("");
-       /* $("#Saat").val("");*/
+        //$("#howmanydays").val("");
     });
 
     $("#kaydet").click(function () {

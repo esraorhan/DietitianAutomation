@@ -74,52 +74,54 @@
                         foreach (var mealgorup in Model.dietPlansListByMeals)
                         {
                             <p>toplam kalori @mealgorup.SumCalorie</p>
+                            
                             <div class="timeline_item ">
                                 <img class="tl_avatar" src="~/assets/images/spoon-and-fork.png" alt="">
                                 <span><a class="font-22" href="javascript:void(0);">@mealgorup.MealName</a>  <small class="float-right text-right font-15">@mealgorup.MealTime</small></span>
-                               
-                            <div class="msg table-responsive table-responsive-sm">
-                                <table class="table table-sm table-hover table-striped table_custom border-style spacing5 ">
-                                    <thead>
-                                        <tr>
-                                            <th>Miktar</th>
-                                            <th>ölçü birimi</th>
-                                            <th>Besin</th>
-                                            <th>Not</th>
-                                            <th>Kalori</th>
-                                            <th>Protein</th>
-                                            <th>Karbonhidrat</th>
-                                            <th>Yağ</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in mealgorup.DietPlandtos)
-                                        {
-                                        <tr>
-                                            <td>@item.Amount</td>
-                                            <td>@item.UnitOfMeasure</td>
-                                            <td>@item.FoodName</td>
+                                @foreach (var dietplan in mealgorup.DietPlandtosGroupeds)
+                                {
+                                   <p><b class="text-danger">@dietplan.HowManyDaysGroup</b></p> 
+                                    <div class="msg table-responsive table-responsive-sm">
+                                        <table class="table table-sm table-hover table-striped table_custom border-style spacing5 ">
+                                            <thead>
+                                                <tr>
+                                                    <th>Miktar</th>
+                                                    <th>ölçü birimi</th>
+                                                    <th>Besin</th>
+                                                    <th>Not</th>
+                                                    <th>Kalori</th>
+                                                    <th>Protein</th>
+                                                    <th>Karbonhidrat</th>
+                                                    <th>Yağ</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in dietplan.DietPlandtos)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Amount</td>
+                                                        <td>@item.UnitOfMeasure</td>
+                                                        <td>@item.FoodName</td>
 
-                                            <td>@item.Description</td>
-                                            <td><small class="badge badge-danger">@item.Calorie Kal</small>  </td>
-                                            <td><span class="badge badge-info">@item.Protein gr</span></td>
-                                            <td><span class="badge badge-warning">@item.Carbohydrate gr</span></td>
-                                            <td><span class="badge badge-secondary">@item.Oil gr</span></td>
-                                            <td>
-                                                <a type="button" href="/DietPlans/DeleteDietPlanItem/@item.DietPlanId" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
-                                            </td>
-                                        </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                              
-                                    @*<ul>
-                                        <li>@item.Amount  @item.UnitOfMeasure @item.FoodName  (@item.Description)  -@item.Calorie</li>
-                                    </ul>*@
+                                                        <td>@item.Description</td>
+                                                        <td><small class="badge badge-danger">@item.Calorie Kal</small>  </td>
+                                                        <td><span class="badge badge-info">@item.Protein gr</span></td>
+                                                        <td><span class="badge badge-warning">@item.Carbohydrate gr</span></td>
+                                                        <td><span class="badge badge-secondary">@item.Oil gr</span></td>
+                                                        <td>
+                                                            <a type="button" href="/DietPlans/DeleteDietPlanItem/@item.DietPlanId" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
                             </div>
-                               
-                            </div>
+
                         }
                     }
 
@@ -128,7 +130,7 @@
 
 
 
-                </div>
+                    </div>
             </div>
         </div>
     </div>
@@ -204,22 +206,22 @@
             });
         }
 
-        // dekontu yazdırma işlemi partial view içindeki görüntüyü alma işlemi
-        //function ShowPdf() {
+        //// dekontu yazdırma işlemi partial view içindeki görüntüyü alma işlemi
+        ////function ShowPdf() {
 
-        //    var divToPrint = document.getElementById('pdfContent');
+        ////    var divToPrint = document.getElementById('pdfContent');
 
-        //    var newWin = window.open('', 'Print-Window');
+        ////    var newWin = window.open('', 'Print-Window');
 
-        //    newWin.document.open();
+        ////    newWin.document.open();
 
-        //    newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
+        ////    newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
 
-        //    newWin.document.close();
+        ////    newWin.document.close();
 
-        //    setTimeout(function () { newWin.close(); }, 10);
+        ////    setTimeout(function () { newWin.close(); }, 10);
 
-        //}
+        ////}
         function ShowPdf() {
             // Div içeriğini al
             var divToPrint = document.getElementById('pdfContent');

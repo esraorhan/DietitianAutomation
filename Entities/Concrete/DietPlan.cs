@@ -20,5 +20,6 @@ namespace Entities.Concrete
         public int FoodID { get; set; }
         public int DietItemId { get; set; }
         public string Description { get; set; }
+        public string HowManyDays { get; set; }
     }
 }
