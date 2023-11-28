@@ -26,6 +26,7 @@ namespace Entities.Concrete
         public string GeneticDisease { get; set; }
         public bool AlcoholUse { get; set; }
         public string Description { get; set; }
+        public int? DiseaseId { get; set; }
         //public decimal? BMH_value { get; set; }
         //public decimal? PAL_value { get; set; }
     }

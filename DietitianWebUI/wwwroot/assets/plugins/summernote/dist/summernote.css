@@ -251,10 +251,15 @@ display: none;
     background-color: #fff;
 }
 
-.note-editor.note-frame .note-editing-area .note-editable[contenteditable="false"] {
-    background-color: #e5e5e5;
-}
-
+    .note-editor.note-frame .note-editing-area .note-editable[contenteditable="false"] {
+        background-color: #e5e5e5;
+        /*min-height: unset;*/
+    }
+    .note-editor.note-frame .note-editing-area .note-editable[contenteditable="true"] {
+        /*background-color: #e5e5e5;*/
+        min-height: unset !important;
+        height:auto !important;
+    }
 .note-editor.note-frame .note-editing-area .note-codable {
     display: none;
     width: 100%;

@@ -1,0 +1,166 @@
+﻿@model DiseaseViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Hastalık Tanım Listesi</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Anasayfa/Index/">Anasayfa</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Hastalık Yönetimi</li>
+                </ol>
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#CategoryList">Hastalık Tanım Listesi</a></li>
+
+                <li class="nav-item"><a class="nav-link active" id="Library-tab-Boot" data-toggle="tab" href="#NewCategoryList">Yeni Hastalık Ekle</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane" id="CategoryList">
+                @await Component.InvokeAsync("DiseaseList")
+            </div>
+
+            <div class="tab-pane active" id="NewCategoryList">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Hastalık Tanımı</h3>
+                        <div class="card-options ">
+                            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                            <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                        </div>
+                    </div>
+
+                    <form class="card-body" asp-action="Add" asp-controller="Disease" method="post">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Hastalık Tanımı <span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                                <input type="text" asp-for="Disease.DiseaseName" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Enerji</label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Energy" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Protein</label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2"  asp-for="Disease.Protein" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Karbonhidrat </label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Carbohydrate" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Yağ</label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Oil"  class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Vitamin ve Mineraller </label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.VitaminMineral" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Posa </label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Posa" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Alkol </label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Alcohol" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Sıvı Tüketimi </label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Water" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Öğün Hakkında </label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Meal" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Kolestorol </label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Cholesterol" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Tuz Tüketimi </label>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea rows="2" asp-for="Disease.Salt" class="summernote"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label"></label>
+                            <div class="col-md-12">
+                                <button type="submit"  class="btn btn-primary float-md-right">Kaydet</button>
+                               
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+
+                @*@Html.Partial("EditCategoryViewModal")*@
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

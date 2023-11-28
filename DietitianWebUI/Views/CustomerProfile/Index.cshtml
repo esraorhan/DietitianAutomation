@@ -51,9 +51,9 @@
                     <div class="h6 my-2">@Model.AdultCustomerDetail.Job</div>
                     <ul class="list-unstyled leading-loose">
                         <li>@Model.AdultCustomerDetail.MannerOfWork </li>
-                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i>Hastalık: @Model.AdultCustomerDetail.GeneticDisease  </li>
-                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i>Alerji: @Model.AdultCustomerDetail.Allergy </li>
-                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i>Notlar: @Html.Raw(Model.AdultCustomerDetail.Description) </li>
+                        <li><i class="fe fe-bookmark text-success mr-2" aria-hidden="true"></i>Hastalık: @Model.AdultCustomerDetail.GeneticDisease  </li>
+                        <li><i class="fe fe-bookmark text-success mr-2" aria-hidden="true"></i>Alerji: @Model.AdultCustomerDetail.Allergy </li>
+                        <li><i class="fe fe-bookmark text-success mr-2" aria-hidden="true"></i>Notlar: @Html.Raw(Model.AdultCustomerDetail.Description) </li>
                         @*<li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>*@
                     </ul>
 
@@ -86,7 +86,7 @@
             <div class="tab-pane" id="Gorusmeler" >
                 <div class="row mb-3">
                     <div class="col-12">
-                        <a type="submit" onclick="showInPopup('@Url.Action("AddNewMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID })','Yeni Görüşme Ekle')"  class="btn btn-sm text-light btn-primary float-lg-right">Yeni Görüşme Ekle</a>
+                        <a type="submit" onclick="showInPopup('@Url.Action("AddNewMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID })','Yeni Görüşme Ekle')"  class="btn btn-sm text-light btn-primary float-lg-right"> <i class="fe fe-plus-circle text-light mr-2" aria-hidden="true"></i>Yeni Görüşme Ekle</a>
 
                     </div>
                 </div>
@@ -139,7 +139,7 @@
             <div class="tab-pane active" id="Dosyalar">
                 <div class="row mb-3">
                     <div class="col-12">
-                        <a type="submit" onclick="showInPopup('@Url.Action("AddFolder","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID})','Yeni tahlil')" class="btn btn-sm btn-primary text-light float-lg-right">Dosya Yükle</a>
+                        <a type="submit" onclick="showInPopup('@Url.Action("AddFolder","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID})','Yeni tahlil')" class="btn btn-sm btn-primary text-light float-lg-right"> <i class="fe fe-plus-circle text-light mr-2" aria-hidden="true"></i> Dosya Yükle</a>
 
                     </div>
                 </div>

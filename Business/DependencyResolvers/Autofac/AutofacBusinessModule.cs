@@ -51,6 +51,10 @@ namespace Business.DependencyResolvers.Autofac
             //GeneraldietList 
             builder.RegisterType<DietPlanManager>().As<IDietPlanService>();
             builder.RegisterType<EfDietPlanDal>().As<IDietPlanDal>();
+
+            //hastalıklar için 
+            builder.RegisterType<DiseaseManager>().As<IDiseaseService>();
+            builder.RegisterType<EfDiseaseDal>().As<IDiseaseDal>();
         }
     }
 }
