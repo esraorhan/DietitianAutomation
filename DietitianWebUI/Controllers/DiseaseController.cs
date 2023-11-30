@@ -38,5 +38,50 @@ namespace DietitianWebUI.Controllers
             }
             return RedirectToAction("Index");
         }
+        [HttpGet("/Disease/Edit/{diseaseId}")]
+        public IActionResult Edit(int diseaseId)
+        {
+            var disease = _diseaseService.GetById(diseaseId).Data;
+            var model = new DiseaseViewModel
+            {
+                Disease = disease
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(DiseaseViewModel model)
+        {
+            var result = _diseaseService.Update(model.Disease);
+            if (result.Success == true)
+            {
+                TempData.Add("message", result.Message);
+
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+            return Redirect("/Disease/Index");
+           
+        }
+
+        [HttpGet("/Disease/Delete/{diseaseId}")]
+        public IActionResult Delete(int diseaseId)
+        {
+            var disease = _diseaseService.GetById(diseaseId).Data;
+            var result = _diseaseService.Delete(disease);
+            if (result.Success == true)
+            {
+                TempData.Add("message", result.Message);
+
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+
+            return Redirect("/Disease/Index");
+        }
     }
 }

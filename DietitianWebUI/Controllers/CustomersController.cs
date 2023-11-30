@@ -3,6 +3,7 @@ using Business.ValidationRules;
 using DietitianWebUI.Models;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,22 +14,37 @@ namespace DietitianWebUI.Controllers
     public class CustomersController : Controller
     {
         private IAdultCustomerService _customerService;
-        private IAdultCustomerDetailService _customerDetailService;
+        //private IAdultCustomerDetailService _customerDetailService;
+        private IDiseaseService _diseaseService;
 
-        public CustomersController(IAdultCustomerService customerService)
+        public CustomersController(IAdultCustomerService customerService,IDiseaseService diseaseService)
         {
             _customerService = customerService;
-            
+            _diseaseService = diseaseService;
         }
 
 
         public IActionResult Index()
         {
-            return View();
+            var disease = _diseaseService.GetList().Success == true ? _diseaseService.GetList().Data : null;
+            List<SelectListItem> diseases = disease != null
+         ? disease.Select(c => new SelectListItem
+         {
+             Text = c.DiseaseName ,
+             Value = c.DiseaseId.ToString()
+         }).ToList()
+         : new List<SelectListItem>();
+
+            var model = new AdultCustomerViewModel
+            {
+                Diseases = diseases,
+               
+            };
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult Add(AdultCustomerViewModel model)
+        public IActionResult Add(AdultCustomerViewModel model,int[] diseaseId)
         {
             AdultCustomersValidator cv = new AdultCustomersValidator();
             ValidationResult result = cv.Validate(model.AdultCustomer);
@@ -36,6 +52,11 @@ namespace DietitianWebUI.Controllers
             {
                 model.AdultCustomer.StartingDate = DateTime.Now;
                 model.AdultCustomer.Age = DateTime.Now.Year - model.AdultCustomer.DateOfBirth.Year;
+                for (int i = 0; i < diseaseId.Length; i++)
+                {
+                    model.AdultCustomer.DiseaseId += diseaseId[i].ToString()+"-";
+                    
+                }
                 var customer = _customerService.Add(model.AdultCustomer);
                 if (customer.Success == true)
                 {
@@ -56,7 +77,7 @@ namespace DietitianWebUI.Controllers
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
             }
-            return View("Index");
+            return Redirect("/Customers/Index");
         }
 
         [HttpGet("/Customers/Edit/{customerId}")]

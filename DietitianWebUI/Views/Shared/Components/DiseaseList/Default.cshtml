@@ -29,8 +29,8 @@
                                 <td>@Html.Raw(item.Energy)</td>
                                 <td>@Html.Raw(item.Protein)</td>
                                 <td>
-                                    <a type="button" onclick="showInPopup('@Url.Action("Edit","Category",new {categoryId=item.DiseaseId})','Kategori Güncelle')" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
-                                    <a type="button" href="@Url.Action("Delete","Category",new {categoryId=item.DiseaseId})" class="btn btn-icon btn-sm" title="Sil"><i class="fa fa-trash-o text-danger"></i></a>
+                                    <a type="button" href="@Url.Action("Edit","Disease",new {diseaseId=item.DiseaseId})" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
+                                    <a type="button" href="@Url.Action("Delete","Disease",new {diseaseId=item.DiseaseId})" class="btn btn-icon btn-sm" title="Sil"><i class="fa fa-trash-o text-danger"></i></a>
                                 </td>
                             </tr>
                             a++;

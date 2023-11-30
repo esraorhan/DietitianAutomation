@@ -9,24 +9,55 @@
 @*@await Component.InvokeAsync("CustomerProfileInformation" ,new { CustomerId = HttpContextAccessor.HttpContext.Session.GetInt32("customerId") })*@
 <div class="container-fluid">
     <div class="row row-deck">
-        <div class="col-sm-12 col-lg-4 mx-auto">
+        <div class="col-sm-12 col-lg-6 mx-auto">
             <div class="card ">
                 <div class="card-status bg-blue"></div>
                 <div class="card-body">
-                    <div class="card-category text-primary">Hastalık Bilgilendirmesi</div>
-                    <div class="display-5 my-2">@Model.AdultCustomerDetail.Kilo kg</div>
-                    <ul class="list-unstyled leading-loose">
-                        <li>@Model.AdultCustomerDetail.Age Yaşında</li>
-                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_value</b>  vücut kitle indeksi</li>
-                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_comment</b></li>
-                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20"> @Model.AdultCustomerDetail.BMH_value</b> kcal bazal metobolizma hızınız</li>
-                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>
-                    </ul>
+                    <div class="table-responsive table-sm" style="height: 310px;">
+                        <table class="table card-table table-sm table-vcenter text-nowrap table-striped mb-0">
+                            <tbody>
+                                <tr>
+                                    <th>Hastalık Adı</th>
+                                    <th>Enerji</th>
+                                    <th>Protein</th>
+                                    <th>Karbonhidrat</th>
+                                    <th>Yağ</th>
+                                    <th>Vitamin ve Mineral</th>
+                                    <th>Posa</th>
+                                    <th>Alkol</th>
+                                    <th>Sıvı</th>
+                                    <th>Öğün</th>
+                                    <th>Tuz</th>
+                                </tr>
+                                @if (Model.Diseases != null)
+                                {
+                                    foreach (var item in Model.Diseases)
+                                    {
+                                        <tr>
+                                            <td class="font-weight-bold">@item.DiseaseName</td>
+                                            <td>@Html.Raw(item.Energy)</td>
+                                            <td>@Html.Raw(item.Protein)</td>
+                                            <td>@Html.Raw(item.Carbohydrate)</td>
+                                            <td>@Html.Raw(item.Oil)</td>
+                                            <td>@Html.Raw(item.VitaminMineral)</td>
+                                            <td>@Html.Raw(item.Posa)</td>
+                                            <td>@Html.Raw(item.Alcohol)</td>
+                                            <td>@Html.Raw(item.Water)</td>
+                                            <td>@Html.Raw(item.Meal)</td>
+                                            <td>@Html.Raw(item.Salt)</td>
+                                        </tr>
+                                    }
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-lg-4 mx-auto">
+        <div class="col-sm-12 col-lg-3 mx-auto">
             <div class="card ">
                 <div class="card-status bg-green"></div>
                 <div class="card-body">
@@ -43,7 +74,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-lg-4 mx-auto">
+        <div class="col-sm-12 col-lg-3 mx-auto">
             <div class="card ">
                 <div class="card-status bg-pink"></div>
                 <div class="card-body">
@@ -83,10 +114,10 @@
 <div class="section-body mt-4">
     <div class="container-fluid">
         <div class="tab-content">
-            <div class="tab-pane" id="Gorusmeler" >
+            <div class="tab-pane" id="Gorusmeler">
                 <div class="row mb-3">
                     <div class="col-12">
-                        <a type="submit" onclick="showInPopup('@Url.Action("AddNewMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID })','Yeni Görüşme Ekle')"  class="btn btn-sm text-light btn-primary float-lg-right"> <i class="fe fe-plus-circle text-light mr-2" aria-hidden="true"></i>Yeni Görüşme Ekle</a>
+                        <a type="submit" onclick="showInPopup('@Url.Action("AddNewMeeting","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID })','Yeni Görüşme Ekle')" class="btn btn-sm text-light btn-primary float-lg-right"> <i class="fe fe-plus-circle text-light mr-2" aria-hidden="true"></i>Yeni Görüşme Ekle</a>
 
                     </div>
                 </div>
@@ -97,22 +128,22 @@
                 <div class="row">
                     <div class="row mb-3">
                         <div class="col-12">
-                            <a type="submit"  class="btn btn-sm text-light btn-primary float-lg-right">Diyet Programı Oluştur</a>
+                            <a type="submit" class="btn btn-sm text-light btn-primary float-lg-right">Diyet Programı Oluştur</a>
 
                         </div>
                     </div>
                     @*<div class="col-xl-3 col-lg-4 col-md-6">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <img class="card-profile-img" src="~/assets/images/sm/avatar1.jpg" alt="">
-                                <h5 class="mb-0">Peter Richards</h5>
-                                <span>Librarian</span>
-                                <div class="text-muted">+ (916) 369-7180</div>
-                                <p class="mb-4 mt-3">449 Thompson St, Conway, SC, 29527</p>
-                                <button class="btn btn-primary btn-sm">Read More</button>
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <img class="card-profile-img" src="~/assets/images/sm/avatar1.jpg" alt="">
+                                    <h5 class="mb-0">Peter Richards</h5>
+                                    <span>Librarian</span>
+                                    <div class="text-muted">+ (916) 369-7180</div>
+                                    <p class="mb-4 mt-3">449 Thompson St, Conway, SC, 29527</p>
+                                    <button class="btn btn-primary btn-sm">Read More</button>
+                                </div>
                             </div>
-                        </div>
-                    </div>*@
+                        </div>*@
 
                 </div>
             </div>
@@ -144,7 +175,7 @@
                     </div>
                 </div>
                 <div class="row clearfix">
-                    @await Component.InvokeAsync("CustomerFolderList",  Model.AdultCustomerDetail.AdultCustomerID)
+                    @await Component.InvokeAsync("CustomerFolderList", Model.AdultCustomerDetail.AdultCustomerID)
                 </div>
             </div>
         </div>
@@ -162,7 +193,7 @@
             <div class="modal-body">
                 @await Html.PartialAsync("AddNewMeetingModal")
                 @await Html.PartialAsync("AddFolderModal")
-              
+
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -171,7 +202,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     $(document).ready(function () {
-      
+
           $.ajax({
             url: "@Url.Action("Graphics", "CustomerProfile", new { customerId = Model.AdultCustomerDetail.AdultCustomerID })",
             type: "GET",
@@ -196,7 +227,7 @@
                 labels.push(item.tarih);
                 dataresults.push(item.deger);
             });
-            
+
 
        const ctx = document.getElementById(div_id).getContext('2d');
 

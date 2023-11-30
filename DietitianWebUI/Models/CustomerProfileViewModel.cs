@@ -14,5 +14,6 @@ namespace DietitianWebUI.Models
         public List<AdultMeeting> AdultMeetings { get; set; }
         public CustomerFolder CustomerFolder { get; set; }
         public List<CustomerFolder> CustomerFolders { get; set; }
+        public List<DiseaseDto> Diseases { get; set; }
     }
 }

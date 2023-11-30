@@ -17,12 +17,13 @@ namespace DietitianWebUI.Controllers
         private IAdultMeetingService _adultMeetingService;
         private IAdultCustomerDetailService _customerDetailService;
         private ICustomerFolderService _folderService;
-
-        public CustomerProfileController(IAdultMeetingService adultMeetingService, IAdultCustomerDetailService customerDetailService, ICustomerFolderService folderService)
+        private IDiseaseService _diseaseService;
+        public CustomerProfileController(IAdultMeetingService adultMeetingService, IAdultCustomerDetailService customerDetailService, ICustomerFolderService folderService , IDiseaseService diseaseService)
         {
             _adultMeetingService = adultMeetingService;
             _customerDetailService = customerDetailService;
             _folderService = folderService;
+            _diseaseService = diseaseService;
         }
 
         [HttpGet("/CustomerProfile/Index/{customerId}")]
@@ -31,10 +32,11 @@ namespace DietitianWebUI.Controllers
             HttpContext.Session.SetString("customerId", customerId.ToString());
             ////ViewBag.id = HttpContext.Session.GetString("danisanbilsi");
             var customerinformation = _customerDetailService.GetDetailCustomer(customerId).Data;
+            var customersDiseaseList = _diseaseService.GetListDiseasesByCustomers(customerId).Data;
             var model = new CustomerProfileViewModel
             {
                 AdultCustomerDetail = customerinformation,
-                
+                Diseases =customersDiseaseList
                 // CourseId = CourseId
             };
             return View(model);

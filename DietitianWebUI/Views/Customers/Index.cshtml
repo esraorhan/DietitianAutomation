@@ -122,7 +122,9 @@
                                     <div class="col-sm-6">
                                         <label class="col-md-6 col-form-label">Genetik Rahatsızlıklar <span class="text-danger">*</span></label>
                                         <div class="form-group">
-                                            <input type="text" class="form-control" asp-for="AdultCustomer.GeneticDisease" placeholder="Genetik hastalıklar">
+                                            <select class="form-control form-control-lg js-example-basic-single" name="diseaseId" multiple="multiple" asp-items="Model.Diseases">
+                                                <option value="">Seçiniz...</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
