@@ -15,5 +15,7 @@ namespace DietitianWebUI.Models
         public CustomerFolder CustomerFolder { get; set; }
         public List<CustomerFolder> CustomerFolders { get; set; }
         public List<DiseaseDto> Diseases { get; set; }
+
+        public GeneralDietList GeneralDietList { get; set; }
     }
 }

@@ -1,0 +1,38 @@
+﻿@model CustomerProfileViewModel
+@{
+    string jsonModel = Newtonsoft.Json.JsonConvert.SerializeObject(Model.AdultCustomerDetail);
+}
+<div class="card p-5">
+    <form asp-controller="CustomerProfile" asp-action="AddCustomerDietList" method="post">
+        @Html.AntiForgeryToken()
+
+        @*@Html.HiddenFor(c => c.GeneralDietList.AdultCustomerID, new { Value = Model.AdultCustomerDetail.AdultCustomerID })*@
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Diyet Başlık <span class="text-danger">*</span></label>
+            <div class="col-md-9">
+                <input type="text" asp-for="GeneralDietList.DietName" class="form-control">
+                <input type="hidden" asp-for="GeneralDietList.AdultCustomerID" value="@Model.AdultCustomerDetail.AdultCustomerID"/>
+                <input type="hidden" asp-for="AdultCustomerDetail" value="@jsonModel"  />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Açıklama <span class="text-danger">*</span></label>
+            <div class="col-md-9">
+                <input type="text" asp-for="GeneralDietList.Description" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Tahmini Kalori <span class="text-danger">*</span></label>
+            <div class="col-md-9">
+                <input type="text" asp-for="GeneralDietList.TotalCalories" class="form-control">
+            </div>
+        </div>
+
+        <div class="row">
+            <p><small class="text-danger">Öncelikle Şablon oluşturup sonrasında diyet oluşturmanız gerekir. </small></p>
+            <button type="submit" class="btn btn-primary ">Ekle</button>
+        </div>
+
+
+    </form>
+</div>

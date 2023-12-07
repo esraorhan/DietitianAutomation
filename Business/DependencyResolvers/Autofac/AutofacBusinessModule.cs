@@ -55,6 +55,13 @@ namespace Business.DependencyResolvers.Autofac
             //hastalıklar için 
             builder.RegisterType<DiseaseManager>().As<IDiseaseService>();
             builder.RegisterType<EfDiseaseDal>().As<IDiseaseDal>();
+
+            //Danışan Dİyet listesi
+            builder.RegisterType<CustomerDietListManager>().As<ICustomerDietListService>();
+            builder.RegisterType<EfCustomerDietListDal>().As<ICustomerDietListDal>();
+            // Danışan Diyetplan 
+            builder.RegisterType<CustomerDietPlanManager>().As<ICustomerDietPlanService>();
+            builder.RegisterType<EfCustomerDietPlanDal>().As<ICustomerDietPlanDal>();
         }
     }
 }

@@ -25,5 +25,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
         public DbSet<Meal> Meals { get; set; }
         public DbSet<CustomerFolder> CustomerFolders { get; set; }
         public DbSet<Disease> Diseases { get; set; }
+        public DbSet<CustomerDietList> CustomerDietLists { get; set; }
+        public DbSet<CustomerDietPlan> CustomerDietPlans { get; set; }
     }
 }

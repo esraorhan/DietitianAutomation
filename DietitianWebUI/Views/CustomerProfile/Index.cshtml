@@ -128,7 +128,7 @@
                 <div class="row">
                     <div class="row mb-3">
                         <div class="col-12">
-                            <a type="submit" class="btn btn-sm text-light btn-primary float-lg-right">Diyet Programı Oluştur</a>
+                            <a type="submit" onclick="showInPopup('@Url.Action("AddCustomerDietList","CustomerProfile",new {customerId=Model.AdultCustomerDetail.AdultCustomerID })','Diyet Programı')" class="btn btn-sm text-light btn-primary float-lg-right"><i class="fe fe-plus-circle text-light mr-2" aria-hidden="true"></i> Diyet Programı Oluştur</a>
 
                         </div>
                     </div>

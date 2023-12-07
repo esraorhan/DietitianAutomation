@@ -18,12 +18,15 @@ namespace DietitianWebUI.Controllers
         private IAdultCustomerDetailService _customerDetailService;
         private ICustomerFolderService _folderService;
         private IDiseaseService _diseaseService;
-        public CustomerProfileController(IAdultMeetingService adultMeetingService, IAdultCustomerDetailService customerDetailService, ICustomerFolderService folderService , IDiseaseService diseaseService)
+        private IGeneralDietListService _dietListService;
+        public CustomerProfileController(IAdultMeetingService adultMeetingService, IAdultCustomerDetailService customerDetailService,
+            ICustomerFolderService folderService , IDiseaseService diseaseService, IGeneralDietListService dietListService)
         {
             _adultMeetingService = adultMeetingService;
             _customerDetailService = customerDetailService;
             _folderService = folderService;
             _diseaseService = diseaseService;
+            _dietListService = dietListService;
         }
 
         [HttpGet("/CustomerProfile/Index/{customerId}")]
@@ -276,6 +279,37 @@ namespace DietitianWebUI.Controllers
             }
 
             return Redirect("/CustomerProfile/Index/" + customerId);
+        }
+
+        [HttpGet("/CustomerProfile/AddCustomerDietList/{customerId}")]
+        public IActionResult AddCustomerDietList(int customerId)
+        {
+            var customerinformation = _customerDetailService.GetDetailCustomer(customerId).Data;
+            var model = new CustomerProfileViewModel
+            {
+                AdultCustomerDetail = customerinformation,
+                
+                // CourseId = CourseId
+            };
+            return PartialView("AddCustomerDietListModal",model);
+        }
+
+        [HttpPost]
+        public IActionResult AddCustomerDietList(CustomerProfileViewModel model)
+        {
+           var customerinformation= _customerDetailService.GetDetailCustomer((int)model.GeneralDietList.AdultCustomerID).Data;
+            model.GeneralDietList.DietName = model.GeneralDietList.DietName;
+           var result =  _dietListService.Add(model.GeneralDietList);
+            if (result.Success == true)
+            {
+                TempData.Add("message",result.Message);
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+
+            return Redirect("/CustomerProfile/Index/" + model.GeneralDietList.AdultCustomerID);
         }
 
     }
