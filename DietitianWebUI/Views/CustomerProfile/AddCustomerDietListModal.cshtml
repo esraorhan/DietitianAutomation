@@ -10,29 +10,66 @@
         <div class="form-group row">
             <label class="col-md-3 col-form-label">Diyet Başlık <span class="text-danger">*</span></label>
             <div class="col-md-9">
-                <input type="text" asp-for="GeneralDietList.DietName" class="form-control">
-                <input type="hidden" asp-for="GeneralDietList.AdultCustomerID" value="@Model.AdultCustomerDetail.AdultCustomerID"/>
-                <input type="hidden" asp-for="AdultCustomerDetail" value="@jsonModel"  />
+                <input type="text" asp-for="CustomerDietList.DietName" id="DietName" class="form-control">
+                <input type="hidden" asp-for="CustomerDietList.AdultCustomerID" value="@Model.AdultCustomerDetail.AdultCustomerID" />
+                <input type="hidden" asp-for="AdultCustomerDetail" value="@jsonModel" />
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 col-form-label">Açıklama <span class="text-danger">*</span></label>
             <div class="col-md-9">
-                <input type="text" asp-for="GeneralDietList.Description" class="form-control">
+                <input type="text" asp-for="CustomerDietList.Description" id="Description" class="form-control">
             </div>
         </div>
         <div class="form-group row">
             <label class="col-md-3 col-form-label">Tahmini Kalori <span class="text-danger">*</span></label>
             <div class="col-md-9">
-                <input type="text" asp-for="GeneralDietList.TotalCalories" class="form-control">
+                <input type="text" asp-for="CustomerDietList.TotalCalories" id="TotalCalories" class="form-control">
             </div>
         </div>
-
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Diyet Şablonları <span class="text-danger">*</span></label>
+            <small class="text-primary">Diyet Şablonlarından seçim yaptığınızda Diğer Alanlar Otomatik dolacaktır.<br /> Eğer Seçim yapmazsanız alan tanımlamalarını yaptıktan sonra işlemlere devam ediniz. </small>
+            <select class="form-control js-example-basic-single" asp-for="CustomerDietList.DietItemId" id="dietsablon" asp-items="Model.GenerelDietSablons">
+                <option value="">Seçiniz...</option>
+            </select>
+            <span class="text-danger" id="dietsablonUyari"></span>
+        </div>
+     
         <div class="row">
-            <p><small class="text-danger">Öncelikle Şablon oluşturup sonrasında diyet oluşturmanız gerekir. </small></p>
+            <small class="text-danger">Öncelikle Şablon oluşturup sonrasında diyet oluşturmanız gerekir.<br/>Örneğin Diyet Şablonlarından seçim yapıldığında Ardından şablon Klonlanacaktır. Üzerinde Düzenleme yapabilrsiniz. </small>
             <button type="submit" class="btn btn-primary ">Ekle</button>
         </div>
 
 
     </form>
 </div>
+
+<script>
+    $("#dietsablon").change(function () {
+        debugger;
+        var dietItemId = $(this).val();
+       
+       /* var besin = $("#BesinID").val();*/
+        if (dietItemId == "") {
+            $("#dietsablonUyari").text("Lütfen Miktar değerini giriniz.");
+        } else if (dietItemId != null) {
+            $.ajax({
+                url: "@Url.Action("GetGeneralDietSablonInformation", "CustomerProfile")",
+                data: { DietItemId: dietItemId },
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                    console.log(result.jsonlist);
+                    var res = result.jsonlist;
+                    $("#DietName").val(res.dietName);
+                    $("#Description").val(res.description);
+                    $("#TotalCalories").val(res.totalCalories);
+                    
+                    
+                }
+            });
+        }
+    });
+</script>

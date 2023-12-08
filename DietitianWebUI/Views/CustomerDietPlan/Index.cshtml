@@ -1,0 +1,219 @@
+﻿@model CustomerDietPlanViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Diyet şablonu Oluştur</h3>
+        <div class="card-options ">
+            <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+            <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+        </div>
+    </div>
+    <div class="card-body" style="justify-content:center;display:flex;">
+        <a href="/CustomerProfile/Index/1">content</a>
+        <div class="file_folder">
+            <a href="javascript:void(0);">
+                <div class="icon">
+                    <i class="fa fa-search-plus text-success"></i>
+                </div>
+                <div class="file-name">
+                    <p class="mb-0 text-muted">Ön İzleme</p>
+                </div>
+            </a>
+            @* <a type="submit" onclick="showInPopup('@Url.Action("AddMeal","DietPlans" ,new { DiyetSablonID =ViewBag.DiyetSablonID })','Öğün Ekle')">*@
+            <a type="submit" onclick="showInPopup('@Url.Action("AddMeal","CustomerDietPlan",new { CustomerDietListId = Model.CustomerDietListId })','Öğün Ekle')">
+                <div class="icon">
+                    <i class="fa fa-plus-circle"></i>
+                </div>
+                <div class="file-name">
+                    <p class="mb-0 text-muted">Öğün Ekle</p>
+
+                </div>
+            </a>
+
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Diyet Özeti</h3>
+                    <div class="card-options">
+                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                        <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                        <div class="item-action dropdown ml-2">
+                            <a href="javascript:void(0)" data-toggle="dropdown"><i class="fe fe-more-vertical"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-eye"></i> View Details </a>
+                                <a href="javascript:void(0)" class="dropdown-item" onclick="ShowPdf()"><i class="dropdown-icon fa fa-share-alt"></i> Pdf Görüntüle </a>
+                                <a href="javascript:void(0)" class="dropdown-item" onclick="PrintPDF()"><i class="dropdown-icon fa fa-cloud-download"></i> Download</a>
+                                <div class="dropdown-divider"></div>
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-copy"></i> Copy to</a>
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-folder"></i> Move to</a>
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-edit"></i> Rename</a>
+                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fa fa-trash"></i> Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" id="pdfContent">
+
+
+                    @if (Model.CustomerDietPlansListByMeals == null)
+                    {
+
+                    }
+                    else
+                    {
+                        foreach (var mealgorup in Model.CustomerDietPlansListByMeals)
+                        {
+                            <p>toplam kalori @mealgorup.SumCalorie</p>
+
+                            <div class="timeline_item ">
+                                <img class="tl_avatar" src="~/assets/images/spoon-and-fork.png" alt="">
+                                <span><a class="font-22" href="javascript:void(0);">@mealgorup.MealName</a>  <small class="float-right text-right font-15">@mealgorup.MealTime</small></span>
+                                @foreach (var dietplan in mealgorup.CustomerDietPlandtosGrouped)
+                                {
+                                    <p><b class="text-danger">@dietplan.HowManyDaysGroup</b></p>
+                                    <div class="msg table-responsive table-responsive-sm">
+                                        <table class="table table-sm table-hover table-striped table_custom border-style spacing5 ">
+                                            <thead>
+                                                <tr>
+                                                    <th>Miktar</th>
+                                                    <th>ölçü birimi</th>
+                                                    <th>Besin</th>
+                                                    <th>Not</th>
+                                                    <th>Kalori</th>
+                                                    <th>Protein</th>
+                                                    <th>Karbonhidrat</th>
+                                                    <th>Yağ</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in dietplan.CustomerDietPlanDtos)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Amount</td>
+                                                        <td>@item.UnitOfMeasure</td>
+                                                        <td>@item.FoodName</td>
+
+                                                        <td>@item.Description</td>
+                                                        <td><small class="badge badge-danger">@item.Calorie Kal</small>  </td>
+                                                        <td><span class="badge badge-info">@item.Protein gr</span></td>
+                                                        <td><span class="badge badge-warning">@item.Carbohydrate gr</span></td>
+                                                        <td><span class="badge badge-secondary">@item.Oil gr</span></td>
+                                                        <td>
+                                                            <a type="button" href="/CustomerDietPlan/DeleteDietPlanItem/@item.CustomerDietPlanId" class="btn btn-icon btn-sm js-sweetalert" title="Delete" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+
+                        }
+                    }
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body" id="modal-conytainer">
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+@section grafikscript{
+
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+
+    <script>
+        
+        function PrintPDF() {
+            var element = document.getElementById('pdfContent');
+
+            // html2pdf kütüphanesini kullanarak PDF'e dönüştürme
+            html2pdf(element, {
+                margin: 10,
+                filename: 'document.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).then(function (pdf) {
+                // PDF verisini al ve yeni bir sekmede aç
+                var pdfData = pdf.output();
+                var blob = new Blob([pdfData], { type: 'application/pdf' });
+                var pdfUrl = URL.createObjectURL(blob);
+
+                // Kullanıcıya PDF dosyasını indirmesini sağlayan bir link oluştur
+                var downloadLink = document.createElement('a');
+                downloadLink.href = pdfUrl;
+                downloadLink.download = 'document.pdf';
+
+                // Linki tıklatarak kullanıcıyı indirmeye yönlendir
+                downloadLink.click();
+            });
+        }
+
+        
+        function ShowPdf() {
+            // Div içeriğini al
+            var divToPrint = document.getElementById('pdfContent');
+
+            // Yeni bir pencere aç
+            var newWin = window.open('', 'Print-Window');
+
+            // Orijinal div içeriğini kopyala
+            var clonedContent = divToPrint.cloneNode(true);
+
+            // Kopyalanan içerikteki img elementlerini bul ve kaldır
+            var imgElements = clonedContent.querySelectorAll('.tl_avatar');
+            imgElements.forEach(function (img) {
+                img.remove();
+            });
+
+            // Pencere içine HTML içeriğini yaz
+            newWin.document.open();
+            newWin.document.write('<html><body onload="window.print()">');
+            newWin.document.write(clonedContent.innerHTML);
+            newWin.document.write('</body></html>');
+            newWin.document.close();
+
+            // Pencereyi kapat
+            setTimeout(function () { newWin.close(); }, 10);
+        }
+
+
+    </script>
+
+}
+
+

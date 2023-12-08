@@ -4,6 +4,7 @@ using DietitianWebUI.Models;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,14 +20,17 @@ namespace DietitianWebUI.Controllers
         private ICustomerFolderService _folderService;
         private IDiseaseService _diseaseService;
         private IGeneralDietListService _dietListService;
+        private ICustomerDietListService _customerDietListService;
         public CustomerProfileController(IAdultMeetingService adultMeetingService, IAdultCustomerDetailService customerDetailService,
-            ICustomerFolderService folderService , IDiseaseService diseaseService, IGeneralDietListService dietListService)
+            ICustomerFolderService folderService , IDiseaseService diseaseService, IGeneralDietListService dietListService,
+            ICustomerDietListService customerDietListService)
         {
             _adultMeetingService = adultMeetingService;
             _customerDetailService = customerDetailService;
             _folderService = folderService;
             _diseaseService = diseaseService;
             _dietListService = dietListService;
+            _customerDietListService = customerDietListService;
         }
 
         [HttpGet("/CustomerProfile/Index/{customerId}")]
@@ -285,10 +289,17 @@ namespace DietitianWebUI.Controllers
         public IActionResult AddCustomerDietList(int customerId)
         {
             var customerinformation = _customerDetailService.GetDetailCustomer(customerId).Data;
+            var DietSablonList = _dietListService.GetList().Success == true ? _dietListService.GetList().Data : null;
+            List<SelectListItem> DietSablonLists = DietSablonList != null
+         ? DietSablonList.Select(c => new SelectListItem
+         {
+             Text = c.DietName ,
+             Value = c.DietItemId.ToString()
+         }).ToList()  : new List<SelectListItem>();
             var model = new CustomerProfileViewModel
             {
                 AdultCustomerDetail = customerinformation,
-                
+                GenerelDietSablons =DietSablonLists
                 // CourseId = CourseId
             };
             return PartialView("AddCustomerDietListModal",model);
@@ -297,20 +308,26 @@ namespace DietitianWebUI.Controllers
         [HttpPost]
         public IActionResult AddCustomerDietList(CustomerProfileViewModel model)
         {
-           var customerinformation= _customerDetailService.GetDetailCustomer((int)model.GeneralDietList.AdultCustomerID).Data;
-            model.GeneralDietList.DietName = model.GeneralDietList.DietName;
-           var result =  _dietListService.Add(model.GeneralDietList);
+            var customerinformation = _customerDetailService.GetDetailCustomer((int)model.CustomerDietList.AdultCustomerID).Data;
+            model.CustomerDietList.DietName = model.CustomerDietList.DietName.ToUpper();
+            model.CustomerDietList.Date = DateTime.Now;
+            var result = _customerDietListService.Add(model.CustomerDietList);
             if (result.Success == true)
             {
-                TempData.Add("message",result.Message);
+                TempData.Add("message", result.Message);
             }
             else
             {
                 TempData.Add("errormessage", result.Message);
             }
 
-            return Redirect("/CustomerProfile/Index/" + model.GeneralDietList.AdultCustomerID);
+            return Redirect("/CustomerProfile/Index/" + 1);
         }
 
+        public IActionResult GetGeneralDietSablonInformation(int DietItemId)
+        {
+            var information = _dietListService.GetById(DietItemId).Data;
+            return Json(new { jsonlist = information });
+        }
     }
 }

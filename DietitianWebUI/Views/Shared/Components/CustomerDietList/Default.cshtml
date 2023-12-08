@@ -1,0 +1,45 @@
+﻿@model CustomerProfileViewModel
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            @*@await Component.InvokeAsync("DiyetSablonListView")*@
+            <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
+                <thead>
+                    <tr>
+
+                        <th>Diyet Adı</th>
+                        <th>Açıklama</th>
+                        <th>Toplam Kalori</th>
+                        <th>Oluşturma Tarihi</th>
+                        <th>Düzenle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.CustomerDietLists == null)
+                    {
+
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.CustomerDietLists)
+                        {
+                            <tr>
+                                <td>@item.DietName</td>
+                                <td>@item.Description</td>
+                                <td>@item.TotalCalories kcal</td>
+                                <td>@item.Date.ToShortDateString()</td>
+                                <td>
+                                    <a href="/CustomerDietPlan/Index/@item.CustomerDietListId" class="btn btn-icon btn-sm" title="Görüntüle"><i class="fa fa-eye"></i></a>
+                                    @*<a onclick="showInPopup('@Url.Action("Edit","CustomerDietPlans",new { dietItemId= item.DietItemId})','Diyet Şablonu Güncelle')" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>*@
+                                    <a href="/CustomerProfile/Delete/@item.CustomerDietListId" class="btn btn-icon btn-sm js-sweetalert" title="Sil" data-type="confirm"><i class="fa fa-trash-o text-danger"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

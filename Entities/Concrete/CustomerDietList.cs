@@ -13,6 +13,7 @@ namespace Entities.Concrete
         [Key]
         public int CustomerDietListId { get; set; }
         public int? AdultCustomerID { get; set; }
+        public int? DietItemId { get; set; }
         public string DietName { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }

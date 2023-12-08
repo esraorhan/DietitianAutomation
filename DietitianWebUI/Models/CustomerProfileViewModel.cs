@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DietitianWebUI.Models
 {
@@ -16,6 +17,8 @@ namespace DietitianWebUI.Models
         public List<CustomerFolder> CustomerFolders { get; set; }
         public List<DiseaseDto> Diseases { get; set; }
 
-        public GeneralDietList GeneralDietList { get; set; }
+        public CustomerDietList CustomerDietList { get; set; }
+        public List<CustomerDietList> CustomerDietLists { get; set; }
+        public IEnumerable<SelectListItem> GenerelDietSablons { get; set; }
     }
 }

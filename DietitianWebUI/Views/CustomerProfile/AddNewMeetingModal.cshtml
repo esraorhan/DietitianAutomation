@@ -3,9 +3,10 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 <div class="card">
     <div class="card-body">
+        <span class="text-danger">Yeni görüşme eklerken son görüşme bilgileri gelir...</span>
         <form asp-controller="CustomerProfile" asp-action="AddAddNewMeeting" method="post">
             @Html.AntiForgeryToken()
-            @Html.HiddenFor(c=>c.AdultCustomerDetail)
+            @Html.HiddenFor(c => c.AdultCustomerDetail)
             <div class="form-group row">
                 <label class="col-md-3 col-form-label">Güncel Kilonuz <span class="text-danger">*</span></label>
                 <div class="col-md-9">
@@ -61,11 +62,11 @@
                 </div>
             </div>
             @*<div class="form-group row">
-            <label class="col-md-3 col-form-label">Bacak Ölçüsü(CM)<span class="text-danger">*</span></label>
-            <div class="col-md-9">
-                <input type="text" class="form-control">
-            </div>
-        </div>*@
+                <label class="col-md-3 col-form-label">Bacak Ölçüsü(CM)<span class="text-danger">*</span></label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control">
+                </div>
+            </div>*@
 
 
 
