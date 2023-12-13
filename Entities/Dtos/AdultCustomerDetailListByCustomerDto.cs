@@ -33,5 +33,7 @@ namespace Entities.Dtos
         public decimal? Vki_value { get; set; }
         public decimal? BodyFatIndex { get; set; }
         public string Vki_comment { get; set; }
+        public decimal? MinProtectionOfWeightCalorie { get; set; }
+        public decimal? MaxProtectionOfWeightCalorie { get; set; }
     }
 }

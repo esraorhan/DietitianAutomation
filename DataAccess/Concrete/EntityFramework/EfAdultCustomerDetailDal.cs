@@ -44,7 +44,9 @@ namespace DataAccess.Concrete.EntityFramework
                                   BodyFatIndex = d.BodyFatIndex,
                                   PAL_value = d.PAL_value,
                                   Vki_value = d.Vki_value,
-                                   Vki_comment=d.Vki_comment
+                                   Vki_comment=d.Vki_comment,
+                                   MaxProtectionOfWeightCalorie=d.MaxProtectionOfWeightCalorie,
+                                   MinProtectionOfWeightCalorie=d.MinProtectionOfWeightCalorie
                               });
 
                 return result.FirstOrDefault();

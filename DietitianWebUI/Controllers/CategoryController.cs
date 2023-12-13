@@ -67,7 +67,6 @@ namespace DietitianWebUI.Controllers
         [HttpPost]
         public IActionResult Edit(CategoryViewModel categoryView)
         {
-
             var result = _categoryService.Update(categoryView.Category);
             if (result.Success == true)
             {
@@ -80,6 +79,7 @@ namespace DietitianWebUI.Controllers
             }
             return Redirect("/Category/Index");
         }
+
         [HttpGet("/Category/Delete/{categoryId}")]
         public IActionResult Delete(int categoryId)
         {
