@@ -62,6 +62,10 @@ namespace Business.DependencyResolvers.Autofac
             // Danışan Diyetplan 
             builder.RegisterType<CustomerDietPlanManager>().As<ICustomerDietPlanService>();
             builder.RegisterType<EfCustomerDietPlanDal>().As<ICustomerDietPlanDal>();
+
+            //User
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
         }
     }
 }

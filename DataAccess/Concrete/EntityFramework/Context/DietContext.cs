@@ -13,6 +13,9 @@ namespace DataAccess.Concrete.EntityFramework.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-8AK4CAP;Database=DietitianAutomationDB;User Id=sa;Password=esra1905;");
+            //optionsBuilder.UseSqlServer(@"Server=DESKTOP-EK3IE5F;Database=DietitianAutomationDB;User Id=sa;Password=123456;");
+
+
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -27,5 +30,7 @@ namespace DataAccess.Concrete.EntityFramework.Context
         public DbSet<Disease> Diseases { get; set; }
         public DbSet<CustomerDietList> CustomerDietLists { get; set; }
         public DbSet<CustomerDietPlan> CustomerDietPlans { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
     }
 }

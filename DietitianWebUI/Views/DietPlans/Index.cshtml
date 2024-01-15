@@ -77,13 +77,13 @@
                             
                             <div class="timeline_item ">
                                 <img class="tl_avatar" src="~/assets/images/spoon-and-fork.png" alt="">
-                                <span><a class="font-22" href="javascript:void(0);">@mealgorup.MealName</a>  <small class="float-right text-right font-15">@mealgorup.MealTime</small></span>
+                                <span><a class="font-22" href="javascript:void(0);">@mealgorup.MealName</a>  <small class="float-right text-right font-15">Tüketim Saati: @mealgorup.MealTime</small></span>
                                 @foreach (var dietplan in mealgorup.DietPlandtosGroupeds)
                                 {
                                    <p><b class="text-danger">@dietplan.HowManyDaysGroup</b></p> 
                                     <div class="msg table-responsive table-responsive-sm">
                                         <table class="table table-sm table-hover table-striped table_custom border-style spacing5 ">
-                                            <thead>
+                                            <thead id="removecontent">
                                                 <tr>
                                                     <th>Miktar</th>
                                                     <th>ölçü birimi</th>
@@ -100,7 +100,7 @@
                                                 @foreach (var item in dietplan.DietPlandtos)
                                                 {
                                                     <tr>
-                                                        <td>@item.Amount</td>
+                                                        <td> <li> @item.Amount </li></td>
                                                         <td>@item.UnitOfMeasure</td>
                                                         <td>@item.FoodName</td>
 
@@ -234,8 +234,16 @@
 
             // Kopyalanan içerikteki img elementlerini bul ve kaldır
             var imgElements = clonedContent.querySelectorAll('.tl_avatar');
+            var badgeElements = clonedContent.querySelectorAll('.badge');
+            var thead = clonedContent.querySelectorAll('#removecontent');
+            thead.forEach(function (cnt) {
+                cnt.remove();
+            });
             imgElements.forEach(function (img) {
                 img.remove();
+            });
+            badgeElements.forEach(function (badge) {
+                badge.remove();
             });
 
             // Pencere içine HTML içeriğini yaz

@@ -19,6 +19,7 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var diseaselist = context.AdultCustomers.Where(c => c.AdultCustomerID == CustomerId).AsEnumerable()
                                     .SelectMany(c => c.DiseaseId.Split('-'))
+                                    .Where(d => !string.IsNullOrWhiteSpace(d))
                                     .Select(d => Convert.ToInt32(d))
                                     .ToList();
 

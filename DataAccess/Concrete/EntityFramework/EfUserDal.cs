@@ -1,0 +1,37 @@
+﻿using Core.DataAccess;
+using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework.Context;
+using Entities.Concrete;
+using Entities.Dtos;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataAccess.Concrete.EntityFramework
+{
+    public class EfUserDal : EfEntityRepositoryBase<User, DietContext>, IUserDal
+    {
+        public List<UserListByRoleDto> GetUserListByRole()
+        {
+            using (var context = new DietContext())
+            {
+                var result = (from u in context.Users
+                              join r in context.UserRoles on u.UserRoleID equals r.UserRoleID
+                              select new UserListByRoleDto { 
+                             FullName= u.FullName,
+                             UserRoleID=u.UserRoleID,
+                             Mail=u.Mail,
+                             Password=u.Password,
+                             Phone=u.Phone,
+                             RoleName=r.RoleName,
+                             UserID=u.UserID
+                              }).ToList();
+                return result;
+            }
+
+        }
+    }
+}
