@@ -20,14 +20,19 @@ namespace DataAccess.Concrete.EntityFramework
             {
                 var result = (from u in context.Users
                               join r in context.UserRoles on u.UserRoleID equals r.UserRoleID
-                              select new UserListByRoleDto { 
-                             FullName= u.FullName,
-                             UserRoleID=u.UserRoleID,
-                             Mail=u.Mail,
-                             Password=u.Password,
-                             Phone=u.Phone,
-                             RoleName=r.RoleName,
-                             UserID=u.UserID
+                              where u.Status == true
+                              select new UserListByRoleDto
+                              {
+                                  FullName = u.FullName,
+                                  UserRoleID = u.UserRoleID,
+                                  Email = u.Email,
+                                  Password = u.Password,
+                                  Phone = u.Phone,
+                                  RoleName = r.RoleName,
+                                  UserID = u.UserID,
+                                  CreationDate = u.CreationDate,
+                                  Status = u.Status,
+                                  UserProfileFolder=u.UserProfileFolder
                               }).ToList();
                 return result;
             }

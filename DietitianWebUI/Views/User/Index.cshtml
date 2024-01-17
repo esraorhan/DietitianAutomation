@@ -1,0 +1,176 @@
+﻿@model UserViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Page title and tab -->
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Students</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Kullanıcılar</li>
+                </ol>
+            </div>
+            <ul class="nav nav-tabs page-header-tab">
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#User-all">Kullanıcı Listesi</a></li>
+
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#User-add">Ekle</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="tab-content">
+            <div class="tab-pane active" id="User-all">
+
+                <div class="table-responsive card mt-4">
+                    <table class="table table-hover js-basic-example dataTable table-striped table_custom border-style spacing5">
+                        <thead>
+                            <tr>
+                                <th>Rol Adı</th>
+                                <th>Adı Soyadı</th>
+                                <th></th>
+                                <th>Telefon</th>
+                                <th>Email</th>
+
+
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Users != null)
+                            {
+                                foreach (var item in Model.Users)
+                                {
+                                    <tr>
+                                        <td>@item.RoleName</td>
+                                        <td class="w60">
+                                            <img class="avatar" src="~/Folder/UserProfile/@item.UserProfileFolder" alt="image">
+                                        </td>
+                                        <td><span class="font-16">@item.FullName</span></td>
+                                        <td>@item.Phone</td>
+                                        <td>@item.Email</td>
+
+
+                                        <td>
+                                            <a type="button" onclick="showInPopup('@Url.Action("Edit","User",new {UserId=item.UserID})','Kullanıcı Güncelle')" class="btn btn-icon btn-sm" title="Düzenle"><i class="fa fa-edit"></i></a>
+
+                                            <a type="button" href="@Url.Action("Delete","User",new {UserId=item.UserID})" class="btn btn-icon btn-sm" title="Sil"><i class="fa fa-trash-o text-danger"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="User-add">
+                <div class="row clearfix">
+                    <div class="col-lg-10 col-md-12 col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Yeni Kullanıcı Tanımla</h3>
+                                <div class="card-options ">
+                                    <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                                    <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                                </div>
+                            </div>
+                            <form asp-action="Add" asp-controller="User" enctype="multipart/form-data" class="card-body">
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Adı Soyadı <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" asp-for="User.FullName" class="form-control" placeholder="Adınız Soyadınız">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Email</label>
+                                    <div class="col-md-9">
+                                        <input type="text" asp-for="User.Email" class="form-control" placeholder="Mail Adresiniz">
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Kullanıcı Rolü <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <select class="form-control input-height" asp-for="User.UserRoleID">
+                                            <option value="">Seçiniz...</option>
+                                            <option value="1">Admin</option>
+                                            <option value="2">Diyetisyen</option>
+                                            <option value="3">Müşteri</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Telefon <span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" class="form-control" asp-for="User.Phone" placeholder="Telefon numaranız">
+                                        @*<span class="text-danger" asp-validation-for="User.Phone"></span>*@
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Şifre belirleyin<span class="text-danger">*</span></label>
+                                    <div class="col-md-9">
+                                        <input type="text" asp-for="User.Password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label">Profil Resminiz</label>
+                                    <div class="col-md-9">
+                                        <input type="file" id="fileInput" asp-for="User.UserProfileFolder" name="formFile" class="dropify" onchange="checkFileSize()">
+                                        <small id="fileHelp" class="form-text text-muted">Profil Resminizi Yükleyebilirsiniz. .png ve ya .jpg formatında olmasına dikkat edin.</small>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <button type="submit" class="btn btn-primary float-right">Kaydet</button>
+
+                                </div>
+                                <div class="text-danger" asp-validation-summary="All">
+                                    @*model de olsutuduklarıı listelemeleye yarıyor.uyarı dizini olarak*@
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+
+                @Html.Partial("EditUserViewModal")
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+@section grafikscript{
+
+    <script>
+        function checkFileType() {
+            var ext = $('#UserProfileFile').val().split('.').pop().toLowerCase();
+            if ($.inArray(ext, ['gif', 'png', 'jpg', 'jpeg']) == -1) {
+                alert('geçersiz dosya türü, Png ve jpg formatında yükleyin!');
+            }
+        }
+    </script>
+}
+

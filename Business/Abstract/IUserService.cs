@@ -16,5 +16,6 @@ namespace Business.Abstract
 
         IResult Update(User user);
         IDataResult<List<UserListByRoleDto>> GetUserList(); //join işlem sonucu 
+        IDataResult<User> GetById(int userId);
     }
 }
