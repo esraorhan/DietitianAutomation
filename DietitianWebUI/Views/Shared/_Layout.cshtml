@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 
 <html lang="en" dir="ltr">
 <head>
@@ -50,7 +51,21 @@
             }*/
     </style>
 </head>
+@{
+    string role = "";
+    string fullname = "";
+    if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+    {
+        fullname = HttpContextAccessor.HttpContext.User.Identity.Name;
+        var email = HttpContextAccessor.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.Email).Value;
+        role = HttpContextAccessor.HttpContext.User.FindFirst(System.Security.Claims.ClaimTypes.Role).Value;
+    }
+    else
+    {
+        role = "";
+    }
 
+}
 <body class="font-muli theme-cyan gradient">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -76,7 +91,7 @@
                 </div>
                 <div class="hright">
                     <a href="javascript:void(0)" class="nav-link icon right_tab"><i class="fe fe-align-right"></i></a>
-                    <a href="login.html" class="nav-link icon settingbar"><i class="fe fe-power"></i></a>
+                    <a href="/Login/LogOut/" class="nav-link icon settingbar"><i class="fe fe-power"></i></a>
                 </div>
             </div>
         </div>
@@ -812,7 +827,7 @@
                             <li class="active"><a href="/Dashboard/Index/"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
                             <li><a href="/Customers/Index/"><i class="fa fa-black-tie"></i><span>Danışanlar</span></a></li>
                             <li><a href="/DietLists/Index/"><i class="fa fa-cutlery"></i><span>Diyet Şablonu</span></a></li>
-                            <li><a href="/Food/Index/"><i class="fa fa-users"></i><span>Besinler</span></a></li>
+                            <li><a href="/Food/Index/"><i class="fa fa-apple"></i><span>Besinler</span></a></li>
                             <li><a href="/Disease/Index/"><i class="fa fa-thermometer-quarter"></i><span>Hastalık yönetimi</span></a></li>
 
                             <li><a href="/RecipeList/Index"><i class="fa fa-book"></i><span>Soru Listeleri</span></a></li>
@@ -820,6 +835,7 @@
                             <li><a href="/Category/Index"><i class="fa fa-bars"></i><span>Besin kategori tanımla</span></a></li>
                             <li><a href="/Meal/Index/"><i class="fa fa-users"></i><span>Öğün Tanımlama</span></a></li>
                             <li><a href="holiday.html"><i class="fa fa-bullhorn"></i><span>Randevularım</span></a></li>
+                            <li><a href="/User/Index/"><i class="fa fa-users"></i><span>Kullanıcılar</span></a></li>
                         </ul>
                     </nav>
                 </div>
@@ -869,7 +885,7 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Auth</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="login.html">Login</a>
+                                        <a class="dropdown-item" href="/Login/LogOut">Çıkış Yap</a>
                                         <a class="dropdown-item" href="register.html">Register</a>
                                         <a class="dropdown-item" href="forgot-password.html">Forgot password</a>
                                         <div class="dropdown-divider"></div>
@@ -985,16 +1001,16 @@
                                 </div>
                                 <div class="dropdown d-flex">
                                     <a href="javascript:void(0)" class="chip ml-3" data-toggle="dropdown">
-                                        <span class="avatar" style="background-image: url(../assets/images/xs/avatar5.jpg)"></span> George
+                                        <span class="avatar" style="background-image: url(../assets/images/xs/avatar5.jpg)"></span> @fullname -@role
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                        <a class="dropdown-item" href="page-profile.html"><i class="dropdown-icon fe fe-user"></i> Profile</a>
-                                        <a class="dropdown-item" href="app-setting.html"><i class="dropdown-icon fe fe-settings"></i> Settings</a>
-                                        <a class="dropdown-item" href="app-email.html"><span class="float-right"><span class="badge badge-primary">6</span></span><i class="dropdown-icon fe fe-mail"></i> Inbox</a>
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fe fe-send"></i> Message</a>
+                                        <a class="dropdown-item" href="page-profile.html"><i class="dropdown-icon fe fe-user"></i> Profil</a>
+                                        <a class="dropdown-item" href="app-setting.html"><i class="dropdown-icon fe fe-settings"></i> Ayarlar</a>
+                                        <a class="dropdown-item" href="app-email.html"><span class="float-right"><span class="badge badge-primary">6</span></span><i class="dropdown-icon fe fe-mail"></i> Gelen Kutusu</a>
+                                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fe fe-send"></i> Mesajlar</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon fe fe-help-circle"></i> Need help?</a>
-                                        <a class="dropdown-item" href="login.html"><i class="dropdown-icon fe fe-log-out"></i> Sign out</a>
+
+                                        <a class="dropdown-item" href="/Login/LogOut/"><i class="dropdown-icon fe fe-log-out"></i> Çıkış Yap</a>
                                     </div>
                                 </div>
                             </div>
@@ -1076,7 +1092,7 @@
                 //tags: true
             });
 
-          
+
         });
     </script>
 
