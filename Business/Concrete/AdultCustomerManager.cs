@@ -49,9 +49,9 @@ namespace Business.Concrete
             return new SuccessDataResult<AdultCustomer>(_customerDal.GET(c => c.AdultCustomerID == adultCustomerId));
         }
 
-        public IDataResult<List<AdultCustomer>> GetList()
+        public IDataResult<List<AdultCustomer>> GetList(int UserId)
         {
-            return new SuccessDataResult<List<AdultCustomer>>(_customerDal.GETLIST().ToList());
+            return new SuccessDataResult<List<AdultCustomer>>(_customerDal.GETLIST(c=>c.UserId == UserId).ToList());
         }
 
         public IResult Update(AdultCustomer adultCustomer)

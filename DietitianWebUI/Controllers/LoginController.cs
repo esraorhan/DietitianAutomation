@@ -27,7 +27,7 @@ namespace DietitianWebUI.Controllers
         [HttpPost]
         public IActionResult Login(string Email, string password)
         {
-            var nutritionist = _userService.GetUserList().Data.FirstOrDefault(c => c.Email == Email && c.Password == password);
+            var nutritionist = _userService.GetUserList().Data.FirstOrDefault(c => c.Email == Email && c.Password == password && c.Status ==true);
             if (nutritionist !=null)
             {
                 var claims = new List<Claim>

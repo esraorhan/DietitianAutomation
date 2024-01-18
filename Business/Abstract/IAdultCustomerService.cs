@@ -10,7 +10,7 @@ namespace Business.Abstract
 {
     public interface IAdultCustomerService
     {
-        IDataResult<List<AdultCustomer>> GetList();
+        IDataResult<List<AdultCustomer>> GetList(int UserId);
         IDataResult<AdultCustomer> GetById(int adultCustomerId);
         IResult Update(AdultCustomer adultCustomer);
         IResult Add(AdultCustomer adultCustomer);

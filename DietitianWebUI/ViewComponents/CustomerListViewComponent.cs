@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DietitianWebUI.ViewComponents
@@ -22,7 +23,8 @@ namespace DietitianWebUI.ViewComponents
 
         public IViewComponentResult Invoke()
         {
-            var customerList = _customerService.GetList().Data;
+            var userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var customerList = _customerService.GetList(userid).Data;
             var disease = _diseaseService.GetList().Success == true ? _diseaseService.GetList().Data : null;
             List<SelectListItem> diseases = disease != null
          ? disease.Select(c => new SelectListItem

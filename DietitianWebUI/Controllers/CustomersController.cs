@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DietitianWebUI.Controllers
@@ -52,6 +53,7 @@ namespace DietitianWebUI.Controllers
             {
                 model.AdultCustomer.StartingDate = DateTime.Now;
                 model.AdultCustomer.Age = DateTime.Now.Year - model.AdultCustomer.DateOfBirth.Year;
+                model.AdultCustomer.UserId = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 for (int i = 0; i < diseaseId.Length; i++)
                 {
                     model.AdultCustomer.DiseaseId += diseaseId[i].ToString()+"-";

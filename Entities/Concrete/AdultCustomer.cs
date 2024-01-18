@@ -10,6 +10,7 @@ namespace Entities.Concrete
     public class AdultCustomer: IEntity
     {
         public int AdultCustomerID { get; set; }
+        public int? UserId { get; set; }
         public string FullName { get; set; }
         public string Mail { get; set; }
         public string Phone { get; set; }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DietitianWebUI.Controllers
@@ -24,7 +25,8 @@ namespace DietitianWebUI.Controllers
 
         public IActionResult Index()
         {
-            var generaldietlist = _dietListService.GetList().Data;
+            var userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var generaldietlist = _dietListService.GetList(null,userid).Data;
             var model = new GeneralDietListViewModel
             {
                 GeneralDietLists =generaldietlist
@@ -34,20 +36,20 @@ namespace DietitianWebUI.Controllers
 
         public IActionResult AddGeneralDiet()
         {
-            var customers =_customerService.GetList().Success == true ? _customerService.GetList().Data : null;
-            List<SelectListItem> customerlist = customers != null
-         ? customers.Select(c => new SelectListItem
-         {
-             Text = c.FullName ,
-             Value = c.AdultCustomerID.ToString()
-         }).ToList()
-         : new List<SelectListItem>();
+         //   var customers =_customerService.GetList().Success == true ? _customerService.GetList().Data : null;
+         //   List<SelectListItem> customerlist = customers != null
+         //? customers.Select(c => new SelectListItem
+         //{
+         //    Text = c.FullName ,
+         //    Value = c.AdultCustomerID.ToString()
+         //}).ToList()
+         //: new List<SelectListItem>();
 
-            var model = new GeneralDietListViewModel
-            {
-                Customers = customerlist
-            };
-            return PartialView("AddGeneralDietModal",model);
+         //   var model = new GeneralDietListViewModel
+         //   {
+         //       Customers = customerlist
+         //   };
+            return PartialView("AddGeneralDietModal");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -59,6 +61,7 @@ namespace DietitianWebUI.Controllers
             {
                 model.GeneralDietList.DietName = model.GeneralDietList.DietName.ToUpper();
                 model.GeneralDietList.Date = DateTime.Now;
+                model.GeneralDietList.UserId = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var category = _dietListService.Add(model.GeneralDietList);
                 if (category.Success == true)
                 {
@@ -84,18 +87,18 @@ namespace DietitianWebUI.Controllers
         public IActionResult Edit(int dietItemId)
         {
             var dietTemplate = _dietListService.GetById(dietItemId).Data;
-            var customers = _customerService.GetList().Success == true ? _customerService.GetList().Data : null;
-            List<SelectListItem> customerlist = customers != null
-         ? customers.Select(c => new SelectListItem
-         {
-             Text = c.FullName,
-             Value = c.AdultCustomerID.ToString()
-         }).ToList()
-         : new List<SelectListItem>();
+         //   var customers = _customerService.GetList().Success == true ? _customerService.GetList().Data : null;
+         //   List<SelectListItem> customerlist = customers != null
+         //? customers.Select(c => new SelectListItem
+         //{
+         //    Text = c.FullName,
+         //    Value = c.AdultCustomerID.ToString()
+         //}).ToList()
+         //: new List<SelectListItem>(); // danışan olayını bu kısımda iptal ettik.
             var model = new GeneralDietListViewModel
             {
                 GeneralDietList = dietTemplate,
-                 Customers=customerlist
+                 //Customers=customerlist
             };
             return PartialView("EditViewModal",model);
         }

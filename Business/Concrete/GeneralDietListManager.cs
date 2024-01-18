@@ -45,9 +45,9 @@ namespace Business.Concrete
             return new SuccessDataResult<GeneralDietList>(_generalDietListDal.GET(c => c.DietItemId == DietItemId));
         }
 
-        public IDataResult<List<GeneralDietList>> GetList(int? customerId)
+        public IDataResult<List<GeneralDietList>> GetList(int? customerId,int userid)
         {
-            return new SuccessDataResult<List<GeneralDietList>>(_generalDietListDal.GETLIST(c => c.AdultCustomerID == customerId).ToList());
+            return new SuccessDataResult<List<GeneralDietList>>(_generalDietListDal.GETLIST(c => c.AdultCustomerID == customerId && c.UserId==userid).ToList());
         }
 
         public IDataResult<List<GeneralDietList>> GetList()

@@ -17,10 +17,20 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (var context = new DietContext())
             {
-                var diseaselist = context.AdultCustomers.Where(c => c.AdultCustomerID == CustomerId).AsEnumerable()
+                var diseaselist = context.AdultCustomers
+                                    .Where(c => c.AdultCustomerID == CustomerId)
+                                    .AsEnumerable()
+                                    .Where(c=>c.DiseaseId !=null)
                                     .SelectMany(c => c.DiseaseId.Split('-'))
                                     .Where(d => !string.IsNullOrWhiteSpace(d))
-                                    .Select(d => Convert.ToInt32(d))
+                                    .Select(d =>
+                                    {
+                                        if (int.TryParse(d, out int diseaseId))
+                                        {
+                                            return diseaseId;
+                                        }
+                                        return 0; // Veya başka bir değer, hata durumunu belirlemek için.
+                                    }                              )
                                     .ToList();
 
                 var result = context.Diseases
