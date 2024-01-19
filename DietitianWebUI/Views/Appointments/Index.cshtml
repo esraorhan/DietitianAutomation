@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Start Page title and tab -->
+<div class="section-body">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center ">
+            <div class="header-action">
+                <h1 class="page-title">Calendar</h1>
+                <ol class="breadcrumb page-breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Ericsson</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="section-body mt-4">
+    <div class="container-fluid">
+        <div class="row clearfix row-deck">
+            <div class="col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Randevu Listesi</h3>
+                        <a href="#" class="btn btn-primary">Randevu Oluştur</a>
+                        <div id="event-list" class="fc event_list">
+
+                            <div class='fc-event bg-primary' data-class="bg-primary">Etkinliğim 1</div>
+                            <div class='fc-event bg-info' data-class="bg-info">Doğum günü partisi</div>
+                            <div class='fc-event bg-success' data-class="bg-success">Toplantı</div>
+                            <div class='fc-event bg-warning' data-class="bg-warning">Konferans</div>
+                            <div class='fc-event bg-danger' data-class="bg-danger">Etkinliğim 5</div>
+                        </div>
+                        <div class="todo_list mt-4">
+                            <h3 class="card-title">ToDo List <small>This Month task list</small></h3>
+                            <ul class="list-unstyled mb-0">
+                                <li>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked="">
+                                        <span class="custom-control-label">Report Panel Usag</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1">
+                                        <span class="custom-control-label">Report Panel Usag</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked="">
+                                        <span class="custom-control-label">New logo design for Angular Admin</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1">
+                                        <span class="custom-control-label">Design PSD files for Angular Admin</span>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section grafikscript{
+   
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar')
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+                },
+                weekNumbers: true,
+                dayMaxEvents: true, // allow "more" link when too many events
+                locale: 'tr',
+                lang: 'tr',
+                editable: true,
+                eventSources: [{
+                    url: '/Appointments/GetData',
+                    method: 'POST',
+                    success: function (response) {
+                        console.log(response);
+                        return response;
+                    },
+                    failure: function () {
+                        alert('Etkinlikler alınırken bir hata oluştu!')
+                    }
+                }
+                ]
+            });
+            calendar.render()
+        });
+
+    </script>
+}
