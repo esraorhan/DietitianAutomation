@@ -32,5 +32,6 @@ namespace DataAccess.Concrete.EntityFramework.Context
         public DbSet<CustomerDietPlan> CustomerDietPlans { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<AppoinmentCalendar>  AppoinmentCalendars { get; set; }
     }
 }

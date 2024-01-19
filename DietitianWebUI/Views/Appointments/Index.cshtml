@@ -1,4 +1,4 @@
-﻿
+﻿@model AppoinmentCalendarViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -26,7 +26,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">Randevu Listesi</h3>
-                        <a href="#" class="btn btn-primary">Randevu Oluştur</a>
+                        <a onclick="showInPopup('@Url.Action("Add","Appointments")','Randevu Oluştur')" class="btn btn-primary text-light m-2"><i class="fa fa-plus-circle"></i>  Randevu Oluştur</a>
+                       
                         <div id="event-list" class="fc event_list">
 
                             <div class='fc-event bg-primary' data-class="bg-primary">Etkinliğim 1</div>
@@ -35,35 +36,7 @@
                             <div class='fc-event bg-warning' data-class="bg-warning">Konferans</div>
                             <div class='fc-event bg-danger' data-class="bg-danger">Etkinliğim 5</div>
                         </div>
-                        <div class="todo_list mt-4">
-                            <h3 class="card-title">ToDo List <small>This Month task list</small></h3>
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked="">
-                                        <span class="custom-control-label">Report Panel Usag</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1">
-                                        <span class="custom-control-label">Report Panel Usag</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1" checked="">
-                                        <span class="custom-control-label">New logo design for Angular Admin</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" name="example-checkbox1" value="option1">
-                                        <span class="custom-control-label">Design PSD files for Angular Admin</span>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
+                   
                     </div>
                 </div>
             </div>
@@ -77,8 +50,22 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @section grafikscript{
-   
+
     <script>
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -99,7 +86,7 @@
                     method: 'POST',
                     success: function (response) {
                         console.log(response);
-                        return response;
+                        return response.data;
                     },
                     failure: function () {
                         alert('Etkinlikler alınırken bir hata oluştu!')

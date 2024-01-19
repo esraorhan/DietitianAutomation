@@ -66,6 +66,9 @@ namespace Business.DependencyResolvers.Autofac
             //User
             builder.RegisterType<UserManager>().As<IUserService>();
             builder.RegisterType<EfUserDal>().As<IUserDal>();
+            //AppoinmetCalendar 
+            builder.RegisterType<AppoinmentCalendarManager>().As<IAppoinmentCalendarService>();
+            builder.RegisterType<EfAppoinmentCalendarDal>().As<IAppoinmentCalendarDal>();
         }
     }
 }

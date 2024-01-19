@@ -1,0 +1,67 @@
+﻿@model AppoinmentCalendarViewModel
+<div class="card p-5">
+    <form asp-controller="Appointments" asp-action="Add" method="post">
+
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Danışan <span class="text-danger"></span></label>
+            <div class="col-md-9">
+                <small class="text-primary">bu kısımda kişiye atama yapabilirsiniz</small>
+                <select class="form-control input-height" asp-for="AppoinmentCalendar.id" id="customer" asp-items="Model.Customers">
+                    <option value="">Seçiniz...</option>
+                </select>
+                <small id="customerWarning" class="text-danger"></small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Başlık <span class="text-danger">*</span></label>
+            <div class="col-md-9">
+                <input type="text" asp-for="AppoinmentCalendar.title" id="title" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Randevu başlangıç <span class="text-danger">*</span></label>
+            <div class="col-md-9">
+                <input type="datetime-local" asp-for="AppoinmentCalendar.start" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Randevu bitiş <span class="text-danger">*</span></label>
+            <div class="col-md-9">
+                <input type="datetime-local" asp-for="AppoinmentCalendar.end" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label">Renk <span class="text-danger"></span></label>
+            <div class="col-md-9">
+                <small class="text-primary">Renk Atayabilirsiniz</small>
+                <select class="form-control input-height" asp-for="AppoinmentCalendar.color" id="foodId">
+                    <option value="">Seçiniz...</option>
+                    <option value="#fff">Beyaz</option>
+                    <option value="#df0000">Kırmızı</option>
+                    <option value="#00ff00">Yeşil</option>
+                    <option value="#0083ff">Mavi</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <p><small class="text-danger">Lütfen kişi ve saatleri eksiksiz tamamlayın. </small></p>
+            <button type="submit" class="btn btn-primary ">Ekle</button>
+        </div>
+
+
+    </form>
+</div>
+
+<script>
+    $("#customer").change(function () {
+        debugger;
+        var dietItemId = $(this).val();
+
+       /* var besin = $("#BesinID").val();*/
+        if (dietItemId == "") {
+            $("#customerWarning").text("Lütfen Danışan  Seçiniz.");
+        } else if (dietItemId != null) {
+            $("#title").val($("#customer option:selected").text());
+        }
+    });
+</script>
