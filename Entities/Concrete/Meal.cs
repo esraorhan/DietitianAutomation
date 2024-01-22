@@ -10,6 +10,7 @@ namespace Entities.Concrete
    public  class Meal :IEntity
     {
         public int MealID { get; set; }
+        public int? UserId { get; set; }
         public string MealName { get; set; }
         public string MealTime { get; set; }
     }

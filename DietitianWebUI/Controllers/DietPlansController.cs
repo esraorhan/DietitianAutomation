@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DietitianWebUI.Controllers
@@ -37,7 +38,8 @@ namespace DietitianWebUI.Controllers
 
         public IActionResult AddMeal(int dietItemId)
         {
-            var meal = _mealService.GetList().Success == true ? _mealService.GetList().Data : null;
+            var userId = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var meal = _mealService.GetList(userId).Success == true ? _mealService.GetList(userId).Data : null;
             List<SelectListItem> meals = meal != null
          ? meal.Select(c => new SelectListItem
          {

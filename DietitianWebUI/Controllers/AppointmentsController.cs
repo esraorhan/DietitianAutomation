@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using DietitianWebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace DietitianWebUI.Controllers
 {
+    [Authorize(Roles = "Admin,Diyetisyen")]
     public class AppointmentsController : Controller
     {
         private IAdultCustomerService _customerService;

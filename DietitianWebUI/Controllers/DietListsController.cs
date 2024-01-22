@@ -2,6 +2,7 @@
 using Business.ValidationRules;
 using DietitianWebUI.Models;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace DietitianWebUI.Controllers
 {
+    [Authorize(Roles = "Admin,Diyetisyen")]
     public class DietListsController : Controller
     {
         private IGeneralDietListService _dietListService;

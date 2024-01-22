@@ -2,6 +2,7 @@
 using Business.ValidationRules;
 using DietitianWebUI.Models;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace DietitianWebUI.Controllers
 {
+    [Authorize(Roles = "Admin,Diyetisyen")]
     public class CustomerProfileController : Controller
     {
         private IAdultMeetingService _adultMeetingService;

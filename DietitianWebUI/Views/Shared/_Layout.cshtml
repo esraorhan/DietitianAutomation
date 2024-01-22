@@ -819,7 +819,7 @@
             <h5 class="brand-name">DiyetFit<a href="javascript:void(0)" class="menu_option float-right"><i class="icon-grid font-16" data-toggle="tooltip" data-placement="left" title="Grid & List Toggle"></i></a></h5>
             <ul class="nav nav-tabs">
                 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#menu-uni">Diyetisyen</a></li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu-admin">Genel</a></li>
+                <li class="nav-item">@*<a class="nav-link" data-toggle="tab" href="#menu-admin">Genel</a>*@</li>
             </ul>
             <div class="tab-content mt-3">
                 <div class="tab-pane fade show active" id="menu-uni" role="tabpanel">
@@ -844,7 +844,7 @@
                         </ul>
                     </nav>
                 </div>
-                <div class="tab-pane fade" id="menu-admin" role="tabpanel">
+                @*<div class="tab-pane fade" id="menu-admin" role="tabpanel">
                     <nav class="sidebar-nav">
                         <ul class="metismenu">
                             <li><a href="payments.html"><i class="fa fa-credit-card"></i><span>Payments</span></a></li>
@@ -857,7 +857,7 @@
                             <li><a href="setting.html"><i class="fa fa-gear"></i><span>Settings</span></a></li>
                         </ul>
                     </nav>
-                </div>
+                </div>*@
             </div>
         </div>
         <!-- Start project content area -->
@@ -877,30 +877,28 @@
                         <div class="right">
                             <ul class="nav nav-pills">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sayfalar</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="page-empty.html">Empty page</a>
-                                        <a class="dropdown-item" href="page-profile.html">Profile</a>
-                                        <a class="dropdown-item" href="page-search.html">Search Results</a>
-                                        <a class="dropdown-item" href="page-timeline.html">Timeline</a>
-                                        <a class="dropdown-item" href="page-invoices.html">Invoices</a>
-                                        <a class="dropdown-item" href="page-pricing.html">Pricing</a>
+                                       
+                                        <a class="dropdown-item" href="/Home/Index/">Dashboard</a>
+                                        <a class="dropdown-item" href="/Food/Index/">Besinler</a>
+                                        <a class="dropdown-item" href="/Appointments/Index/">Randevularım</a>
+                                        <a class="dropdown-item" href="/Disease/Index/">Hastalık Tanımlama</a>
+                                        <a class="dropdown-item" href="/DietLists/Index/">Diyet Şablonları</a>
                                     </div>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Auth</a>
+                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Çıkış</a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="/Login/LogOut">Çıkış Yap</a>
-                                        <a class="dropdown-item" href="register.html">Register</a>
-                                        <a class="dropdown-item" href="forgot-password.html">Forgot password</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="404.html">404 error</a>
-                                        <a class="dropdown-item" href="500.html">500 error</a>
+                                        <a class="dropdown-item" href="register.html">Kayıt ol</a>
+                                        <a class="dropdown-item" href="forgot-password.html">Parolamı Unuttum</a>
+                                       
                                     </div>
                                 </li>
                             </ul>
                             <div class="notification d-flex">
-                                <div class="dropdown d-flex">
+                                @*<div class="dropdown d-flex">
                                     <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-1" data-toggle="dropdown"><i class="fa fa-language"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                         <a class="dropdown-item" href="#"><img class="w20 mr-2" src="~/assets/images/flags/us.svg" alt="">English</a>
@@ -909,7 +907,7 @@
                                         <a class="dropdown-item" href="#"><img class="w20 mr-2" src="~/assets/images/flags/jp.svg" alt="">japanese</a>
                                         <a class="dropdown-item" href="#"><img class="w20 mr-2" src="~/assets/images/flags/bl.svg" alt="">France</a>
                                     </div>
-                                </div>
+                                </div>*@
                                 <div class="dropdown d-flex">
                                     <a class="nav-link icon d-none d-md-flex btn btn-default btn-icon ml-1" data-toggle="dropdown"><i class="fa fa-envelope"></i><span class="badge badge-success nav-unread"></span></a>
                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">

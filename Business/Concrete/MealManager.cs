@@ -39,9 +39,9 @@ namespace Business.Concrete
             return new SuccessDataResult<Meal>(_mealDal.GET(m => m.MealID == mealId));
         }
 
-        public IDataResult<List<Meal>> GetList()
+        public IDataResult<List<Meal>> GetList(int UserId)
         {
-            return new SuccessDataResult<List<Meal>>(_mealDal.GETLIST().ToList());
+            return new SuccessDataResult<List<Meal>>(_mealDal.GETLIST(c=>c.UserId==UserId).ToList());
         }
 
         public IResult Update(Meal meal)

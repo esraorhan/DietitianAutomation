@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DietitianWebUI.Controllers
@@ -31,6 +32,7 @@ namespace DietitianWebUI.Controllers
             if (result.IsValid)
             {
                 model.Meal.MealName = model.Meal.MealName.ToUpper();
+                model.Meal.UserId= Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var meal = _mealService.Add(model.Meal);
                 if (meal.Success == true)
                 {

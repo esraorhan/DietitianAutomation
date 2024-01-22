@@ -10,7 +10,7 @@ namespace Business.Abstract
 {
     public interface IMealService
     {
-        IDataResult<List<Meal>> GetList();
+        IDataResult<List<Meal>> GetList(int UserId);
         IDataResult<Meal> GetById(int mealId);
         IResult Update(Meal meal);
         IResult Add(Meal meal);
