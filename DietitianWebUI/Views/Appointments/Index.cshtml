@@ -9,10 +9,10 @@
     <div class="container-fluid">
         <div class="d-flex justify-content-between align-items-center ">
             <div class="header-action">
-                <h1 class="page-title">Calendar</h1>
+                <h1 class="page-title">Randevularım</h1>
                 <ol class="breadcrumb page-breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Ericsson</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Calendar</li>
+                    <li class="breadcrumb-item"><a href="/Home/Index/">Anasayfa</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Randevularım</li>
                 </ol>
             </div>
 
@@ -22,25 +22,28 @@
 <div class="section-body mt-4">
     <div class="container-fluid">
         <div class="row clearfix row-deck">
-            <div class="col-lg-4 col-md-12">
+            <div class="col-lg-3 col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title">Randevu Listesi</h3>
                         <a onclick="showInPopup('@Url.Action("Add","Appointments")','Randevu Oluştur')" class="btn btn-primary text-light m-2"><i class="fa fa-plus-circle"></i>  Randevu Oluştur</a>
-                       
+                        <h5 class="card-title">Bu haftaki Randevularınız</h5>
                         <div id="event-list" class="fc event_list">
+                            @if (Model.AppoinmentCalendars != null)
+                            {
+                                foreach (var item in Model.AppoinmentCalendars)
+                                {
+                                    <div class='fc-event bg-primary text-light' data-class="bg-primary">@item.title - @item.start</div>
+                                }
+                            }
 
-                            <div class='fc-event bg-primary' data-class="bg-primary">Etkinliğim 1</div>
-                            <div class='fc-event bg-info' data-class="bg-info">Doğum günü partisi</div>
-                            <div class='fc-event bg-success' data-class="bg-success">Toplantı</div>
-                            <div class='fc-event bg-warning' data-class="bg-warning">Konferans</div>
-                            <div class='fc-event bg-danger' data-class="bg-danger">Etkinliğim 5</div>
+                            
                         </div>
-                   
+
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 col-md-12">
+            <div class="col-lg-9 col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <div id="calendar"></div>
@@ -52,6 +55,20 @@
 </div>
 
 <div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myCenterModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">x</button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -80,7 +97,7 @@
                 dayMaxEvents: true, // allow "more" link when too many events
                 locale: 'tr',
                 lang: 'tr',
-                editable: true,
+                //editable: true,
                 eventSources: [{
                     url: '/Appointments/GetData',
                     method: 'POST',
@@ -92,9 +109,33 @@
                         alert('Etkinlikler alınırken bir hata oluştu!')
                     }
                 }
-                ]
+                ],
+                eventClick: function (info) {
+                   
+                    openUpdateEventModal(info.event);
+                }
             });
-            calendar.render()
+            calendar.render();
+            function openUpdateEventModal(event) {
+                console.log(event);
+                $.ajax({
+                    type: "GET",
+                    url: "/Appointments/Edit/" + event.id,
+                    success: function (res) {
+                        $("#EditModal .modal-body").html(res);
+                        $("#EditModal .modal-title").html("Randevu Düzenleme");
+
+                        $("#EditModal").modal('show');
+                    }
+                })
+                //const updatedEvent = {
+                //    id: event.id,
+                //    start: event.start,
+                //    end: event.end,
+                //    title: event.title
+                //};
+               
+            }
         });
 
     </script>

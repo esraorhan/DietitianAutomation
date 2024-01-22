@@ -11,8 +11,9 @@ namespace Entities.Concrete
     public class AppoinmentCalendar :IEntity
     {
         [Key]
-        public int AppointmentID { get; set; }
+        
         public int id { get; set; }
+        public int AdultCustomerId { get; set; }
         public int? UserId { get; set; }
         public string title { get; set; }
         public DateTime start { get; set; }

@@ -24,7 +24,13 @@ namespace DietitianWebUI.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var filteredList = _calendarService.GetList(userid).Data.Where(c=>c.start>= DateTime.Now && c.start<= DateTime.Now.AddDays(7)).ToList();
+            var model = new AppoinmentCalendarViewModel
+            {
+               AppoinmentCalendars = filteredList
+            };
+            return View(model);
         }
 
         [HttpPost("/Appointments/GetData")]
@@ -81,5 +87,60 @@ namespace DietitianWebUI.Controllers
             return Redirect("/Appointments/Index");
             //return View("Index");
         }
+        [HttpGet("/Appointments/Edit/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var userid = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var customers = _customerService.GetList(userid).Success == true ? _customerService.GetList(userid).Data : null;
+            List<SelectListItem> customerlist = customers != null
+         ? customers.Select(c => new SelectListItem
+         {
+             Text = c.FullName,
+             Value = c.AdultCustomerID.ToString()
+         }).ToList()
+         : new List<SelectListItem>();
+
+           
+            var appoinment = _calendarService.GetById(id).Data;
+            var model = new AppoinmentCalendarViewModel
+            {
+                 AppoinmentCalendar = appoinment,
+                Customers = customerlist
+            };
+            return PartialView("EditAppoinmentViewModal", model);
+        }
+        [HttpPost]
+        public IActionResult Edit(AppoinmentCalendarViewModel model)
+        {
+            var result = _calendarService.Update(model.AppoinmentCalendar);
+            if (result.Success == true)
+            {
+                TempData.Add("message", result.Message);
+
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+            return Redirect("/Appointments/Index");
+        }
+        [HttpGet("/Appointments/Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var app = _calendarService.GetById(id).Data;
+            var result = _calendarService.Delete(app);
+            if (result.Success == true)
+            {
+                TempData.Add("message", result.Message);
+
+            }
+            else
+            {
+                TempData.Add("errormessage", result.Message);
+            }
+            return Redirect("/Appointments/Index");
+        }
+
+
     }
 }

@@ -34,7 +34,7 @@ namespace Business.Concrete
 
         public IDataResult<AppoinmentCalendar> GetById(int appointmentID)
         {
-            return new SuccessDataResult<AppoinmentCalendar>(_calendarDal.GET(m => m.AppointmentID == appointmentID));
+            return new SuccessDataResult<AppoinmentCalendar>(_calendarDal.GET(m => m.id == appointmentID));
         }
 
         public IDataResult<List<AppoinmentCalendar>> GetList(int userId)
