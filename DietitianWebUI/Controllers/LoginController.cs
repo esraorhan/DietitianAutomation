@@ -41,12 +41,12 @@ namespace DietitianWebUI.Controllers
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 HttpContext.SignInAsync(principal);
                 TempData["message"] = "Şifre Doğru! Sayfaya Yönlendiriliyorsunuz...";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Category");
             }
             else
             {
-                TempData["messageerror"] = "Şifre Yanlış! ";
-                return View("Index");
+                TempData["errormessage"] = "Şifre Yanlış! ";
+                return Redirect("Index");
             }
            
         }

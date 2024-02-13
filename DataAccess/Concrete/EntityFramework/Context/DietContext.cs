@@ -13,9 +13,8 @@ namespace DataAccess.Concrete.EntityFramework.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=DESKTOP-8AK4CAP;Database=DietitianAutomationDB;User Id=sa;Password=esra1905;");
+            //optionsBuilder.UseSqlServer(@"Server=212.58.20.67;Database=AresdiyetisyenDB;User Id=diyetisyenDBUser;Password=u4i0_9Rv5;");
             //optionsBuilder.UseSqlServer(@"Server=DESKTOP-EK3IE5F;Database=DietitianAutomationDB;User Id=sa;Password=123456;");
-
-
         }
 
         public DbSet<Category> Categories { get; set; }

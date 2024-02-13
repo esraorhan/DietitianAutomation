@@ -13,7 +13,7 @@ namespace Entities.Concrete
         [Key]
         
         public int id { get; set; }
-        public int AdultCustomerId { get; set; }
+        public int? AdultCustomerId { get; set; }
         public int? UserId { get; set; }
         public string title { get; set; }
         public DateTime start { get; set; }
