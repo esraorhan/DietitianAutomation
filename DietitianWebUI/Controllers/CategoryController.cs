@@ -44,6 +44,7 @@ namespace DietitianWebUI.Controllers
                 {
                     TempData.Add("errormessage", category.Message);
                 }
+                return Redirect("/Category/Index");
             }
             else
             {
@@ -52,9 +53,10 @@ namespace DietitianWebUI.Controllers
                   
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+                return View("Index");
             }
-            //return Redirect("/Category/Index");
-            return View("Index");
+            //
+           
         }
         [HttpGet("/Category/Edit/{categoryId}")]
         public IActionResult Edit(int categoryId)

@@ -11,6 +11,7 @@ namespace Entities.Concrete
     {
         public int AdultCustomerID { get; set; }
         public int? UserId { get; set; }
+        public int? UserRoleID { get; set; }
         public string FullName { get; set; }
         public string Mail { get; set; }
         public string Phone { get; set; }
@@ -28,6 +29,7 @@ namespace Entities.Concrete
         public bool AlcoholUse { get; set; }
         public string Description { get; set; }
         public string DiseaseId { get; set; }
+        public string Password { get; set; }
         //public decimal? BMH_value { get; set; }
         //public decimal? PAL_value { get; set; }
     }

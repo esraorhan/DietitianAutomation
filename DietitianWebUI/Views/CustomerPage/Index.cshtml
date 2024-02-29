@@ -1,0 +1,295 @@
+﻿@model CustomerPageViewModel
+@{
+    ViewData["Title"] = "Özet Sayfanız";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <div class="row row-deck">
+        <div class="col-sm-12 col-lg-6 mx-auto">
+            <div class="card ">
+                <div class="card-status bg-blue"></div>
+                <div class="card-body">
+                    <div class="table-responsive table-sm" style="height: 310px;">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-4 col-md-6">
+                                <canvas id="chartdiv" style="width:600px; height:400px;">
+                                </canvas>
+                            </div>
+                            <div class="col-xl-6 col-lg-4 col-md-6">
+                                <canvas id="chartBelCM" style="width:600px; height:400px;">
+                                </canvas>
+                            </div>
+                            <div class="col-xl-6 col-lg-4 col-md-6">
+                                <canvas id="chartKalcaCM" style="width:600px; height:400px;">
+                                </canvas>
+                            </div>
+                            <div class="col-xl-6 col-lg-4 col-md-6">
+                                <canvas id="Yagorani" style="width:600px; height:400px;">
+                                </canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-3 mx-auto">
+            <div class="card ">
+                <div class="card-status bg-green"></div>
+                <div class="card-body">
+                    <div class="card-category text-success">@Model.AdultCustomerDetail.FullName</div>
+                    <div class="display-5 my-2">@Model.AdultCustomerDetail.Kilo kg</div>
+                    <ul class="list-unstyled leading-loose">
+                        <li>@Model.AdultCustomerDetail.Age Yaşında</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_value</b>  vücut kitle indeksi</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20">@Model.AdultCustomerDetail.Vki_comment</b></li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20"> @Model.AdultCustomerDetail.BMH_value</b> kcal bazal metobolizma hızınız</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20"> @Model.AdultCustomerDetail.MaxProtectionOfWeightCalorie</b> Kilo korunması için Max Kalori</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> <b class="text-primary font-20"> @Model.AdultCustomerDetail.MinProtectionOfWeightCalorie</b> Kilo korunması için Min Kalori</li>
+                        <li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-3 mx-auto">
+            <div class="card ">
+                <div class="card-status bg-pink"></div>
+                <div class="card-body">
+                    <div class="card-category text-danger">Öykünüz</div>
+                    <div class="h6 my-2">@Model.AdultCustomerDetail.Job</div>
+                    <ul class="list-unstyled leading-loose">
+                        <li>@Model.AdultCustomerDetail.MannerOfWork </li>
+                        <li><i class="fe fe-bookmark text-success mr-2" aria-hidden="true"></i>Hastalık: @Model.AdultCustomerDetail.GeneticDisease  </li>
+                        <li><i class="fe fe-bookmark text-success mr-2" aria-hidden="true"></i>Alerji: @Model.AdultCustomerDetail.Allergy </li>
+                        <li><i class="fe fe-bookmark text-success mr-2" aria-hidden="true"></i>Notlar: @Html.Raw(Model.AdultCustomerDetail.Description) </li>
+                        @*<li><i class="fe fe-check text-success mr-2" aria-hidden="true"></i> @Model.AdultCustomerDetail.BodyFatIndex Vucut yağ Oranı</li>*@
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row clearfix">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Diyet Özeti</h3>
+                    <div class="card-options">
+                        <a href="#" class="card-options-collapse" data-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+                        <a href="#" class="card-options-fullscreen" data-toggle="card-fullscreen"><i class="fe fe-maximize"></i></a>
+                        <a href="#" class="card-options-remove" data-toggle="card-remove"><i class="fe fe-x"></i></a>
+                        <div class="item-action dropdown ml-2">
+                            <a href="javascript:void(0)" data-toggle="dropdown"><i class="fe fe-more-vertical"></i></a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                               
+                                <a href="javascript:void(0)" class="dropdown-item" onclick="ShowPdf()"><i class="dropdown-icon fa fa-share-alt"></i> Pdf Görüntüle </a>
+                                @*<a href="javascript:void(0)" class="dropdown-item" onclick="PrintPDF()"><i class="dropdown-icon fa fa-cloud-download"></i> Download</a>*@
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" id="pdfContent">
+
+
+                    @if (Model.CustomerDietPlansListByMeals == null)
+                    {
+
+                    }
+                    else
+                    {
+                        foreach (var mealgorup in Model.CustomerDietPlansListByMeals)
+                        {
+                            <p>toplam kalori @mealgorup.SumCalorie</p>
+
+                            <div class="timeline_item ">
+                                <img class="tl_avatar" src="~/assets/images/spoon-and-fork.png" alt="">
+                                <span><a class="font-22" href="javascript:void(0);">@mealgorup.MealName</a>  <small class="float-right text-right font-15">@mealgorup.MealTime</small></span>
+                                @foreach (var dietplan in mealgorup.CustomerDietPlandtosGrouped)
+                                {
+                                    <p><b class="text-danger">@dietplan.HowManyDaysGroup</b></p>
+                                    <div class="msg table-responsive table-responsive-sm">
+                                        <table class="table table-sm table-hover table-striped table_custom border-style spacing5 ">
+                                            <thead>
+                                                <tr>
+                                                    <th>Miktar</th>
+                                                    <th>ölçü birimi</th>
+                                                    <th>Besin</th>
+                                                    <th>Not</th>
+                                                   
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in dietplan.CustomerDietPlanDtos)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Amount</td>
+                                                        <td>@item.UnitOfMeasure</td>
+                                                        <td>@item.FoodName</td>
+
+                                                        <td>@item.Description</td>
+                                                       
+                                                    </tr>
+                                                }
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                }
+                            </div>
+
+                        }
+                    }
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+@section grafikscript{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    $(document).ready(function () {
+
+          $.ajax({
+            url: "@Url.Action("Graphics", "CustomerPage", new { customerId = Model.AdultCustomerDetail.AdultCustomerID })",
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json",
+              success: function (result) {
+                  console.log(result.kilo);
+                  ChartJSRes(result.kilo, "Kilo", "KiLO(KG)", "chartdiv");
+                  ChartJSRes(result.yagOrani, "Yağ Oranı", "Yağ(%)", "Yagorani");
+                  ChartJSRes(result.kalca, "Kalça Ölçüsü", "KALÇA(CM)", "chartKalcaCM");
+                  ChartJSRes(result.bel, "Bel Ölçüsü", "BEL(CM)", "chartBelCM");
+            }
+          });
+
+      
+
+    });
+        function ShowPdf() {
+            // Div içeriğini al
+            var divToPrint = document.getElementById('pdfContent');
+
+            // Yeni bir pencere aç
+            var newWin = window.open('', 'Print-Window');
+
+            // Orijinal div içeriğini kopyala
+            var clonedContent = divToPrint.cloneNode(true);
+
+            // Kopyalanan içerikteki img elementlerini bul ve kaldır
+            var imgElements = clonedContent.querySelectorAll('.tl_avatar');
+            imgElements.forEach(function (img) {
+                img.remove();
+            });
+
+            // Pencere içine HTML içeriğini yaz
+            newWin.document.open();
+            newWin.document.write('<html><body onload="window.print()">');
+            newWin.document.write(clonedContent.innerHTML);
+            newWin.document.write('</body></html>');
+            newWin.document.close();
+
+            // Pencereyi kapat
+            setTimeout(function () { newWin.close(); }, 10);
+        };
+   function ChartJSRes(result,label,text,div_id) {
+
+            //  console.log(result);
+            var labels = [];
+            var dataresults = [];
+            $.each(result, function (index, item) {
+                labels.push(item.tarih);
+                dataresults.push(item.deger);
+            });
+
+
+       const ctx = document.getElementById(div_id).getContext('2d');
+
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels, //tarih adı
+                    datasets: [{
+                        label: label,
+                        data: dataresults,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(235, 45,0, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(135, 48, 36,0.5)',
+                            'rgba(36, 135, 70,0.5)',
+                            'rgba(100, 70, 189,0.5)',
+                            'rgba(0 ,139 ,139,0.5)',
+                            'rgba(75 ,0,130,0.5)',
+                            'rgba(166 ,69,12,0.5)',
+                            'rgba(245 ,1,1,0.5)'
+
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(135, 48, 36,1)',
+                            'rgba(36, 135, 70,1)',
+                            'rgb(100, 70, 189,1)',
+                            'rgb(0 ,139 ,139,1)',
+                            'rgb(75 ,0,130,1)',
+                            'rgba(166 ,69,12,1)',
+                            'rgba(245 ,1,1,1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: text
+                        }
+                    },
+                    scale: {
+                        reverse: true,
+
+                        xAxes: [{
+                            display: true,
+                            type: 'time',
+                            time: {
+                                parser: 'DD/MM/YYYY',
+                                unit: 'day',
+                                unitStepSize: 1,
+                                displayFormats: {
+                                    'day': 'DD/MM/YYYY'
+                                }
+                            }
+                        }
+                        ],
+                        yAxes: [{ ticks: { min: 0, max: 120 } }],
+                    }
+                }
+
+            });
+        }
+    </script>
+}

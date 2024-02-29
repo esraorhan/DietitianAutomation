@@ -55,6 +55,7 @@ namespace DietitianWebUI.Controllers
             {
                 model.AdultCustomer.StartingDate = DateTime.Now;
                 model.AdultCustomer.Age = DateTime.Now.Year - model.AdultCustomer.DateOfBirth.Year;
+                model.AdultCustomer.UserRoleID = 3;
                 model.AdultCustomer.UserId = Convert.ToInt32(HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
                 for (int i = 0; i < diseaseId.Length; i++)
                 {

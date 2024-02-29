@@ -14,6 +14,7 @@ namespace Entities.Dtos
         public string Mail { get; set; }
         public string Phone { get; set; }
         public string Gender { get; set; }
+        public string Password { get; set; }
         public string Job { get; set; }
         public DateTime StartingDate { get; set; }
         public DateTime DateOfBirth { get; set; }

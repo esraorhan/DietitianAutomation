@@ -1,5 +1,6 @@
 ﻿using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Business.Abstract
     {
         IDataResult<List<CustomerDietList>> GetList(int? customerId);
         IDataResult<CustomerDietList> GetById(int CustomerDietListId);
+        IDataResult<CustomerDietListByCustomerDto> GetCustomerDietListDescFirst(int customerId);
         IResult Update(CustomerDietList dietList);
         IResult Add(CustomerDietList dietList);
         IResult Delete(CustomerDietList dietList);

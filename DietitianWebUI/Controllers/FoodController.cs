@@ -44,7 +44,16 @@ namespace DietitianWebUI.Controllers
         [HttpPost]
         public IActionResult Add(FoodViewModal model)
         {
-           
+            var r = _categoryService.GetList().Success == true ? _categoryService.GetList().Data : null;
+            List<SelectListItem> categories = r != null
+         ? r.Select(c => new SelectListItem
+         {
+             Text = c.CategoryName,
+             Value = c.CategoryID.ToString()
+         }).ToList()
+         : new List<SelectListItem>();
+            model.Categories = categories;
+
             FoodValidator cv = new FoodValidator();
             ModelState.Clear();
             ValidationResult result = cv.Validate(model.Food);
@@ -61,6 +70,7 @@ namespace DietitianWebUI.Controllers
                 {
                     TempData.Add("errormessage", category.Message);
                 }
+                return RedirectToAction("Index");
             }
             else
             {
@@ -69,18 +79,11 @@ namespace DietitianWebUI.Controllers
 
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+                return View("Index", model);
             }
-            var r = _categoryService.GetList().Success == true ? _categoryService.GetList().Data : null;
-            List<SelectListItem> categories = r != null
-         ? r.Select(c => new SelectListItem
-         {
-             Text = c.CategoryName,
-             Value = c.CategoryID.ToString()
-         }).ToList()
-         : new List<SelectListItem>();
-            model.Categories = categories;
+           
            // model.Food = null; geçici olarak çözdü 
-          return View("Index",model);
+         
            //return RedirectToAction("Index");
         }
 

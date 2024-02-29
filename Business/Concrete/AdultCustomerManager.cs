@@ -49,6 +49,11 @@ namespace Business.Concrete
             return new SuccessDataResult<AdultCustomer>(_customerDal.GET(c => c.AdultCustomerID == adultCustomerId));
         }
 
+        public IDataResult<AdultCustomer> GetByPhoneNumber(string phone)
+        {
+            return new SuccessDataResult<AdultCustomer>(_customerDal.GET(c => c.Phone == phone));
+        }
+
         public IDataResult<List<AdultCustomer>> GetList(int UserId)
         {
             return new SuccessDataResult<List<AdultCustomer>>(_customerDal.GETLIST(c=>c.UserId == UserId).ToList());

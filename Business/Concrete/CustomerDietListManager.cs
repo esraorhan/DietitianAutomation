@@ -3,6 +3,7 @@ using Business.Contans;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,11 @@ namespace Business.Concrete
         public IDataResult<CustomerDietList> GetById(int CustomerDietListId)
         {
             return new SuccessDataResult<CustomerDietList>(_customerDietListDal.GET(c => c.CustomerDietListId == CustomerDietListId));
+        }
+
+        public IDataResult<CustomerDietListByCustomerDto> GetCustomerDietListDescFirst(int customerId)
+        {
+            return new SuccessDataResult<CustomerDietListByCustomerDto>(_customerDietListDal.GetCustomerDietListDescFirst(customerId));
         }
 
         public IDataResult<List<CustomerDietList>> GetList(int? customerId)

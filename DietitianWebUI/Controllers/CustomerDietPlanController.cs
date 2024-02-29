@@ -87,7 +87,7 @@ namespace DietitianWebUI.Controllers
             {
                 _customerDietPlanService.Add(new CustomerDietPlan
                 {
-                    Amount = item.Amount,
+                    Amount = item.Amount* _foodService.GetById(item.FoodID).Data.Amount,
                     Calorie = item.Calorie,
                     Carbohydrate = item.Carbohydrate,
                     CustomerDietListId = item.CustomerDietListId,

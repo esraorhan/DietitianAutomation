@@ -12,6 +12,7 @@ namespace Business.Abstract
     {
         IDataResult<List<AdultCustomer>> GetList(int UserId);
         IDataResult<AdultCustomer> GetById(int adultCustomerId);
+        IDataResult<AdultCustomer> GetByPhoneNumber(string phone);
         IResult Update(AdultCustomer adultCustomer);
         IResult Add(AdultCustomer adultCustomer);
         IResult Delete(AdultCustomer adultCustomer);
